@@ -1,0 +1,41 @@
+<br> 
+<table align="center" class="mainTable" style="width:80%"> 
+  <tr> 
+    <td colspan="2" class="head">Application Package <{$xasset_package}> for <{$xasset_application}> </td> 
+  </tr> 
+  <tr> 
+    <td class="head">Name</td> 
+    <td class="even"><{$xasset_group.name}></td> 
+  </tr> 
+  <tr> 
+    <td class="head">Description</td> 
+    <td class="even"><{$xasset_group.grpDesc}></td> 
+  </tr> 
+  <tr> 
+    <td class="head">Version</td> 
+    <td class="even"><{$xasset_group.version}></td> 
+  </tr> 
+  <tr> 
+    <td class="head">Date Published </td> 
+    <td class="even"><{$xasset_group.datePublished}></td> 
+  </tr>
+  <tr>
+    <td class="head">Files</td>
+    <td class="even">
+		<table>
+			<tr>
+				<td class="head">File Name</td>
+				<td class="head">File Type</td>
+				<td class="head">File Size</td>
+			</tr>
+		  <{section name=i loop=$xasset_group.packages}>
+			  <tr class="<{cycle values="odd,even"}>">
+				  <td><a href="index.php?op=downloadPack&packid=<{$xasset_group.packages[i].id}>&key=<{$xasset_group.packages[i].cryptKey}>"><{$xasset_group.packages[i].filename}></a></td>
+					<td><{$xasset_group.packages[i].filetype}></td>
+					<td><{$xasset_group.packages[i].filesize}></td>
+				</tr>
+			<{/section}>
+		</table>
+		</td>
+  </tr> 
+</table>

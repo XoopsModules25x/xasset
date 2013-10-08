@@ -1,0 +1,100 @@
+---------------------------------------
+0.94 Beta 1  2013-03-03
+---------------------------------------
+
+- Converted to XOOPS 2.5.5 Admin GUI (Mamba)
+
+---------------------------------------
+0.93 Final  2006-07-30
+---------------------------------------
+---------------------------------------
+0.92 Final  2006-07-21
+---------------------------------------
+
+---------------------------------------
+0.91 Final  2006/7/5
+---------------------------------------
+
+---------------------------------------
+0.90 Final  2006/6/1
+---------------------------------------
+
+---------------------------------------
+0.89 Final  2006/5/24
+---------------------------------------
+
+---------------------------------------
+0.88 Final  2006/5/7
+---------------------------------------
+
+---------------------------------------
+0.87 Final  2006-02-07
+---------------------------------------
+1. Added Spanish language files kindly done by www.eriosoft.com.
+2. Fixed bug in xAsset user creation where created Xoops users uname was blank
+3. Added ability to remove unfulfilled orders from the "Order Tacking" tab.
+
+---------------------------------------
+0.86 Final  2006-02-05
+---------------------------------------
+1. Fixed template error for IE (bless it) for user detail screen.
+2. Fixed notifications. Notifications are sent to the admins when a client orders an application. The client is also sent a receipt for the purchase.
+3. Fixed notifications when a new user is created while signing up via the User Details form in xAsset. Welcome email is sent with username and password.
+4. Paypal verification code is more robust and now records failed outgoing SSL attempts.
+5. fixed mysql.sql file
+
+---------------------------------------
+0.85 Final  2006-01-03
+---------------------------------------
+1. Better mime type handling by using class/mimetypes.inc.php
+2. If user has an older order with status "In Cart" then it would be lost if a later order was completed.
+3. Added membership expiry support.
+4. Updated help file and PDF on new features.
+5. Cometic changes.
+6. Please note that a new table has been added an some table structures have been made. Please click the "Check Tables" link after the update.
+
+---------------------------------------
+0.84 Final  2006-07-30
+---------------------------------------
+1. Fixed bug in My Downloads.
+2. Added Xoops 2.2.
+3 compatibility when using calendar classes. This solution will work for both Xoops 2.0.x and 2.2.3.
+4. Bug fixes submitted by JDSeymour. Thanks buddy.
+
+---------------------------------------
+0.83 Final  2005-11-11
+---------------------------------------
+1. Cleaned up xAsset admin menu.
+2. Added extra information to the order tracking page. Order items and relevant gateway transactions are now shown against each order.
+3. Cleaned up status code logic in order tracking page. Actual meaning of code is now displayed.
+4. Added mechanism in order tracking to manually complete any uncomplete order.
+5. Updated manual and help file with new features.
+
+---------------------------------------
+0.82 Final  2005/11/8
+---------------------------------------
+1. Added Order Tracking tab in xAsset admin area to view all orders.
+2. Added ability to check table structures and update to latest version.
+3. Application Product can be disabled to not display on the shop page via the new enabled check box.
+4. Package class reports filesize when downloading.
+5. Added Table check script in xAsset admin control panel to update table structures to latest version.
+6. Added Support Link in admin control panel.
+
+---------------------------------------
+0.81 Final  2005/11/4
+---------------------------------------
+1. simplifies the ordering system for anonymous users by automatically creating a new XOOPS user (based on their supplied email address), logging in that user and adding their required application product into their cart.
+2. includes an updated manual which explains the ordering workflow.
+
+---------------------------------------
+0.80 Final  2005/11/3
+---------------------------------------
+
+---------------------------------------
+0.65 Final  2005-4-28
+---------------------------------------
+
+---------------------------------------
+0.60 Final  2005-04-13
+---------------------------------------
+

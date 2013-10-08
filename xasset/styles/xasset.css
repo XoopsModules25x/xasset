@@ -1,0 +1,25 @@
+input.validateError {background-color:red; color:white;}
+textarea.validateError {background-color:red; color:white;}
+
+.mainTable {
+  width:95%;
+  border:1px solid #D6DDE6;
+  border-collapse: collapse;
+}
+
+.mainTable table {
+  width:100%;
+  border:1px solid #D6DDE6;
+  border-collapse: collapse;
+}
+
+.mainTable a {
+  color: #3C4759;
+  font-weight: bold;
+}
+
+.error {
+  font-weight: bold;
+  color: #CC0000;
+  left: 5px;
+}

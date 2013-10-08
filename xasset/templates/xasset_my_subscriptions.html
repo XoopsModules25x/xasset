@@ -1,0 +1,27 @@
+<{if $xasset_subscriptons|@count gt 0}>
+	<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="1" class="mainTable">
+		<tr>
+			<th colspan="5" class="head">My Subscriptions</th>
+		</tr>
+		<tr>
+			<td class="head">Subscription Group</td>
+			<td class="head">Expiry Date</td>
+			<td class="head">Product</td>
+			<td class="head">Subscription Period</td>
+			<td class="head">Extended Membership</td>
+		</tr>
+		<{section name=i loop=$xasset_subscriptons}> 
+			<tr class="<{cycle values="odd,even"}>">
+				<td><{$xasset_subscriptons[i].name}></td>
+				<td><{$xasset_subscriptons[i].formatExpiryDate}></td>
+				<td><{$xasset_subscriptons[i].product}></td>
+				<td><{$xasset_subscriptons[i].period}> days</td>
+				<td valign="middle" align="center"><{$xasset_subscriptons[i].buyNow}></td>
+			</tr>
+		<{/section}>
+	</table>
+<{else}>
+<div align="center">
+  <h1><strong><font color="#FF0000">No Subscriptions Found.</font></strong></h1>
+</div>
+<{/if}>

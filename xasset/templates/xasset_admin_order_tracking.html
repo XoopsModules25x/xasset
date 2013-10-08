@@ -1,0 +1,50 @@
+<{$xasset_navigation}> <br>
+<br> 
+<{if $xasset_order_count gt 0}>
+  <form name="Orders" method="post" action="index.php"> 
+		<table width='100%' cellspacing='1' class='outer'> 
+			<tr> 
+				<th colspan='9'> Order Logs </th> 
+			</tr> 
+			<tr> 
+				<td class='head'><input name="allbox" id="allbox" onclick="xoopsCheckAll('Orders','allbox');" type="checkbox" value="All" /></td> 
+				<td class='head'>Order ID</td> 
+				<td class='head'>Date</td> 
+				<td class='head'>User</td> 
+				<td class='head'>Status</td> 
+				<td class='head'>Transaction</td> 
+				<td class='head'>Currency</td> 
+				<td class='head'>Order Value</td> 
+				<td class='head'>Order Gateway Fee</td> 
+			</tr> 
+		<{section name=i loop=$xasset_orders}> 
+			<tr class="<{cycle values="odd,even"}>" valign='top' align='left'> 
+				<td><input name="ID[]" type="checkbox" value="<{$xasset_orders[i].id}>" <{if $xasset_orders[i].status eq 5}>disabled="disabled"<{/if}>/></td> 
+				<td class='head'><a href="index.php?op=showOrderLogDetail&id=<{$xasset_orders[i].id}>"><{$xasset_orders[i].id}></a></td>
+				<td><{$xasset_orders[i].dateFmt}></td> 
+				<td><{$xasset_orders[i].fullName}> (<{$xasset_orders[i].uname}>)</td> 
+				<td><{$xasset_orders[i].statusFmt}></td> 
+				<td><{$xasset_orders[i].trans_id}></td> 
+				<td><{$xasset_orders[i].currency}></td>
+				<td><{$xasset_orders[i].value}></td>
+				<td><{$xasset_orders[i].fee}></td> 
+			</tr>
+		<{/section}> 
+		</table><br />
+    <table width='100%' align="center" cellspacing='1' class='outer'>
+		  <tr>
+			  <td class='head'>
+				  <div align="center">
+				    Batch Actions 
+						<select name="op">
+				      <option value="opDelOrder" selected="selected">Remove Order</option>
+				      <option value="opCompOrder" selected="selected">Complete Orders Manually</option>
+			      </select> <input name="Go" type="submit" value="Go">
+			    </div>
+				</td>
+			</tr>
+		</table>		
+	</form>
+<{else}>
+  <p>No Orders found.</p>
+<{/if}>
