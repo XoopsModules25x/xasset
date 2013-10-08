@@ -1,0 +1,80 @@
+<style type="text/css">
+<!--
+.bottom {
+	position: relative;
+	bottom: 1px;
+	font-size: 10px;
+}
+-->
+</style>
+<table align="center" class="mainTable" style="border: 0px;">
+  <tr align="center">
+    <td colspan="2" valign="top"><table style="border: 0px;"><tr><td><{$xasset_application.richDescription}></td></tr></table>
+		</td>
+  </tr>
+		<{if $xasset_application_packages_count gt 0 and $xasset_application.productsVisible and $xasset_application.product_list_template eq ''}>
+			<tr>
+				<td colspan="2" valign="top">
+				<table align="center" class="mainTable">
+					<tr>
+						<td class="head"><{$smarty.const._LANG_PRICE}></td>
+						<td class="head"><{$smarty.const._LANG_DESCRIPTION}></td>
+						<{if $xasset_show_minlic}><td class="head"><{$smarty.const._LANG_MIN_LICENSES}></td><{/if}>
+						<{if $xasset_show_maxdowns}><td class="head"><{$smarty.const._LANG_MAX_DOWNLOADS}></td><{/if}>
+						<{if $xasset_show_maxdays}><td class="head"><{$smarty.const._LANG_MAX_DAYS}></td><{/if}>
+						<{if $xasset_show_expires}><td class="head"><{$smarty.const._LANG_OFFER_EXPIRES}></td><{/if}>
+						<{if $xasset_show_samples}><td class="head"><{$smarty.const._LANG_SAMPLE}></td><{/if}>
+						<td class="head"></td>
+					</tr>
+					<{section name=i loop=$xasset_application_packages}>
+						<tr class="<{cycle values="odd,even"}>">
+							<td>
+							  <{section name=j loop=$xasset_application_packages[i].prices}>
+ 								  <{$xasset_application_packages[i].prices[j].fmtUnit}><br>
+							<{/section}>							</td>
+							<td> 
+	                <{if $xasset_application_packages[i].item_rich_description <> ''}>						
+  							    <span onclick='javascript:window.open("<{$xoops_url}>/modules/xasset/index.php?op=viewProductDescription&id=<{$xasset_application_packages[i].id}>&key=<{$xasset_application_packages[i].key}>","Product_Description","width=<{$xasset_popup_dim.width}>,height=<{$xasset_popup_dim.height}>");'><a href="javascript:void(null)"><{$xasset_application_packages[i].item_description}></a></span>
+  							  <{else}>
+  							    <{$xasset_application_packages[i].item_description}>
+  							  <{/if}>
+							</td>
+							<{if $xasset_show_minlic}><td><{$xasset_application_packages[i].min_unit_count}></td>
+							<{/if}>
+							<{if $xasset_show_maxdowns}><td><{$xasset_application_packages[i].max_access}></td>
+							<{/if}>
+							<{if $xasset_show_maxdays}><td><{$xasset_application_packages[i].max_days}></td>
+							<{/if}>
+							<{if $xasset_show_expires}><td><{$xasset_application_packages[i].expiresDate}></td>
+							<{/if}>
+							<{if $xasset_show_samples}>
+							  <td>
+								  <table border="0" cellpadding="0" cellspacing="0" style="border: 0px;">
+									  <{section name=j loop=$xasset_application_packages[i].appSamples}>
+									    <tr>
+											  <{if $xasset_application_packages[i].appSamples[j].isVideo}>
+  											  <td valign="top"><a href="javascript:void(0)" onclick="xajax_onSampleClick(<{$xasset_application_packages[i].appSamples[j].id}>,<{$xasset_application_packages[i].appSamples[j].cryptKey}>);"><{$xasset_application_packages[i].appSamples[j].filename}></a></td>
+												<{else}>
+  											  <td valign="top"><a href="index.php?op=downloadSample&id=<{$xasset_application_packages[i].appSamples[j].id}>&key=<{$xasset_application_packages[i].appSamples[j].cryptKey}>"><{$xasset_application_packages[i].appSamples[j].filename}></a></td>
+												<{/if}>	
+										  </tr>
+										<{/section}>
+									</table>
+							</td>
+							<{/if}>
+							<td align="center">
+              <form method="post" action="order.php?id=<{$xasset_application_packages[i].id}>&amp;key=<{$xasset_application_packages[i].key}>&amp;op=addToCart" style="height:10px">		
+                <input type="image" src="images/buyNow.png" title="Buy Now" name="buyNow" style="border:0;background:transparent" />												
+							</form>
+							</td>
+						</tr>
+					<{/section}>
+				</table><br><br>
+				</td>
+			</tr>
+		<{/if}>
+</table>
+<!--<{if $xasset_application.product_list_template <> ''}>
+  <{eval var=$xasset_application.product_list_template}>
+<{/if}> -->
+<div align="center" class="bottom" style="">Powered by <a href="http://xprojects.co.uk/modules/xproject/index.php?op=viewSummary&pid=2">xAsset</a></div>

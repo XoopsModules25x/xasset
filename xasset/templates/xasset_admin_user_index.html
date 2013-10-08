@@ -1,0 +1,23 @@
+<p><{$xasset_navigation}>
+</p>
+<table width='100%' cellspacing='1' class='outer'>
+  <tr>
+    <th colspan='5'> Licensed Users </th>
+  </tr>
+  <tr>
+    <td class='head'>ID</td>
+    <td class='head'>Application</td>
+    <td class='head'>User</td>
+    <td class='head'>Action</td>
+  </tr>
+<{section name=i loop=$xasset_users}>
+  <tr class="<{cycle values="odd,even"}>" valign='top' align='left'>
+      <td class='head'><{$xasset_users[i].id}></td>
+      <td><{$xasset_users[i].appname}></td>
+      <td><{$xasset_users[i].link}></td>
+      <td><{$xasset_users[i].actions}></td>
+  </tr>
+<{/section}>
+</table>
+<br><br>
+<{include file="db:xasset_admin_user_add.html"}>

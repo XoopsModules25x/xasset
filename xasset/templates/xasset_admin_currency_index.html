@@ -1,0 +1,38 @@
+<{if $xasset_currencies_count gt 0}>
+	<table width='100%' cellspacing='1' class='outer'>
+		<tr>
+			<th colspan='11'> Currencies </th>
+		</tr>
+		<tr>
+			<td class='head'>ID</td>
+			<td class='head'>Name</td>
+			<td class='head'>Code</td>
+			<td class='head'>Decimal Places</td>
+			<td class='head'>Symbol Left</td>
+			<td class='head'>Symbol Right</td>
+			<td class='head'>Decimal Symbol</td>
+			<td class='head'>Thousand Symbol</td>
+			<td class='head'>Value</td>
+			<td class='head'>Last Updated</td>
+			<td class='head'>Action</td>
+		</tr>
+	<{section name=i loop=$xasset_currencies}>
+		<tr class="<{cycle values="odd,even"}>" valign='top' align='left'>
+				<td class='head'><{$xasset_currencies[i].id}></td>
+				<td><a href="index.php?op=editCurrency&id=<{$xasset_currencies[i].id}>"><{$xasset_currencies[i].name}></a></td>
+				<td><{$xasset_currencies[i].code}></td>
+				<td><{$xasset_currencies[i].decimal_places}></td>
+				<td><{$xasset_currencies[i].symbol_left}></td>
+				<td><{$xasset_currencies[i].symbol_right}></td>
+				<td><{$xasset_currencies[i].decimal_point}></td>
+				<td><{$xasset_currencies[i].thousands_point}></td>
+				<td><{$xasset_currencies[i].value}></td>
+				<td><{$xasset_currencies[i].updatedFmt}></td>
+				<td><{$xasset_currencies[i].actions}></td>
+		</tr>
+	<{/section}>
+	</table>
+<{/if}>
+<br>
+<br>
+<{include file="db:xasset_admin_currency_add.html"}>

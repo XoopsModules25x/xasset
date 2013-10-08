@@ -1,0 +1,42 @@
+:TITLE xAsset Help Manual
+:BASE xasset.hlp
+1 Introduction
+2 Whats is XAsset=Welcometopic@xasset.hlp
+2 Item Ordering Workflow=xh_OrderingWorkflow@xasset.hlp
+1 Quick Setup
+2 Simple Setup - No Tax=Simple_Setup_-_No_Tax@xasset.hlp
+2 Tax Setup - Overview=Overview@xasset.hlp
+1 XAsset Control Panel
+2 Control Panel Index Page=ApplicationSetup@xasset.hlp
+2 General Configuration=XassetProperties@xasset.hlp
+2 Application Setup=ApplicationSetup2@xasset.hlp
+2 Packages and Groups=PackagesandGroups@xasset.hlp
+2 Tax Regions=TaxRegions@xasset.hlp
+2 Countries=Countries@xasset.hlp
+2 Zones=Zones@xasset.hlp
+2 Taxes & Rates=TaxesRates@xasset.hlp
+2 Currencies=Currencies@xasset.hlp
+2 Download Stats=DownloadStats@xasset.hlp
+2 Payment Gateway=PaymentGateway@xasset.hlp
+2 Payment Gateway Logs=PaymentGatewayLogs@xasset.hlp
+2 Order Tracking=OrderLogs@xasset.hlp
+2 Group Membership=GroupMembership@xasset.hlp
+1 Payment Gateways
+2 Paypal=Paypal@xasset.hlp
+2 Bill Me=xa_Bill_Me@xasset.hlp
+1 Subscriptions
+2 xAsset Subscriptions=xa_XAsset_Subscritions@xasset.hlp
+2 Automatically Expiring Subscriptions=xa_Automatically_Expiring_Subscri@xasset.hlp
+1 Video Streaming
+2 Introduction=xa_Introduction@xasset.hlp
+2 How to=xa_How_to@xasset.hlp
+1 xAsset Blocks
+2 Currencies=xa_Currencies@xasset.hlp
+2 Top Downloads=xa_Top_Downloads@xasset.hlp
+2 Application Picture List=xa_Application_Picture_List@xasset.hlp
+2 Applications=xa_Applications@xasset.hlp
+1 XAsset User Manual
+2 Overview=Overview2@xasset.hlp
+2 Product Page=EvaulationPage@xasset.hlp
+2 My Cart=MyCart@xasset.hlp
+2 My Details=MyDetails@xasset.hlp

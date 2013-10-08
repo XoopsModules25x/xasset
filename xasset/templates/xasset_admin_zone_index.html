@@ -1,0 +1,26 @@
+<{if $xasset_zones_count gt 0}>
+	<table width='100%' cellspacing='1' class='outer'>
+		<tr>
+			<th colspan='5'> Country Zones </th>
+		</tr>
+		<tr>
+			<td class='head'>ID</td>
+			<td class='head'>Country</td>
+			<td class='head'>Code</td>
+			<td class='head'>Name</td>
+			<td class='head'>Action</td>
+		</tr>
+	<{section name=i loop=$xasset_zones}>
+		<tr class="<{cycle values="odd,even"}>" valign='top' align='left'>
+				<td class='head'><{$xasset_zones[i].id}></td>
+				<td><a href="index.php?op=editCountry&id=<{$xasset_zones[i].countryid}>"><{$xasset_zones[i].countryname}></a></td>
+				<td><a href="index.php?op=editZone&id=<{$xasset_zones[i].id}>"><{$xasset_zones[i].code}></a></td>
+				<td><{$xasset_zones[i].name}></td>
+				<td><{$xasset_zones[i].actions}></td>
+		</tr>
+	<{/section}>
+	</table>
+<{/if}>
+<br>
+<br>
+<{include file="db:xasset_admin_zone_add.html"}>

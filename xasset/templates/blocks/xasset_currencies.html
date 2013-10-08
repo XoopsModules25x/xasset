@@ -1,0 +1,9 @@
+ <form name="form1" method="post" action="main.php?op=updateCurrency">
+   <p>
+     Currency : <select name=currency_id>
+      <{html_options options=$block.select selected=$block.current}>
+    </select>
+     <input type="submit" name="Submit" value="Refresh">
+     <input type="hidden" name="app_id" value="<{$block.application}>">
+   </p>
+</form>
