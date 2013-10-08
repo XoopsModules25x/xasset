@@ -1,0 +1,5 @@
+<ol>
+	<{section name=i loop=$block.downloads}>
+	  <li><a href="<{$xoops_url}>/modules/xasset/index.php?op=product&id=<{$block.downloads[i].application_id}>&key=<{$block.downloads[i].appKey}>"><{$block.downloads[i].filename}></a> <{if $block.showDowns}>(<{$block.downloads[i].downloads}>)<{/if}></li>
+	<{/section}>
+</ol>

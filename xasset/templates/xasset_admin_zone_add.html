@@ -1,0 +1,30 @@
+<form name="Apps" method="post" action="main.php">
+  <table width='100%' class='outer' cellspacing='1'> 
+    <tr> 
+      <th colspan='2'><{$xasset_operation}> Zone </th> 
+    </tr> 
+    <tr valign='top' align='left'> 
+      <td class='head'>Country Name </td> 
+      <td class='even'>
+  	    <select name=country_id>
+          <{html_options options=$xasset_countries selected=$xasset_zone.countryid}>
+        </select>
+			</td>
+    </tr> 
+    <tr valign='top' align='left'> 
+      <td class='head'>Code</td> 
+      <td class='even'><input type='text' name='code' size='30' maxlength='30' value="<{$xasset_zone.code}>"/></td> 
+    </tr> 
+    <tr valign='top' align='left'> 
+      <td class='head'>Name</td> 
+      <td class='even'><input type='text' name='name' size='30' maxlength='30' value="<{$xasset_zone.name}>" /></td> 
+    </tr> 
+    <tr valign='top' align='left'> 
+      <td class='head'>&nbsp;</td> 
+      <td class='even'><input type="submit" name="bCreate" value="<{$xasset_operation_short}>"> 
+        <input type="reset" name="bCancel" value="cancel"> 
+        <input type="hidden" name="zoneid" value="<{$xasset_zone.id}>">
+        <input type="hidden" name="op" value="addZone"></td> 
+    </tr> 
+  </table> 
+</form>

@@ -1,0 +1,61 @@
+<table width='100%' cellspacing='1' class='outer'>
+  <tr> 
+    <th colspan='5'> Applications </th> 
+  </tr> 
+  <tr> 
+    <td class='head'>ID</td> 
+    <td class='head'>Application</td> 
+    <td class='head'>Products</td> 
+   <!-- <td class='head'>Licenses</td> -->
+    <td class='head'>Downloads</td> 
+    <td class='head'>Action</td> 
+  </tr> 
+<{section name=i loop=$applications}> 
+  <tr class="<{cycle values="odd,even"}>" valign='top' align='left'> 
+    <td class='head'><{$applications[i].id}></td> 
+    <td><{$applications[i].name}></td> 
+    <td><{$applications[i].prodCount}></td> 
+   <!-- <td><a href="index.php?op=viewAppLicenses&id=<{$applications[i].id}>"><{$applications[i].licenses}></a></td> -->
+    <td><a href="index.php?op=viewDownloadStats&appid=<{$applications[i].id}>"><{$applications[i].downloads}></a></td>
+    <td><{$applications[i].actions}></td> 
+  </tr>
+	<{if $applications[i].prodCount gt 0}>
+		<tr class="<{cycle values="odd,even"}>">
+			<td colspan=9>
+        <table width="100%"  border="0" cellspacing="0" cellpadding="0" class="outer">
+				<tr>
+					<td class='head'>Code</td>
+					<td class='head'>Tax Code</td>
+					<td class='head'>Base Currency</td>
+					<td class='head'>Unit Price</td>
+					<td class='head'>Min Unit</td>
+					<td class='head'>Max Downloads</td>
+					<td class='head'>Expires</td>
+					<td class='head'>Enabled</td>
+					<td class='head'>Actions</td>
+				</tr>
+				<{section name=j loop=$applications[i].products}>
+					<tr class="<{cycle values="odd,even"}>">
+						<td><{$applications[i].products[j].item_code}></td>
+						<td><{$applications[i].products[j].tax_code}></td>
+						<td><{$applications[i].products[j].currency_name}></td>
+						<td><{$applications[i].products[j].unit_price}></td>
+						<td><{$applications[i].products[j].min_unit_count}></td>
+						<td><{$applications[i].products[j].max_access}></td>
+						<td><{$applications[i].products[j].expiresDate}></td>
+						<td><{$applications[i].products[j].enabled}></td>
+						<td><{$applications[i].products[j].actions}></td>
+					</tr>
+				<{/section}>
+			</table>			</td>
+    </tr>
+	<{/if}>
+<{/section}> 
+</table>
+<br>
+<br> <{include file="db:xasset_admin_application_add.html"}>
+<br>
+<br>
+<{if $xasset_show_prod_block gt 0}>  
+  <{include file="db:xasset_admin_applicaion_product_add.html"}>
+<{/if}>  

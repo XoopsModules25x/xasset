@@ -1,0 +1,33 @@
+<{$xasset_navigation}> <br>
+<br>
+<form name="Apps" method="post" action="main.php">
+  <table width='100%' class='outer' cellspacing='1'> 
+    <tr> 
+      <th colspan='2'>xasset Configuration </th> 
+    </tr> 
+    <!--<tr valign='top' align='left'> 
+      <td class='head'>Usergroup User List </td> 
+      <td class='even'><select name=group_id>
+        <{html_options options=$xasset_config_groups selected=$xasset_config.group_id}>
+      </select></td> 
+    </tr>  -->
+    <tr valign='top' align='left'> 
+      <td class='head'>Email Notification Group </td> 
+      <td class='even'><select name=email_group_id>
+        <{html_options options=$xasset_config_groups selected=$xasset_config.email_group_id}>
+      </select></td> 
+    </tr> 
+    <tr valign='top' align='left'> 
+      <td class='head'>Base Currency </td> 
+      <td class='even'><select name=currencyid>
+        <{html_options options=$xasset_config_currencies selected=$xasset_config.currency_id}>
+      </select></td> 
+    </tr> 
+    <tr valign='top' align='left'> 
+      <td class='head'>&nbsp;</td> 
+      <td class='even'><input type="submit" name="bCreate" value="modify"> 
+        <input type="reset" name="bCancel" value="cancel"> 
+        <input type="hidden" name="op" value="updateConfig"></td> 
+    </tr> 
+  </table> 
+</form>
