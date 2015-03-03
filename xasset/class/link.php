@@ -21,6 +21,7 @@ class xassetLink extends XoopsObject {
   ////////////////////////////////////////////
   function getApplication() {
     $hDept =& xoops_getmodulehandler('application', 'xasset');
+
     return $hDept->get($this->getVar('applicationid'));
   }
   ///////////////////////////////////////////////////
@@ -86,6 +87,7 @@ class xassetLinkHandler extends xassetBaseObjectHandler {
 
       }
     }
+
     return $ary;
   }
   /////////////////////////////////////////////////////
@@ -99,6 +101,7 @@ class xassetLinkHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetLinkHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -137,8 +140,7 @@ class xassetLinkHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

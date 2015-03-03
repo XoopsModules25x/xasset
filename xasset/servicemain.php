@@ -8,14 +8,14 @@ if (defined('XOOPS_TEST_ROOT_PATH')) {
   
 } else {
   require('../../mainfile.php');
-}          
+}
 
 require_once XOOPS_ROOT_PATH.'/kernel/object.php';
 require_once XOOPS_ROOT_PATH.'/class/criteria.php';
 require_once XOOPS_ROOT_PATH.'/include/functions.php';
 include_once XOOPS_ROOT_PATH.'/class/logger.php';
 include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
-include_once XOOPS_ROOT_PATH.'/class/xoopsuser.php';  
+include_once XOOPS_ROOT_PATH.'/class/xoopsuser.php';
 
 define("XOOPS_CACHE_PATH", XOOPS_ROOT_PATH."/cache");
 define("XOOPS_UPLOAD_PATH", XOOPS_ROOT_PATH."/uploads");
@@ -28,14 +28,14 @@ define('XASSET_CLASS_PATH', XASSET_BASE_PATH.'/class');
 
 //Initialize XOOPS Logger
 $xoopsLogger =& XoopsLogger::instance();
-$xoopsLogger->startTime();  
+$xoopsLogger->startTime();
 
 //Initialize DB Connection
 include_once XOOPS_ROOT_PATH.'/class/database/databasefactory.php';
-$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();  
+$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
 //
-$module_handler =& xoops_gethandler('module');      
-$xoopsModule =& $module_handler->getByDirname('xasset'); 
+$module_handler =& xoops_gethandler('module');
+$xoopsModule =& $module_handler->getByDirname('xasset');
 $module =& $module_handler;
 //
 $config_handler =& xoops_gethandler('config');
@@ -59,4 +59,3 @@ if ( file_exists(XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/l
 } else {
     include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/english/main.php";
 }
-?>

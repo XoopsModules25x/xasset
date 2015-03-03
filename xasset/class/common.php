@@ -10,7 +10,6 @@ class xassetCommon extends XoopsObject {
   }
 }
 
-
 class xassetCommonHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -31,6 +30,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetCommonHandler($db);
       }
+
       return $instance;
   }
   //////////////////////////////////////////////////////////
@@ -61,6 +61,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
           }
       }
       $tbloptions[$option]=$retval;
+
       return $retval;
   }
   //////////////////////////////////////////////////////////
@@ -69,16 +70,17 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     //
     if (!isset($date)) {
       $date = time();
-    }      
+    }
     //
     if ($module_header = $this->getSmartyVar('xoops_module_header')) {
-      ob_start();       
+      ob_start();
       include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';
       $module_header = $module_header . ob_get_contents();
-      ob_end_clean();   
+      ob_end_clean();
       //assign back
       $xoopsTpl->assign('xoops_module_header',$module_header);
     }
+
     return "<input type='text' name='$name' id='$name' size='11' maxlength='11' value='".date("Y-m-d", $date)."' /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$name."\");'>";
   }
   //////////////////////////////////////////////////////////
@@ -87,22 +89,22 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     //
     if (!isset($date)) {
       $date = time();
-    }      
-		$datetime = getDate($date);
-		$div      = 30;      //echo  $datetime['hours'] * 3600 + 60 * 30 * ceil($datetime['minutes'] / 30);
+    }
+        $datetime = getDate($date);
+        $div      = 30;      //echo  $datetime['hours'] * 3600 + 60 * 30 * ceil($datetime['minutes'] / 30);
     //
-		$timearray = array();
-		for ($i = 0; $i < 24; $i++) {
-			for ($j = 0; $j < 60; $j = $j + $div) {
-				$key = ($i * 3600) + ($j * 60);
-				$timearray[$key] = ($j != 0) ? $i.':'.$j : $i.':0'.$j;
-			}
-		}
-		ksort($timearray);
-		$timeselect = new XoopsFormSelect('', $name.'[time]', $datetime['hours'] * 3600 + 60 * $div * ceil($datetime['minutes'] / $div));
-		$timeselect->addOptionArray($timearray);
-		//
-		return $timeselect->render();
+        $timearray = array();
+        for ($i = 0; $i < 24; $i++) {
+            for ($j = 0; $j < 60; $j = $j + $div) {
+                $key = ($i * 3600) + ($j * 60);
+                $timearray[$key] = ($j != 0) ? $i.':'.$j : $i.':0'.$j;
+            }
+        }
+        ksort($timearray);
+        $timeselect = new XoopsFormSelect('', $name.'[time]', $datetime['hours'] * 3600 + 60 * $div * ceil($datetime['minutes'] / $div));
+        $timeselect->addOptionArray($timearray);
+        //
+        return $timeselect->render();
   }
   /////////////////////////////////////////
   function cryptValue($id, $weight = 0) {
@@ -131,13 +133,13 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     $hCount =& xoops_getmodulehandler('country','xasset');
     $script = $hCount->constructSelectJavascript('zone_id','country_id');
     //
-    $javascript = "<script type='text/javascript'> <!-- \n $script \n //--></script>"; 
+    $javascript = "<script type='text/javascript'> <!-- \n $script \n //--></script>";
     //return str_replace('</head>',"$javascript</head>",$buffer);
     return $javascript;
   }
   /////////////////////////////////////////
   function insertHeaderCountriesJavaScriptNoAllZones() {
-    $hCount =& xoops_getmodulehandler('country','xasset'); 
+    $hCount =& xoops_getmodulehandler('country','xasset');
     $script = $hCount->constructSelectJavascript('zone_id','country_id', false );
     //
     $javascript = "<script type='text/javascript'> <!-- ' \n $script \n //--></script>";
@@ -153,6 +155,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     //
     if (count($user) > 0) {
       $user = reset($user);
+
       return $user;
     } else {
       return false;
@@ -167,6 +170,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     //
     if (count($user) > 0) {
       $user = reset($user);
+
       return $user;
     } else {
       return false;
@@ -184,6 +188,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////
   function &getRowArray($hObject, $array) {
     $obj = new $hObject->classname($array);
+
     return $obj->getArray();
   }
   ///////////////////////////////////////////
@@ -234,6 +239,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
           $member_handler->addUserToGroup(XOOPS_GROUP_USERS, $xuser->getVar('uid'));
       } else {
         $res = false;
+
         return $res;
       }
 
@@ -305,12 +311,14 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
       for ($i = 0; $i < $digits; $i++) {
           $tmp[$i] = (rand()%9);
       }
+
       return implode('', $tmp);
   }
   //////////////////////////////////////////////////////////////////////////
-  function validEmail($email,&$error) {  
+  function validEmail($email,&$error) {
     $valid = new ValidateEmail($email);
     $error = $valid->getError();
+
     return $valid->isValid();
   }
   //////////////////////////////////////////////////////////////////////////
@@ -322,6 +330,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     $valid = new ValidateInteger($value, $field, $required, $minval, $maxval);
     if ($valid->isValid()) {
       $res = false;
+
       return $res;
     } else {
       return $valid->getErrors();
@@ -332,6 +341,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     $valid = new ValidateFloat($value, $field, $required, $minval, $maxval);
     if ($valid->isValid()) {
       $res = false;
+
       return $res;
     } else {
       return $valid->getErrors();
@@ -393,7 +403,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     if ($oUser->getVar('level') == 0) {
       //now only activate if the key sent is the same as the key in the tables
       if ($oUser->getVar('actkey') == $actkey) {
-        return $hMember->activateUser($oUser);    
+        return $hMember->activateUser($oUser);
       } else {
         return false;
       }
@@ -412,12 +422,13 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
       $result = $this->_db->queryF($sql);
     } else {
       $result = $this->_db->query($sql);
-    }          
+    }
     //
     if ($result) {
       return true;
     } else {
       echo $sql;
+
       return false;
     }
   }
@@ -438,13 +449,14 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     //$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
     $realname = $this->_db->prefix($table);
     $ret = mysql_list_tables(XOOPS_DB_NAME, $this->_db->conn);
-    while (list($m_table)=$this->_db->fetchRow($ret)) {     
+    while (list($m_table)=$this->_db->fetchRow($ret)) {
         if ($m_table ==  $realname) {
             $bRetVal = true;
             break;
         }
     }
     $this->_db->freeRecordSet($ret);
+
     return ($bRetVal);
   }
   //////////////////////////////////////////////////////////////////////////
@@ -454,13 +466,14 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     $ret = false;
     //
     if ($res = $this->_db->query($sql)) {
-      $fields = mysql_num_fields($res);      
-      for ($i=0;$i<$fields;$i++) {     
+      $fields = mysql_num_fields($res);
+      for ($i=0;$i<$fields;$i++) {
         if (mysql_field_name($res,$i) == $field) {
-          return true;     
+          return true;
         }
       }
     }
+
     return $ret;
   }
   ///////////////////////////////////////////////////////////////////////
@@ -468,8 +481,8 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     $filename = time();
     
     if ($handle = fopen($filename, 'a')) {
-    	fwrite($handle,$content);
-    	fclose($handle);
+        fwrite($handle,$content);
+        fclose($handle);
     }
   }
   //////////////////////////////////////////////////////////////////////
@@ -477,7 +490,8 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     if (strstr(XOOPS_URL,'https'))
       return XOOPS_URL;
     else {
-      $url = str_replace('http','https',XOOPS_URL); 
+      $url = str_replace('http','https',XOOPS_URL);
+
       return $url;
     }
   }
@@ -494,7 +508,8 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
       
       if ($msgord + $keyord <= 255){$encstring .= chr($msgord + $keyord);}
       if ($msgord + $keyord > 255){$encstring .= chr(($msgord + $keyord)-256);}
-    } 
+    }
+
     return urlencode(base64_encode($encstring));
   }
   ////////////////////////////////////////////////////////////////////////
@@ -512,6 +527,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
       if ($msgord - $keyord >= 0){$decstring .= chr($msgord - $keyord);}
       if ($msgord + $keyord < 0){$decstring .= chr(($msgord - $keyord)+256);}
     }
+
     return $decstring;
   }
   //////////////////////////////////////////////////////////////////////
@@ -527,7 +543,4 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
   
 
 
-
 }
-
-?>

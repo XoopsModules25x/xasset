@@ -34,7 +34,7 @@ class xassetCurrency extends XAssetBaseObject {
     }
   }
   ////////////////////////////////////////
-  function valueFormat($value) {       
+  function valueFormat($value) {
     $val = $this->getVar('symbol_left') .
            number_format( $this->getVar('value') * $value, $this->getVar('decimal_places'),
                           $this->getVar('decimal_point'), $this->getVar('thousands_point') ) .
@@ -59,7 +59,6 @@ class xassetCurrency extends XAssetBaseObject {
   }
 }
 
-
 class xassetCurrencyHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -77,6 +76,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetCurrencyHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -94,6 +94,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
     foreach($objs as $obj) {
       $ar[$obj->getVar('id')] = sprintf('%s - %s',$obj->getVar('code'), $obj->getVar('name'));
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -118,6 +119,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
       $ary[$i]['updatedFmt'] = formattimestamp($obj->getVar('updated'),'s');
       $i++;
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -128,6 +130,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
       return current($objs);
     } else {
       $res = false;
+
       return $res;
     }
   }
@@ -144,7 +147,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function formatCurrency($sLeft, $sRight, $point, $places, $thousand, $curValue, $value) {
-    $val = $sLeft . 
+    $val = $sLeft .
            number_format( $curValue * $value, $places,
                           $point, $thousand ) .
            $sRight;
@@ -196,8 +199,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

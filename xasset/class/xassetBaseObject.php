@@ -8,7 +8,7 @@ Class XAssetBaseObject extends XoopsObject {
   //////////////////////////////////////
   function ID() {
     return $this->getVar('id');
-  }  
+  }
   ///////////////////////////////////////////////////////
   function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $pretty = '') {
     parent::initVar($key, $data_type, $value, $required, $maxlength, $options);
@@ -21,6 +21,7 @@ Class XAssetBaseObject extends XoopsObject {
     foreach($vars as $key => $value) {
       $ary[$key] = $value['value'];
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////////
@@ -34,8 +35,8 @@ Class XAssetBaseObject extends XoopsObject {
     }
   }
   ///////////////////////////////////////////////////////
-  function setErrors($key, $value) {     
-    $this->_errors[$key] = trim($value); 
+  function setErrors($key, $value) {
+    $this->_errors[$key] = trim($value);
   }
   ///////////////////////////////////////////////////////
   function cleanVars()
@@ -127,6 +128,7 @@ Class XAssetBaseObject extends XoopsObject {
           return false;
       }
       $this->unsetDirty();
+
       return true;
   }
 }
@@ -135,6 +137,7 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
 
     function &create() {
       $obj = new $this->classname();
+
       return $obj;
     }
 
@@ -149,9 +152,11 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
           $numrows = $this->_db->getRowsNum($result);
           if($numrows == 1) {
               $obj = new $this->classname($this->_db->fetchArray($result));
+
               return $obj;
           }
       }
+
       return false;
   }
     ///////////////////////////////////////////////////////////////////
@@ -171,16 +176,15 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
       }
     }
 
-
     function &getObjects($criteria = null, $id_as_key = false)
     {
         $ret    = array();
         $limit  = $start = 0;
-        $sql    = $this->_selectQuery($criteria); 
+        $sql    = $this->_selectQuery($criteria);
         if (isset($criteria)) {
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
-        }          
+        }
 
         $result = $this->_db->query($sql, $limit, $start);
         // If no records from db, return empty array
@@ -198,6 +202,7 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
             }
             unset($obj);
         }
+
         return $ret;
     }
 
@@ -210,7 +215,8 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
              $sql .= ' ORDER BY ' . $criteria->getSort() . '
                  ' .$criteria->getOrder();
          }
-     }     
+     }
+
      return $sql;
    }
 
@@ -224,6 +230,7 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
     return 0;
    }
    list($count) = $this->_db->fetchRow($result);
+
    return $count;
   }
 
@@ -242,6 +249,7 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
     if (!$result) {
      return false;
     }
+
     return true;
   }
   //
@@ -255,6 +263,7 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
     if (!$result) {
      return false;
     }
+
     return true;
   }
   ///////////////////////////////////////////
@@ -271,6 +280,7 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
     } else {
       echo $sql;
     }
+
     return $ary;
   }
   //////////////////////////////////////////
@@ -308,5 +318,3 @@ Class xassetBaseObjectHandler extends XoopsObjectHandler {
 function &xoopGetModuleHandler($class) {
   return xoops_getmodulehandler($class,'xasset');
 }
-
-?>

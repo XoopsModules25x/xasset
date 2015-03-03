@@ -9,7 +9,7 @@ function xasset_search($queryarray, $andor, $limit, $offset, $userid){
   $aProds =& $hAppProd->searchApplicationProduct($queryarray, $andor, $limit, $offset, $userid);
   //first the apps
   $ret = array();
-  $i   = 0; 
+  $i   = 0;
   if (count($aApps) > 0) {
     foreach($aApps as $key=>$oApp) {
       $ret[$i]['image'] = "images/main.png";
@@ -30,8 +30,7 @@ function xasset_search($queryarray, $andor, $limit, $offset, $userid){
       $ret[$i]['uid']  = 0;
       $i++;
     }
-  } 
+  }
   //
   return $ret;
 }
-?>

@@ -18,7 +18,3 @@ define('XASSET_CLASS_PATH', XASSET_BASE_PATH.'/class');
 
 $xassetCSS = XOOPS_URL.'/modules/xasset/styles/xasset.css';
 $xasset_module_header = '<link rel="stylesheet" type="text/css" media="all" href="'.$xassetCSS.'" /><!--[if gte IE 5.5000]><script src="iepngfix.js" language="JavaScript" type="text/javascript"></script><![endif]-->';
-
-
-
-?>

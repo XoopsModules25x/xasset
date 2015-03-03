@@ -18,7 +18,6 @@
  * @version    $Id $
  */
 
-
 $path = dirname(dirname(dirname(dirname(__FILE__))));
 include_once $path . '/mainfile.php';
 include_once $path . '/include/cp_functions.php';
@@ -56,7 +55,6 @@ global $xoopsModule;
 $module_id = $xoopsModule->getVar('mid');
 
 $myts = &MyTextSanitizer::getInstance();
-
 
 if ( !isset($xoopsTpl) ) {
     $xoopsTpl = new XoopsTpl(); }

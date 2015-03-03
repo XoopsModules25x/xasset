@@ -13,10 +13,8 @@ $op = 'default';
 if ( isset( $_REQUEST['op'] ) ) {
   $op = $_REQUEST['op'];
 } else if ( isset ($_POST['op']) ) {
-	$op = $_POST['op'];
+    $op = $_POST['op'];
 }
-
-
 
 switch ( $op )
 {
@@ -152,8 +150,8 @@ switch ( $op )
       manageZones();
       break;
     //
-		case 'addZone':
-			addZone($_POST);
+        case 'addZone':
+            addZone($_POST);
       break;
     //
     case 'editZone':
@@ -249,9 +247,9 @@ switch ( $op )
       isset($_GET['id']) ? manageGateways($_GET['id']) : manageGateways();
       break;
     //
-		case 'toggleGateway':
+        case 'toggleGateway':
       xoops_cp_header();
-			toggleGateway($_POST);
+            toggleGateway($_POST);
       break;
     //
     case 'updateGatewayValues':
@@ -268,7 +266,7 @@ switch ( $op )
       xoops_cp_header();
       showLogDetail($_GET['id']);
     break;
-    //  
+    //
     case 'removeLogItem':
       removeLogItem($_GET['id']);
       break;
@@ -278,9 +276,9 @@ switch ( $op )
       config();
       break;
     //
-		case 'updateConfig':
+        case 'updateConfig':
       xoops_cp_header();
-			updateConfig($_POST);
+            updateConfig($_POST);
       break;
     //
     case 'manageRegion':
@@ -324,7 +322,7 @@ switch ( $op )
     case 'opDelOrder':
       opDelOrder($_POST);
       break;
-    //    
+    //
     case 'membership':
       membership();
       break;
@@ -361,10 +359,10 @@ function loadIndex() {
   $xasset_index['licenses']         = $hLic->getAllLicensesCount();
   $xasset_index['files']            = $hPack->getAllPackagesCount();
   $xasset_index['links']            = $hLinks->getAllLinksCount();
-  $xasset_index['downloads']        = $hStat->getAllDownloadStats(); 
+  $xasset_index['downloads']        = $hStat->getAllDownloadStats();
   //test SSL connectivity
   $fp = fsockopen('ssl://www.paypal.com', 443,$errnum,$errstr,30);
-  if (!$fp) 
+  if (!$fp)
     $test = array('pass' => false, 'errnum' => $errnum, 'errstr' => $errstr);
   else
     $test = array('pass' => true);
@@ -433,8 +431,6 @@ function manageApplications() {
   $xoopsTpl->assign('xasset_app',$ar);
   $xoopsTpl->assign('xasset_xoops_groups',$aGroups);
 
-
-
 //  $xoopsTpl->assign('xasset_app_memo_field',$hEditor->slimEditorDraw('richDescription'));
 
 
@@ -452,9 +448,7 @@ function manageApplications() {
              $editor = new XoopsFormDhtmlTextArea('', 'richDescription', $this->getVar('richDescription', 'e'), '100%', '100%');
          }
 
-
   $xoopsTpl->assign('xasset_app_memo_field',$editor->render());
-
 
 //  $xoopsTpl->assign('xasset_appprod_memo_field',$hEditor->slimEditorDraw('item_rich_description'));
 
@@ -471,7 +465,6 @@ function manageApplications() {
     } else {
         $editor = new XoopsFormDhtmlTextArea('', 'item_rich_descriptionn', $this->getVar('item_rich_description', 'e'), '100%', '100%');
     }
-
 
     $xoopsTpl->assign('xasset_appprod_memo_field',$editor->render());
 
@@ -492,7 +485,7 @@ function addApplication($post) {
     $app =& $hApp->create();
     $app->setVar('datePublished',time());
   }
-  $app->setVarsFromArray($post);   
+  $app->setVarsFromArray($post);
   $app->setVar('requiresLicense',isset($post['requiresLicense']));
   $app->setVar('listInEval',isset($post['listInEval']));
   $app->setVar('mainMenu',isset($post['mainMenu']));
@@ -551,9 +544,7 @@ function editApplication($appid){
         $editor = new XoopsFormDhtmlTextArea('', 'richDescription', $this->getVar('richDescription', 'e'), '100%', '100%');
     }
 
-
 $xoopsTpl->assign('xasset_app_memo_field',$editor->render());
-
 
   //$xoopsTpl->assign('xasset_appprod_memo_field',$hEditor->slimEditorDraw('item_rich_description'));
   //
@@ -766,7 +757,7 @@ function editPackage($id) {
   //
   $hPackGrp =& xoops_getmodulehandler('packageGroup','xasset');
   $hPack    =& xoops_getmodulehandler('package','xasset');
-  $pack     =  $hPack->getPackagesArray($crit);   
+  $pack     =  $hPack->getPackagesArray($crit);
   //
   $appid    = $hPack->getPackageApplication($id);
   //
@@ -816,7 +807,7 @@ function addPackage($post) {
   else {
     $pack =& $hPack->create();
     $op   = 'Created';
-  }                                     
+  }
   $pack->setVarsFromArray($post);
   $pack->setVar('packagegroupid',$post['groupid']);
   $pack->setVar('protected',isset($post['protected']));
@@ -930,7 +921,7 @@ function viewDownloadStats($appid = null) {
       $xoopsTpl->assign('xasset_navigation','Error: No applications defined');//hack..will need to do an error screen
       require(XASSET_ADMIN_PATH.'/admin_footer.php');
       xoops_cp_footer();
-			exit;
+            exit;
     }
   }
   $app       =& $hApp->get($appid);
@@ -1042,7 +1033,7 @@ function addZone($post) {
     $zone =& $hZone->create();
   }
   //
-	$zone->setVar('country_id',$post['country_id']);
+    $zone->setVar('country_id',$post['country_id']);
   $zone->setVar('code',$post['code']);
   $zone->setVar('name',$post['name']);
   //
@@ -1218,12 +1209,12 @@ function addTaxRate($post) {
     $rate =& $hRate->get($post['taxrateid']); }
   else {
     $rate =& $hRate->create();
-	}
-	//
+    }
+    //
   $rate->setVarsFromArray($post);
   //
   if ($hRate->insert($rate)) {
-		redirect_header('main.php?op=manageTaxes',3,'Tax Rate Added.');
+        redirect_header('main.php?op=manageTaxes',3,'Tax Rate Added.');
   }
 }
 //////////////////////////////////////////////////////
@@ -1295,7 +1286,7 @@ function manageCurrencies() {
   //
   $hCurrency =& xoops_getmodulehandler('currency','xasset');
   //
-  $currs = $hCurrency->getCurrencyArray(); 
+  $currs = $hCurrency->getCurrencyArray();
   //
 //  $xoopsTpl->assign('xasset_navigation',$oAdminButton->renderButtons('manCurr'));
   $xoopsTpl->assign('xasset_operation','Add a');
@@ -1376,7 +1367,7 @@ function addAppProduct($post) {
   }
   //
   $prod->setVarsFromArray($post);
-  $prod->setVar('enabled',isset($post['enabled']));      
+  $prod->setVar('enabled',isset($post['enabled']));
   // set expiry date
   if ($prod->getVar('add_to_group') > 0) {
     if ($post['rbGrpExpire'] == -1) {
@@ -1431,7 +1422,7 @@ function editAppProduct($id){
   //
   $prod       =& $hAppProd->get($id);
   $aPackages  =& $hPackGroup->getAllGroupsSelectArray();
-  $ar         =& $prod->getArray();  
+  $ar         =& $prod->getArray();
   //
   $aMembers   =& $hMember->getGroups();
   $aGroups    = array();
@@ -1452,7 +1443,6 @@ function editAppProduct($id){
   $xoopsTpl->assign('xasset_date_field',getDateField('expires',$prod->getVar('expires')));
   $xoopsTpl->assign('xasset_expdate_field',getDateField('group_expire_date',$prod->getVar('group_expire_date')));
 
-
 //    $xoopsTpl->assign('xasset_appprod_memo_field', $hEditor->slimEditorDraw('item_rich_description', $ar['item_rich_description']));
 
     if (class_exists('XoopsFormEditor')) {
@@ -1469,9 +1459,7 @@ function editAppProduct($id){
         $editor = new XoopsFormDhtmlTextArea('', 'item_rich_description', $this->getVar('item_rich_description', 'e'), '100%', '100%');
     }
 
-
     $xoopsTpl->assign('xasset_appprod_memo_field', $editor->render());
-
 
     $xoopsTpl->assign('xasset_xoops_groups',$aGroups);
   $xoopsTpl->assign('xasset_xoops_packages',$aPackages);
@@ -1502,20 +1490,20 @@ function manageGateways($id = null) {
       $gateway = reset($installed);
       $gateway =& $hGateway->get($gateway['id']);
     }
-	}
-	//
-	if (is_object($gateway)) {
-		$gateConfigs = $gateway->getDetailArray();
-		$xoopsTpl->assign('xasset_config',$gateConfigs);
-		$xoopsTpl->assign('xasset_gateway_id',$gateway->getVar('id'));
-		$xoopsTpl->assign('xasset_gateway_name',$gateway->getVar('code'));
+    }
+    //
+    if (is_object($gateway)) {
+        $gateConfigs = $gateway->getDetailArray();
+        $xoopsTpl->assign('xasset_config',$gateConfigs);
+        $xoopsTpl->assign('xasset_gateway_id',$gateway->getVar('id'));
+        $xoopsTpl->assign('xasset_gateway_name',$gateway->getVar('code'));
     $xoopsTpl->assign('xasset_gateway_count',1);
-	}
-	//
+    }
+    //
 //	$xoopsTpl->assign('xasset_navigation',$oAdminButton->renderButtons('manGate'));
-	$xoopsTpl->assign('xasset_gateway',$gateways);
-	$xoopsTpl->assign('xasset_installed_gateway',$installed);
-	//
+    $xoopsTpl->assign('xasset_gateway',$gateways);
+    $xoopsTpl->assign('xasset_installed_gateway',$installed);
+    //
   require(XASSET_ADMIN_PATH.'/admin_footer.php');
   xoops_cp_footer();
 }
@@ -1572,8 +1560,8 @@ function showLogDetail($id) {
   $xoopsOption['template_main'] = 'xasset_admin_gateway_log_detail.html';
   //
   $hGateway  =& xoops_getmodulehandler('gatewayLog','xasset');
-  $oGateLog  = $hGateway->get($id);  
-  $aGateLog  = $oGateLog->getArray();   
+  $oGateLog  = $hGateway->get($id);
+  $aGateLog  = $oGateLog->getArray();
   //
 //  $xoopsTpl->assign('xasset_navigation',$oAdminButton->renderButtons('gateLogs'));
   $xoopsTpl->assign('xasset_log',$aGateLog);
@@ -1677,12 +1665,12 @@ function deleteRegion($id) {
 }
 //////////////////////////////////////////////////////
 function updateConfig($post) {
-	$hConfig =& xoops_getmodulehandler('config','xasset');
+    $hConfig =& xoops_getmodulehandler('config','xasset');
   //
   $hConfig->setGroup($post['group_id']);
   $hConfig->setEmailGroup($post['email_group_id']);
-	$hConfig->setBaseCurrency($post['currencyid']);
-	//
+    $hConfig->setBaseCurrency($post['currencyid']);
+    //
   redirect_header('main.php',2,'Configuration Updated.');
 }
 //////////////////////////////////////////////////////
@@ -1700,7 +1688,7 @@ function orderTracking() {
   //
 //  $xoopsTpl->assign('xasset_navigation',$oAdminButton->renderButtons('orderTrack'));
   $xoopsTpl->assign('xasset_orders',$aOrders);
-  $xoopsTpl->assign('xasset_order_count',count($aOrders)); 
+  $xoopsTpl->assign('xasset_order_count',count($aOrders));
   //
   require(XASSET_ADMIN_PATH.'/admin_footer.php');
   xoops_cp_footer();
@@ -1714,10 +1702,10 @@ function showOrderLogDetail($orderID) {
   $hOrder  =& xoops_getmodulehandler('order','xasset');
   $hGateway  =& xoops_getmodulehandler('gatewayLog','xasset');
   //
-  $oOrder  =& $hOrder->get($orderID);               
+  $oOrder  =& $hOrder->get($orderID);
   //
-  $aOrder       =& $oOrder->getArray();     
-  $aOrderDetail =& $oOrder->getOrderDetailsArray(); 
+  $aOrder       =& $oOrder->getArray();
+  $aOrderDetail =& $oOrder->getOrderDetailsArray();
   $aGateLogs    =& $hGateway->getLogsByOrder($orderID);
   //
 //  $xoopsTpl->assign('xasset_navigation',$oAdminButton->renderButtons('orderTrack'));
@@ -1755,7 +1743,7 @@ function checkTables() {
   if (!$hCommon->fieldExists('xasset_app_product','group_expire_date')) {
     $table = $hCommon->_db->prefix('xasset_app_product');
     echo "Upgrading table $table.<br>";
-    $sql = "ALTER TABLE $table ADD group_expire_date int(11) DEFAULT NULL";      
+    $sql = "ALTER TABLE $table ADD group_expire_date int(11) DEFAULT NULL";
     if ($hCommon->_db->queryF($sql)) {
       $success = true;
       echo "Upgraded $table.<br>";
@@ -1819,7 +1807,7 @@ function checkTables() {
   if (!$hCommon->fieldExists('xasset_app_product','add_to_group2')) {
     $table = $hCommon->_db->prefix('xasset_app_product');
     echo "Upgrading table $table.<br>";
-    $sql = "ALTER TABLE $table ADD add_to_group2 int(11) DEFAULT NULL"; 
+    $sql = "ALTER TABLE $table ADD add_to_group2 int(11) DEFAULT NULL";
     if ($hCommon->_db->queryF($sql)) {
       $success = true;
       echo "Upgraded $table.<br>";
@@ -1831,7 +1819,7 @@ function checkTables() {
   if (!$hCommon->fieldExists('xasset_app_product','group_expire_date2')) {
     $table = $hCommon->_db->prefix('xasset_app_product');
     echo "Upgrading table $table.<br>";
-    $sql = "ALTER TABLE $table ADD group_expire_date2 int(11) DEFAULT NULL"; 
+    $sql = "ALTER TABLE $table ADD group_expire_date2 int(11) DEFAULT NULL";
     if ($hCommon->_db->queryF($sql)) {
       $success = true;
       echo "Upgraded $table.<br>";
@@ -1844,7 +1832,7 @@ function checkTables() {
   if (!$hCommon->fieldExists('xasset_app_prod_memb','sent_warning')) {
     $table = $hCommon->_db->prefix('xasset_app_prod_memb');
     echo "Upgrading table $table.<br>";
-    $sql = "ALTER TABLE $table ADD sent_warning int(11) DEFAULT NULL"; 
+    $sql = "ALTER TABLE $table ADD sent_warning int(11) DEFAULT NULL";
     if ($hCommon->_db->queryF($sql)) {
       $success = true;
       echo "Upgraded $table.<br>";
@@ -1856,7 +1844,7 @@ function checkTables() {
   if (!$hCommon->fieldExists('xasset_app_product','extra_instructions')) {
     $table = $hCommon->_db->prefix('xasset_app_product');
     echo "Upgrading table $table.<br>";
-    $sql = "ALTER TABLE $table ADD extra_instructions text"; 
+    $sql = "ALTER TABLE $table ADD extra_instructions text";
     if ($hCommon->_db->queryF($sql)) {
       $success = true;
       echo "Upgraded $table.<br>";
@@ -1866,11 +1854,11 @@ function checkTables() {
     }
   }
   //check fields for version 0.92
-  echo '<p><u>Checking 0.92 table updates</u></p>'; 
+  echo '<p><u>Checking 0.92 table updates</u></p>';
   if (!$hCommon->fieldExists('xasset_application','product_list_template')) {
     $table = $hCommon->_db->prefix('xasset_application');
     echo "Upgrading table $table.<br>";
-    $sql = "ALTER TABLE $table ADD product_list_template text"; 
+    $sql = "ALTER TABLE $table ADD product_list_template text";
     if ($hCommon->_db->queryF($sql)) {
       $success = true;
       echo "Upgraded $table.<br>";
@@ -1882,7 +1870,7 @@ function checkTables() {
   if (!$hCommon->fieldExists('xasset_application','image')) {
     $table = $hCommon->_db->prefix('xasset_application');
     echo "Upgrading table $table.<br>";
-    $sql = "ALTER TABLE $table ADD image varchar(250) default NULL"; 
+    $sql = "ALTER TABLE $table ADD image varchar(250) default NULL";
     if ($hCommon->_db->queryF($sql)) {
       $success = true;
       echo "Upgraded $table.<br>";
@@ -1894,7 +1882,7 @@ function checkTables() {
   if (!$hCommon->fieldExists('xasset_package','isVideo')) {
     $table = $hCommon->_db->prefix('xasset_package');
     echo "Upgrading table $table.<br>";
-    $sql = "ALTER TABLE $table ADD isVideo tinyint(4) default '0'"; 
+    $sql = "ALTER TABLE $table ADD isVideo tinyint(4) default '0'";
     if ($hCommon->_db->queryF($sql)) {
       $success = true;
       echo "Upgraded $table.<br>";
@@ -1972,15 +1960,14 @@ function membership() {
   xoops_cp_footer();
 }
 //////////////////////////////////////////////////////
-function removeFromGroup($id) {  
+function removeFromGroup($id) {
   xoops_cp_header();
   xoops_confirm( array('id'=>$id), 'main.php?op=doRemoveFromGroup', 'Are you sure you want to remove this member from this group?','',true);
 }
 //////////////////////////////////////////////////////
-function doRemoveFromGroup($id) {  
+function doRemoveFromGroup($id) {
   $hMembers =& xoops_getmodulehandler('applicationProductMemb','xasset');
   if ($hMembers->removeFromGroup($id)) {
     redirect_header('main.php?op=membership',2,'User removed from Xoops Groups');
   }
 }
-?>

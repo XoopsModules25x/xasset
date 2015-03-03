@@ -31,10 +31,10 @@ class xassetUserPackageStats extends XoopsObject {
   //////////////////////////////////////////////////////////
   function getPackage() {
     $hDept =& xoops_getmodulehandler('package', 'xasset');
+
     return $hDept->get($this->getVar('packageid'));
   }
 }
-
 
 class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
   //vars
@@ -49,6 +49,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function getDownloadStatsByPackageArray($packid){
     $crit = new CriteriaCompo(new Criteria('packageid',$packid));
+
     return $this->getDownloadStatsArray($crit);
   }
   ///////////////////////////////////////////////////
@@ -68,7 +69,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
     $stats->setVar('dns',gethostbyaddr(getenv('REMOTE_ADDR'))); ;
     $stats->setVar('date',time());
     //
-    return $this->insert($stats,true);      
+    return $this->insert($stats,true);
   }
   ///////////////////////////////////////////////////
   function getDownloadStatsArray($crit) {
@@ -102,6 +103,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
                          'actions'     => $actions );
       }
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -136,6 +138,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
     } else {
       $obj = time();
     }
+
     return $obj;
   }
   /////////////////////////////////////////////////////
@@ -169,7 +172,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
     if ($res = $this->_db->query($sql)) {
       while ($row = $this->_db->fetchArray($res)) {
         $ary[$i] = $row;
-        $ary[$i]['appKey'] = $hCommon->cryptValue($row['application_id'],$hApp->_weight); 
+        $ary[$i]['appKey'] = $hCommon->cryptValue($row['application_id'],$hApp->_weight);
         $i++;
       }
     } else {
@@ -185,6 +188,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetUserPackageStatsHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -201,7 +205,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
       // Determine next auto-gen ID for table
       $id = $this->_db->genId($this->_db->prefix($this->_dbtable).'_uid_seq');
       $sql = sprintf('INSERT INTO %s (id, packageid, uid, ip, date, dns) VALUES (%u, %u, %u, %s, %u, %s)',
-                      $this->_db->prefix($this->_dbtable),  $id, $packageid, $uid, $this->_db->quoteString($ip), $date, 
+                      $this->_db->prefix($this->_dbtable),  $id, $packageid, $uid, $this->_db->quoteString($ip), $date,
                       $this->_db->quoteString($dns));
     } else {
         $sql = sprintf('UPDATE %s SET packageid = %u, uid = %u, ip = %s, date = %u, dns = %s where id = %u',
@@ -225,8 +229,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

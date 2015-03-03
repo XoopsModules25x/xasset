@@ -4,6 +4,7 @@ class xassetCrypt {
   //
   function cryptValue($value, $weight = 0) {
     $val = $this->sliceValue($value+$weight);
+
     return $val;
   }
   //
@@ -28,5 +29,3 @@ class xassetCrypt {
   }
 
 }
-
-?>

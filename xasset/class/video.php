@@ -13,8 +13,8 @@ class xassetVideo extends XAssetBaseObject {
     $video = new Video();
     $video->setFile($file);
     $video->setBitrate($bandwidth*1024);
-    $video->enableThrottle($hCommon->getModuleOption('Enablebandwidth') == 1);  
-    $video->streamVideo($position);  
+    $video->enableThrottle($hCommon->getModuleOption('Enablebandwidth') == 1);
+    $video->streamVideo($position);
   }
   
 }
@@ -36,11 +36,13 @@ class xassetVideoHandler extends xassetBaseObjectHandler {
     if(!isset($instance)) {
         $instance = new xassetVideoHandler($db);
     }
+
     return $instance;
   }
   ///////////////////////////////////////////////////
   function &create() { //override
     $obj = new $this->classname();
+
     return $obj;
   }
   ///////////////////////////////////////////////////
@@ -52,16 +54,16 @@ class xassetVideoHandler extends xassetBaseObjectHandler {
     }
   }
   ///////////////////////////////////////////////////
-  function getVideo($id, $token, $position = 0) { 
+  function getVideo($id, $token, $position = 0) {
     $hPackage   =& xoops_getmodulehandler('package','xasset');
     $hUserDetail =& xoops_getmodulehandler('userDetails','xasset');
     $hCommon    =& xoops_getmodulehandler('common','xasset');
     //
-    $uid      = $hCommon->pspDecrypt($token); 
-    $oPackage =& $hPackage->get($id); 
+    $uid      = $hCommon->pspDecrypt($token);
+    $oPackage =& $hPackage->get($id);
     //
     if ($uid > 0) { //secure the video
-      $oClient  =& $hUserDetail->getUserDetailByID($uid); 
+      $oClient  =& $hUserDetail->getUserDetailByID($uid);
       //
       $dummy = '';
       if ($oClient->canDownloadPackage($oPackage->ID(),$dummy) or (!$oPackage->fileProtected())) {
@@ -83,5 +85,3 @@ class xassetVideoHandler extends xassetBaseObjectHandler {
     $filesize = $this->getVideoSize($id);
   }
 }
-
-?>

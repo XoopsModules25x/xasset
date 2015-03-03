@@ -15,7 +15,7 @@ $days = $hCommon->getModuleOption('memExpireDaysWarn'); $days = 30;
 $crit = new CriteriaCompo(new Criteria('expiry_date',time() + ($days * 60 * 60 * 24), '<'));
 $crit->add(new Criteria('expiry_date',time(),'>'));
 //
-$aMembers =& $hMembers->getObjects($crit); 
+$aMembers =& $hMembers->getObjects($crit);
 //
 if ((is_array($aMembers)>0) && (count($aMembers)))
   echo 'Notifying '.count($aMembers).' user(s) of pending membership expiry.<br />';
@@ -40,8 +40,4 @@ if ((is_array($aMembers)>0) && (count($aMembers)))
 foreach ($aMembers as $id=>$aMember) {
   $hNotify->expire_account($aMember);
   $hMembers->removeFromGroup($aMember['id'],true);
-} 
-
-
-
-?>
+}

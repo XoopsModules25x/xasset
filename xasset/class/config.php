@@ -21,13 +21,12 @@ Class xassetConfig extends XoopsObject {
   }
 }
 
-
 Class xassetConfigHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
   var $classname = 'xassetconfig';
   var $_dbtable = 'xasset_config';
-	//cons
+    //cons
   function xassetConfigHandler(&$db)
   {
     $this->_db = $db;
@@ -39,19 +38,21 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetConfigHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
   function setValue($key, $value) {
-		$objs =& $this->getObjects(new Criteria('dkey',$key));
-		if (count($objs) > 0) {
-			$obj =& $this->get($objs[0]->getVar('id'));
-			$obj->setVar('dvalue',$value);
+        $objs =& $this->getObjects(new Criteria('dkey',$key));
+        if (count($objs) > 0) {
+            $obj =& $this->get($objs[0]->getVar('id'));
+            $obj->setVar('dvalue',$value);
     } else {
       $obj =& $this->create();
       $obj->setVar('dkey',$key);
       $obj->setVar('dvalue',$value);
     }
+
     return $this->insert($obj);
   }
   ///////////////////////////////////////////////////
@@ -65,9 +66,9 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
       foreach($objs as $obj) {
         return $obj->getVar('dvalue');
         exit;
-			}
+            }
     } else {
-			return $this->getValueArray($key);
+            return $this->getValueArray($key);
     }
   }
   ///////////////////////////////////////////////////
@@ -78,6 +79,7 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
     foreach($objs as $obj) {
       $ary[] = $obj->getVar('dvalue');
     }
+
     return $ary;
   }
   ////////////////////////////////////////////////////
@@ -94,27 +96,27 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
     return $this->getValueValue('group_id');
   }
   function setGroup($value) {
-		return $this->setValue('group_id',$value);
+        return $this->setValue('group_id',$value);
   }
   ///////////////////////////////////////////////////
   function getEmailGroup() {
     return $this->getValueValue('email_group_id');
   }
   function setEmailGroup($value) {
-		return $this->setValue('email_group_id',$value);
+        return $this->setValue('email_group_id',$value);
   }
   ///////////////////////////////////////////////////
   function getBaseCurrency() {
-		$id = $this->getValueValue('currency_id'); 
-		if ($id > 0) {
-			return $id;
+        $id = $this->getValueValue('currency_id');
+        if ($id > 0) {
+            return $id;
     } else {
       return false;
     }
   }
   ///////////////////////////////////////////////////
-	function setBaseCurrency($value) {
-		return $this->setValue('currency_id',$value);
+    function setBaseCurrency($value) {
+        return $this->setValue('currency_id',$value);
   }
   ///////////////////////////////////////////////////
   function insert(&$obj, $force = false)
@@ -123,7 +125,7 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
     // Copy all object vars into local variables
     foreach ($obj->cleanVars as $k => $v) {
       ${$k} = $v;
-    }           
+    }
 
     // Create query for DB update
     if ($obj->isNew()) {
@@ -133,9 +135,9 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
                       $this->_db->prefix($this->_dbtable),  $id, $this->_db->quoteString($dkey),
                       $this->_db->quoteString($dvalue));
     } else {
-				$sql = sprintf('UPDATE %s SET dkey = %s, dvalue = %s  where id = %u',
-												$this->_db->prefix($this->_dbtable), $this->_db->quoteString($dkey),
-												$this->_db->quoteString($dvalue), $id);
+                $sql = sprintf('UPDATE %s SET dkey = %s, dvalue = %s  where id = %u',
+                                                $this->_db->prefix($this->_dbtable), $this->_db->quoteString($dkey),
+                                                $this->_db->quoteString($dvalue), $id);
     }
      //echo $sql;
     // Update DB
@@ -154,8 +156,7 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

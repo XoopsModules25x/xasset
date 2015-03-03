@@ -23,7 +23,6 @@ class xassetUserAppProducts extends XoopsObject {
   }
 }
 
-
 class xassetUserAppProductsHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -41,6 +40,7 @@ class xassetUserAppProductsHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetUserAppProductsHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -59,6 +59,7 @@ class xassetUserAppProductsHandler extends xassetBaseObjectHandler {
         return $row['sm'];
       }
     }
+
     return false;
   }
   ///////////////////////////////////////////////////
@@ -107,6 +108,7 @@ class xassetUserAppProductsHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
 
@@ -115,8 +117,7 @@ class xassetUserAppProductsHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

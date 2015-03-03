@@ -19,7 +19,6 @@ class xassetTaxClass extends XoopsObject {
   }
 }
 
-
 class xassetTaxClassHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -37,6 +36,7 @@ class xassetTaxClassHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetTaxClassHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -52,6 +52,7 @@ class xassetTaxClassHandler extends xassetBaseObjectHandler {
     foreach($objs as $obj) {
       $ar[$obj->getVar('id')] = sprintf('%s - %s',$obj->getVar('code'), $obj->getVar('description'));
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -74,6 +75,7 @@ class xassetTaxClassHandler extends xassetBaseObjectHandler {
                       'description' => $obj->getVar('description'),
                       'actions'     => $actions);
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -126,8 +128,7 @@ class xassetTaxClassHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

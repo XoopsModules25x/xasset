@@ -57,9 +57,6 @@ define("_AM_XASSET_ICO_ADD","Add");
 define("_AM_XASSET_ICO_APPROVE","Approve");
 define("_AM_XASSET_ICO_STATS","Stats");
 
-
 //templates
 define('AM_XASSET_TEMPLATE_ADMIN_INDEX','Admin Index Page');
 define('AM_XASSET_TEMPLATE_APPLICATION_INDEX','Admin Application Maintenance');
-
-?>

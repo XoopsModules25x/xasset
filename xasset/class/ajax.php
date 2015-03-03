@@ -17,17 +17,17 @@ class xassetajax extends xajax {
                       document.getElementById(selectId).options.add(objOption);
                   }
                   </script>';
+
     return parent::getJavascript($location).$cbScript;
   }
   /////////////////////////////////////////////////
   function registerFunction($function,$url = null) {
     if (isset($url))
       $this->sRequestURI = $url;
-    //      
+    //
     parent::registerFunction($function,XAJAX_GET);
   }
 }
-
 
 class xassetajaxHandler extends xassetBaseObjectHandler {
   //vars
@@ -46,8 +46,7 @@ class xassetajaxHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetajaxHandler($db);
       }
+
       return $instance;
   }
 }
-
-?>

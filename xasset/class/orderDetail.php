@@ -25,20 +25,22 @@ class xassetOrderDetail extends XAssetBaseObject {
   //////////////////////////////////////////////////
   function &getOrderIndex() {
     $idx =& xoops_getmodulehandler('order','xasset');
+
     return $idx->get($this->getVar('order_index_id'));
   }
   //////////////////////////////////////////////////
   function &getAppProduct() {
     $hProd =& xoops_getmodulehandler('applicationProduct','xasset');
+
     return $hProd->get($this->getVar('app_prod_id'));
   }
   /////////////////////////////////////////////////
   function getOrderItemDescription() {
     $oAppProd =& $this->getAppProduct();
+
     return $oAppProd->itemDescription();
   }
 }
-
 
 class xassetOrderDetailHandler extends xassetBaseObjectHandler {
   //vars
@@ -53,11 +55,13 @@ class xassetOrderDetailHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function &getOrderDetailsObjectsByIndex($indexID) {
     $crit = new CriteriaCompo(new Criteria('order_index_id',$indexID));
+
     return $this->getObjects($crit);
   }
   ///////////////////////////////////////////////////
   function getOrderDetailsByIndex($indexID) {
     $crit = new CriteriaCompo(new Criteria('order_index_id',$indexID));
+
     return $this->getOrderDetailArray($crit);
   }
   ///////////////////////////////////////////////////
@@ -102,6 +106,7 @@ class xassetOrderDetailHandler extends xassetBaseObjectHandler {
                          'actions'     => $actions );
       }
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -118,7 +123,7 @@ class xassetOrderDetailHandler extends xassetBaseObjectHandler {
               od.app_prod_id = ap.id inner join $currTable c on
               ap.base_currency_id = c.id
               where od.order_index_id = $orderID
-            order by ap.tax_class_id"; 
+            order by ap.tax_class_id";
     //
     $ary = array();
     //
@@ -132,12 +137,14 @@ class xassetOrderDetailHandler extends xassetBaseObjectHandler {
                        'qty'              => $row['qty'] );
       }
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
   function updateOrderQty($id, $qty){
     $item =& $this->get($id);
     $item->setVar('qty',$qty);
+
     return $this->insert($item);
   }
   ///////////////////////////////////////////////////
@@ -147,6 +154,7 @@ class xassetOrderDetailHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetOrderDetailHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -154,7 +162,7 @@ class xassetOrderDetailHandler extends xassetBaseObjectHandler {
     $thisTable = $this->_db->prefix($this->_dbtable);
     $sql = "delete from $thisTable where order_index_id = $orderID";
     //
-    $this->_db->query($sql); 
+    $this->_db->query($sql);
   }
   ///////////////////////////////////////////////////
   function insert(&$obj, $force = false)
@@ -193,8 +201,7 @@ class xassetOrderDetailHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

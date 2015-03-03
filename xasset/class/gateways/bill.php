@@ -22,6 +22,7 @@ class bill extends baseGateway {
   /////////////////////////////////////////////////////
   function keys(){
     $ary = array( 'BILL_ENABLED','BILL_GATEWAY_DESCRIPTION');
+
     return $ary;
   }
   /////////////////////////////////////////
@@ -74,5 +75,3 @@ class bill extends baseGateway {
     }
   }
 }
-
-?>

@@ -23,15 +23,16 @@ class xassetTaxRate extends XAssetBaseObject {
   /////////////////////////////////////////
   function &getZone() {
     $zone =& xoops_getmodulehandler('zone','xasset');
+
     return $zone->get($this->getVar('zoneid'));
   }
   /////////////////////////////////////////
   function &getTaxClass() {
     $class =& xoops_modulehandler('taxClass','xasset');
+
     return $class->get($this->getVar('taxclassid','xasset'));
   }
 }
-
 
 class xassetTaxRateHandler extends xassetBaseObjectHandler {
   //vars
@@ -50,6 +51,7 @@ class xassetTaxRateHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetTaxRateHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -96,6 +98,7 @@ class xassetTaxRateHandler extends xassetBaseObjectHandler {
                       'actions'      => $actions);
       }
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -126,7 +129,7 @@ class xassetTaxRateHandler extends xassetBaseObjectHandler {
       $id = $this->_db->genId($this->_db->prefix($this->_dbtable).'_uid_seq');
       $sql = sprintf( 'INSERT INTO %s (id, region_id, tax_class_id, rate, priority, description)
                        VALUES (%u, %u, %u, %f, %u, %s)',
-											$this->_db->prefix($this->_dbtable),  $id, $region_id, $tax_class_id, $rate, $priority, $this->_db->quoteString($description));
+                                            $this->_db->prefix($this->_dbtable),  $id, $region_id, $tax_class_id, $rate, $priority, $this->_db->quoteString($description));
     } else {
         $sql = sprintf('UPDATE %s SET region_id = %u, tax_class_id = %u, rate = %f, priority = %u, description = %s where id = %u',
                         $this->_db->prefix($this->_dbtable), $region_id, $tax_class_id, $rate, $priority, $this->_db->quoteString($description), $id);
@@ -148,8 +151,7 @@ class xassetTaxRateHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

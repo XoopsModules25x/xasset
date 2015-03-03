@@ -15,7 +15,7 @@ class Validator {
     /**
     * Constucts a new Validator object
     */
-    function Validator () 
+    function Validator ()
     {
         $this->errorMsg=array();
         $this->validate();
@@ -34,7 +34,7 @@ class Validator {
     * Adds an error message to the array
     * @return void
     */
-    function setError ($msg) 
+    function setError ($msg)
     {
         $this->errorMsg[]=$msg;
     }
@@ -44,7 +44,7 @@ class Validator {
     * Returns true is string valid, false if not
     * @return boolean
     */
-    function isValid () 
+    function isValid ()
     {
         if ( count ($this->errorMsg) ) {
             return false;
@@ -58,7 +58,7 @@ class Validator {
     * Pops the last error message off the array
     * @return string
     */
-    function getError () 
+    function getError ()
     {
         return array_pop($this->errorMsg);
     }
@@ -96,7 +96,7 @@ class ValidateEmail extends Validator {
     * Validates an email address
     * @return void
     */
-    function validate() 
+    function validate()
     {
         $pattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i";
         //$pattern= "/^([a-zA-Z0-9])+([.a-zA-Z0-9_-])*@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-]+)+/";
@@ -135,13 +135,13 @@ class ValidatePhone extends Validator {
     * Validates a phone number
     * @return void
     */
-    function validate() 
+    function validate()
     {
         $pattern = "(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$";
         if(!preg_match($pattern, $this->phone)){
             $this->setError(_XHELP_MESSAGE_INVALID);
         }
-    }   
+    }
 }
 
 class ValidateTimestamp extends Validator {
@@ -167,10 +167,10 @@ class ValidateTimestamp extends Validator {
     * Validates a timestamp
     * @return void
     */
-    function validate() 
+    function validate()
     {
         
-    }   
+    }
 }
 
 class ValidateLength extends Validator {
@@ -211,7 +211,7 @@ class ValidateLength extends Validator {
     * Validates a string
     * @return void
     */
-    function validate() 
+    function validate()
     {
         if (strlen($this->text) < $this->min_length ) {
             $this->setError(_XHELP_MESSAGE_SHORT);
@@ -221,7 +221,7 @@ class ValidateLength extends Validator {
                 $this->setError(_XHELP_MESSAGE_LONG);
             }
         }
-    }   
+    }
 }
 
 class ValidateNumber extends Validator {
@@ -249,12 +249,12 @@ class ValidateNumber extends Validator {
     * Validates a number
     * @return void
     */
-    function validate() 
+    function validate()
     {
         if (!is_numeric($this->text) && (strlen($this->text) > 0 && !$this->forceentry)) {
             $this->setError(_XHELP_MESSAGE_NOT_NUMERIC);
         }
-    }   
+    }
 }
 
 /**
@@ -284,51 +284,51 @@ class ValidateUname extends Validator {
     * Validates an email address
     * @return void
     */
-    function validate() 
+    function validate()
     {
         $hConfig =& xoops_gethandler('config');
         $xoopsConfigUser =& $hConfig->getConfigsByCat(XOOPS_CONF_USER);
         $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
         
         switch ( $xoopsConfigUser['uname_test_level'] ) {
-    	case 0:
-    		// strict
-    		$restriction = '/[^a-zA-Z0-9\_\-]/';
-    		break;
-    	case 1:
-    		// medium
-    		$restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
-    		break;
-    	case 2:
-    		// loose
-    		$restriction = '/[\000-\040]/';
-    		break;
-    	}
-    	
+        case 0:
+            // strict
+            $restriction = '/[^a-zA-Z0-9\_\-]/';
+            break;
+        case 1:
+            // medium
+            $restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
+            break;
+        case 2:
+            // loose
+            $restriction = '/[\000-\040]/';
+            break;
+        }
+        
         if (empty($this->uname) || preg_match($restriction, $this->uname)) {
-    		$this->setError(_XHELP_MESSAGE_INVALID);
-    	}
-    	if ( strlen($this->uname) > $xoopsConfigUser['maxuname'] ) {
-    		$this->setError(sprintf(_XHELP_MESSAGE_LONG, $xoopsConfigUser['maxuname']));
-    	}
-    	if ( strlen($this->uname) < $xoopsConfigUser['minuname'] ) {
-    		$this->setError(sprintf(_XHELP_MESSAGE_SHORT, $xoopsConfigUser['minuname']));
-    	}
-    	foreach ($xoopsConfigUser['bad_unames'] as $bu) {
-    		if ( !empty($bu) && preg_match("/".$bu."/i", $this->uname) ) {
-    			$this->setError(_XHELP_MESSAGE_RESERVED);
-    			break;
-    		}
-    	}
-    	if ( strrpos($this->uname,' ') > 0 ) {
-    	    $this->setError(_XHELP_MESSAGE_NO_SPACES);
-    	}
-    	$sql = "SELECT COUNT(*) FROM ".$xoopsDB->prefix('users')." WHERE uname='".addslashes($this->uname)."'";
-    	$result = $xoopsDB->query($sql);
-    	list($count) = $xoopsDB->fetchRow($result);
-    	if ( $count > 0 ) {
-    		$this->setError(_XHELP_MESSAGE_UNAME_TAKEN);
-    	}
+            $this->setError(_XHELP_MESSAGE_INVALID);
+        }
+        if ( strlen($this->uname) > $xoopsConfigUser['maxuname'] ) {
+            $this->setError(sprintf(_XHELP_MESSAGE_LONG, $xoopsConfigUser['maxuname']));
+        }
+        if ( strlen($this->uname) < $xoopsConfigUser['minuname'] ) {
+            $this->setError(sprintf(_XHELP_MESSAGE_SHORT, $xoopsConfigUser['minuname']));
+        }
+        foreach ($xoopsConfigUser['bad_unames'] as $bu) {
+            if ( !empty($bu) && preg_match("/".$bu."/i", $this->uname) ) {
+                $this->setError(_XHELP_MESSAGE_RESERVED);
+                break;
+            }
+        }
+        if ( strrpos($this->uname,' ') > 0 ) {
+            $this->setError(_XHELP_MESSAGE_NO_SPACES);
+        }
+        $sql = "SELECT COUNT(*) FROM ".$xoopsDB->prefix('users')." WHERE uname='".addslashes($this->uname)."'";
+        $result = $xoopsDB->query($sql);
+        list($count) = $xoopsDB->fetchRow($result);
+        if ( $count > 0 ) {
+            $this->setError(_XHELP_MESSAGE_UNAME_TAKEN);
+        }
     }
 }
 
@@ -366,26 +366,26 @@ class ValidatePassword extends Validator {
     * Validates a password
     * @return void
     */
-    function validate() 
+    function validate()
     {
         $hConfig =& xoops_gethandler('config');
         $xoopsConfigUser =& $hConfig->getConfigsByCat(XOOPS_CONF_USER);
         
         if ( !isset($this->pass) || $this->pass == '' || !isset($this->vpass) || $this->vpass == '' ) {
-    		$this->setError(_XHELP_MESSAGE_NOT_SUPPLIED);
-    		//$stop .= _US_ENTERPWD.'<br />';
-    	}
-    	if ( (isset($this->pass)) && ($this->pass != $this->vpass) ) {
-    		$this->setError(_XHELP_MESSAGE_NOT_SAME);
-    		//$stop .= _US_PASSNOTSAME.'<br />';
-    	} elseif ( ($this->pass != '') && (strlen($this->pass) < $xoopsConfigUser['minpass']) ) {
-    		$this->setError(sprintf(_XHELP_MESSAGE_SHORT, $xoopsConfigUser['minpass']));
-    		//$stop .= sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass'])."<br />";
-    	}
+            $this->setError(_XHELP_MESSAGE_NOT_SUPPLIED);
+            //$stop .= _US_ENTERPWD.'<br />';
+        }
+        if ( (isset($this->pass)) && ($this->pass != $this->vpass) ) {
+            $this->setError(_XHELP_MESSAGE_NOT_SAME);
+            //$stop .= _US_PASSNOTSAME.'<br />';
+        } elseif ( ($this->pass != '') && (strlen($this->pass) < $xoopsConfigUser['minpass']) ) {
+            $this->setError(sprintf(_XHELP_MESSAGE_SHORT, $xoopsConfigUser['minpass']));
+            //$stop .= sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass'])."<br />";
+        }
     }
 }
 
-class ValidateMimeType extends Validator 
+class ValidateMimeType extends Validator
 {
     var $file;
     var $mimetype;
@@ -403,11 +403,11 @@ class ValidateMimeType extends Validator
     {
         $allowed_mimetypes = false;
         //Check MimeType
-        if (is_array($this->allowed_mimetypes)) { 
+        if (is_array($this->allowed_mimetypes)) {
             foreach($this->allowed_mimetypes as $mime){
                 if($mime['type'] == $this->mimetype){
                     $allowed_mimetypes = $mime['type'];
-                    break;   
+                    break;
                 }
             }
         }
@@ -420,7 +420,7 @@ class ValidateMimeType extends Validator
     }
 }
 
-class ValidateFileSize extends Validator 
+class ValidateFileSize extends Validator
 {
     var $file;
     var $maxsize;
@@ -441,7 +441,7 @@ class ValidateFileSize extends Validator
     }
 }
 
-class ValidateImageSize extends Validator 
+class ValidateImageSize extends Validator
 {
     var $file;
     var $maxwidth;
@@ -468,4 +468,3 @@ class ValidateImageSize extends Validator
         }
     }
 }
-?>
