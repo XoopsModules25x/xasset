@@ -1,5 +1,5 @@
 ![alt XOOPS CMS](http://xoops.org/images/logoXoops4GithubRepository.png)
-##xAssets module for  [XOOPS CMS 2.5.8+](https://xoops.org)
+## xAssets module for  [XOOPS CMS 2.5.8+](https://xoops.org)
 
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](LICENSE)
 [![XOOPS CMS Module](https://img.shields.io/badge/XOOPS%20CMS-Module-blue.svg)](http://xoops.org)
