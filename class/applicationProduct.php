@@ -196,9 +196,9 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
     //
     if (isset($currid)) {
       $crit = new Criteria('id',$currid);
-      $curs =& $hCurrency->getObjects($crit);
+      $curs = $hCurrency->getObjects($crit);
     } else {
-      $curs       =& $hCurrency->getObjects();
+      $curs       = $hCurrency->getObjects();
     }
     //
     $sql       = "select ap.*, a.name application_name, c.code tax_code, cu.name currency_name, cu.value
@@ -316,7 +316,7 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('application_id',$pAppID));
     $crit->add(new Criteria('item_code',$pCode));
     //
-    $aObjs =& $this->getObjects($crit);
+    $aObjs = $this->getObjects($crit);
     //
     if (count($aObjs) > 0) {
       $obj = reset($aObjs);
@@ -332,14 +332,14 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
   function &getApplicationProductObjectsByOrderDetail($crit) {
     //first get prod_ids
     $hOrderDetail =& xoops_getmodulehandler('orderDetail','xasset');
-    $aDetails     =& $hOrderDetail->getObjects($crit);
+    $aDetails     = $hOrderDetail->getObjects($crit);
     $crit         = new CriteriaCompo();
     //
     foreach($aDetails as $key=>$oDetail) {
       $crit->add(new Criteria('id',$oDetail->getAppProdID()));
     }
     //now get products
-    $aProds =& $this->getObjects($crit,true);
+    $aProds = $this->getObjects($crit,true);
     //index by orderDetail
     $ary = array();
     foreach($aDetails as $key=>$oDetail) {

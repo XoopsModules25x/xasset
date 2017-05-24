@@ -355,7 +355,7 @@ function addCustomer($post) {
       $hMember =& xoops_gethandler('member');
       $hNotify->new_user(array($oUser,$password));
       //
-      $myts =& MyTextsanitizer::getInstance();
+      $myts = MyTextsanitizer::getInstance();
       $hMember->loginUser($myts->addSlashes($oUser->uname()), $myts->addSlashes($password));
       if (!isset($_SESSION)) {
         $_SESSION = array();

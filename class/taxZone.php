@@ -46,7 +46,7 @@ class xassetTaxZoneHandler extends xassetBaseObjectHandler {
       $criteria   = new CriteriaCompo();
       $criteria->setSort('name'); }
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ar = array();
     //

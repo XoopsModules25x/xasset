@@ -85,7 +85,7 @@ class xassetApplication extends XAssetBaseObject {
       $crit->add(new Criteria('uid', $uid));
       $crit->setSort('datePublished');
       //
-      $arr      =& $hLicense->getObjects($crit);
+      $arr      = $hLicense->getObjects($crit);
     }
     //
     return $arr;
@@ -104,7 +104,7 @@ class xassetApplication extends XAssetBaseObject {
     $crit = new CriteriaCompo(new Criteria('applicationid', $id));
     $crit->setSort('datePublished');
     //
-    $arr      =& $hpackGroups->getObjects($crit);
+    $arr      = $hpackGroups->getObjects($crit);
     //
     return $arr;
   }
@@ -135,7 +135,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function getApplications($criteria){
     //
-    $ret =& $this->getObjects($criteria,true);
+    $ret = $this->getObjects($criteria,true);
     //
     return $ret;
   }
@@ -268,7 +268,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
     }
     $crit->add($subCrit);
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     return $objs;
   }
@@ -297,7 +297,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
     }
     $crit->add($subCrit);
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     return $objs;
     

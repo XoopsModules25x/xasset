@@ -109,7 +109,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
       $criteria   = new CriteriaCompo();
       $criteria->setSort('code'); }
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ar = array();
     if ($allZones) {
@@ -136,7 +136,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
   function &getZonesArray($criteria = null) {
     global $imagearray;
     //
-    $objs  =& $this->getObjects($criteria);
+    $objs  = $this->getObjects($criteria);
     $ary   = array();
     //
     $hCnt  =& xoops_getmodulehandler('country','xasset');
@@ -167,7 +167,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function getZoneNameByID($zoneID) {
     $crit = new Criteria('id',$zoneID);
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     if (count($objs) > 0) {
       $obj = reset($objs);
 
@@ -181,7 +181,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('country_id',$countryID));
     $crit->add(new Criteria('id',$zoneID));
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     return count($objs) > 0;
   }

@@ -45,7 +45,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('gateway_id',$id));
     $crit->add(new Criteria('gkey',$code));
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
 
     return $objs[reset($objs)];
   }
@@ -54,7 +54,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('gkey',$key));
     $crit->add(new Criteria('gateway_id',$indexID));
     //
-    $detail =& $this->getObjects($crit);
+    $detail = $this->getObjects($crit);
     //
     if (count($detail) > 0) {
       $detail = reset($detail);
@@ -98,7 +98,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function getConfigArray($crit = null) {
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     $ary  = array();
     //
     foreach($objs as $obj) {

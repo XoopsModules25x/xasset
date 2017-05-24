@@ -43,7 +43,7 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function setValue($key, $value) {
-        $objs =& $this->getObjects(new Criteria('dkey',$key));
+        $objs = $this->getObjects(new Criteria('dkey',$key));
         if (count($objs) > 0) {
             $obj =& $this->get($objs[0]->getVar('id'));
             $obj->setVar('dvalue',$value);
@@ -61,7 +61,7 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function getValueValue($key) {
-    $objs =& $this->getObjects(new Criteria('dkey', $key),true);
+    $objs = $this->getObjects(new Criteria('dkey', $key),true);
     if (count($objs) == 1) {
       foreach($objs as $obj) {
         return $obj->getVar('dvalue');
@@ -73,7 +73,7 @@ Class xassetConfigHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function getValueArray($key) {
-    $objs =& $this->getObjects(new Criteria('dkey',$key));
+    $objs = $this->getObjects(new Criteria('dkey',$key));
     //
     $ary = array();
     foreach($objs as $obj) {

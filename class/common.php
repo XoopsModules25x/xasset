@@ -151,7 +151,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     $hUser =& xoops_gethandler('user');
     //
     $crit  = new Criteria('email',$email);
-    $user  =& $hUser->getObjects($crit);
+    $user  = $hUser->getObjects($crit);
     //
     if (count($user) > 0) {
       $user = reset($user);
@@ -166,7 +166,7 @@ class xassetCommonHandler extends xassetBaseObjectHandler {
     $hUser =& xoops_gethandler('user');
     //
     $crit  = new Criteria('uname',$uname);
-    $user  =& $hUser->getObjects($crit);
+    $user  = $hUser->getObjects($crit);
     //
     if (count($user) > 0) {
       $user = reset($user);

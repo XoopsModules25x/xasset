@@ -174,7 +174,7 @@ class baseGateway {
         $control = "<textarea name='$name' cols='70' rows='5'>$value</textarea>";
       break;
       case 'box':
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         $control = "<table class='outer'><tr><td>".$myts->xoopsCodeDecode($myts->nl2Br($value))."</td></tr></table>";
       break;
     }

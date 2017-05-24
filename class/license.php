@@ -278,7 +278,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('uid', $clientid));
     $crit->add(new Criteria('applicationid', $appid));
     //
-    $lics =& $this->getObjects($crit);
+    $lics = $this->getObjects($crit);
     $ar   = array();
     //
     $crypt = new xassetCrypt();

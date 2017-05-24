@@ -45,7 +45,7 @@ class xassetTaxClassHandler extends xassetBaseObjectHandler {
       $criteria   = new CriteriaCompo();
       $criteria->setSort('description'); }
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ar = array();
     //
@@ -63,7 +63,7 @@ class xassetTaxClassHandler extends xassetBaseObjectHandler {
       $criteria   = new CriteriaCompo();
       $criteria->setSort('description'); }
     //
-    $objs  =& $this->getObjects($criteria);
+    $objs  = $this->getObjects($criteria);
     $ary   = array();
     //
     foreach($objs as $obj){

@@ -130,7 +130,7 @@ class xassetUserPackageStatsHandler extends xassetBaseObjectHandler {
     $crit->add(new Criteria('uid',$pUID));
     $crit->setorder('date');
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     if (count($objs)>0) {
       $obj = reset($objs);

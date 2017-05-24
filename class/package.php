@@ -56,7 +56,7 @@ class xassetPackage extends xassetBaseObject {
     $crit = new CriteriaCompo(new Criteria('packageid', $id));
     $crit->setSort('date');
     //
-    $arr      =& $hPackStats->getObjects($crit);
+    $arr      = $hPackStats->getObjects($crit);
     //
     return $arr;
   }
@@ -181,7 +181,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
       $criteria->setSort('filename');
     }
     //
-    $objs =& $this->getObjects($criteria,true);
+    $objs = $this->getObjects($criteria,true);
     $ar   = array();
     //
     foreach($objs as $obj) {
@@ -201,7 +201,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
   function getDownloadSummary($crit){
     $hStats =& xoops_getmodulehandler('userPackageStats','xasset');
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     $ary  = array();
     //
     foreach($objs as $obj) {
@@ -221,7 +221,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('packagegroupid', $groupID));
     $crit->setSort('filename');
     //
-    $objs  =& $this->getObjects($crit);
+    $objs  = $this->getObjects($crit);
     $crypt = new xassetCrypt();
     $ar    = array();
     $i     = 0;
@@ -272,7 +272,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function &getProductSamplePackages($oAppProduct) {
     $crit = new CriteriaCompo(new Criteria('packagegroupid', $oAppProduct->sampleGroupID()));
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     if (count($objs) > 0) {
       return $objs;

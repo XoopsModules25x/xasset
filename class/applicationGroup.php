@@ -52,7 +52,7 @@ class xassetApplicationGroupHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function getGroupIDArray($appID) {
     $crit = new Criteria('application_id',$appID);
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     $ar = array();
     foreach($objs as $key=>$obj) {

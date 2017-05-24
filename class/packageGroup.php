@@ -46,7 +46,7 @@ class xassetPackageGroup extends xassetBaseObject {
     $crit = new CriteriaCompo(new Criteria('packagegroupid', $id));
     $crit->setSort('filename');
     //
-    $arr      =& $hPackages->getObjects($crit);
+    $arr      = $hPackages->getObjects($crit);
     //
     return $arr;
   }
@@ -75,7 +75,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
       $criteria->setSort('name');
     }
     //
-    $objs =& $this->getObjects($criteria,true);
+    $objs = $this->getObjects($criteria,true);
     $crypt = new xassetCrypt();
     $ar   = array();
     //
@@ -148,7 +148,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function getGroupsSelectArray($crit) {
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     $ar   = array();
     //
     foreach($objs as $obj) {
@@ -172,7 +172,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
     //
     $hPack  =& xoops_getmodulehandler('package','xasset');
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     $ary  = array();
     //
     foreach($objs as $obj){

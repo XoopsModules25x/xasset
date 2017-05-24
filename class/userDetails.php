@@ -166,7 +166,7 @@ class xassetUserDetailsHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function &getUserDetailByID($uid) {
     $crit = new CriteriaCompo(new Criteria('uid',$uid));
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     if (count($objs) > 0) {
       $obj = reset($objs);
 
@@ -191,7 +191,7 @@ class xassetUserDetailsHandler extends xassetBaseObjectHandler {
   function getUserDetailArray($criteria=null) {
     global $xoopsUser;
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ary = array();
     //

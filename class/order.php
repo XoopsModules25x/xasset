@@ -194,7 +194,7 @@ class xassetOrder extends xassetBaseObject {
     $crit = new CriteriaCompo(new Criteria('order_index_id',$this->getVar('id')));
     $crit->add(new Criteria('app_prod_id',$product));
     //
-    if ($orderObjs =& $hODetail->getObjects($crit)) {
+    if ($orderObjs = $hODetail->getObjects($crit)) {
       $order =& $hODetail->get($orderObjs[0]->getVar('id'));
       $qty   = $qty + $order->getVar('qty');
     }
@@ -472,7 +472,7 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('uid',$uid));
     $crit->add(new Criteria('status',3,'<'));
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     if (count($objs) > 0) {
       $obj = reset($objs);

@@ -87,7 +87,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
     //
     $criteria->add(new Criteria('enabled',1));
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ar = array();
     //
@@ -106,7 +106,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
       $criteria->setSort('name'); }
     $criteria->add(new Criteria('enabled',1));
     //
-    $objs  =& $this->getObjects($criteria);
+    $objs  = $this->getObjects($criteria);
     $ary   = array();
     $i     = 0;
     //
@@ -125,7 +125,7 @@ class xassetCurrencyHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function &getByCode($code) {
     $crit = new Criteria('code',$code);
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     if (count($objs) > 0) {
       return current($objs);
     } else {

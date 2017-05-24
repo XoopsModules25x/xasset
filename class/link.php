@@ -31,7 +31,7 @@ class xassetLink extends XoopsObject {
         return false;
     }
     $hApplication =& xoops_getmodulehandler('application', 'xasset');
-    $arr =& $hApplication->getObjects($this->getVar('applicationid'));
+    $arr = $hApplication->getObjects($this->getVar('applicationid'));
     //
     return $arr;
   }
