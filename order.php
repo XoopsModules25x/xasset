@@ -13,32 +13,31 @@ if ( isset( $_REQUEST['op'] ) ) {
   $op = $_POST['op'];
 }
 
-
 switch ( $op ) {
   case 'default':
    default:
    //be default in no op specified then just redirect home.
-	 redirect_header('index.php',2,'Un-Authorised Page Request.');
+     redirect_header('index.php',2,'Un-Authorised Page Request.');
    break;
    //
-	case 'addToCart':
+    case 'addToCart':
     addToCart($_GET['id'], $_GET['key'], 1);
     break;
   //
   case 'askUserDetails':
-		askUserDetails();
+        askUserDetails();
     break;
   //
   case 'addCustomer':
-		addCustomer($_POST);
+        addCustomer($_POST);
     break;
   //
-	case 'showCart':
-		showCart();
+    case 'showCart':
+        showCart();
     break;
   //
-	case 'showUserDetails':
-		showUserDetails();
+    case 'showUserDetails':
+        showUserDetails();
     break;
   //
   case 'removeOrderItem':
@@ -82,7 +81,9 @@ function addToCart($itemID, $key, $qty = 1, $forceUser = null) {
     $_SESSION['stage'] = 1;
     $_SESSION['redirect'] = $redirect;
     //
-    askUserDetails(); return 0;
+    askUserDetails();
+
+return 0;
     //redirect_header('../../user.php',3,'Please login or register first to access your shopping cart.');
   }
   $hOrder   =& xoops_getmodulehandler('order','xasset');
@@ -109,7 +110,7 @@ function addToCart($itemID, $key, $qty = 1, $forceUser = null) {
     }
     //if here then safe to add item to cart
     if ($order->addOrderItem($itemID, $qty)) {
-			redirect_header('order.php?op=showCart',2,'Item Added to Your Cart');
+            redirect_header('order.php?op=showCart',2,'Item Added to Your Cart');
     }
   }  else {
     //order record doesn't exist.. first item added to cart.
@@ -121,27 +122,27 @@ function addToCart($itemID, $key, $qty = 1, $forceUser = null) {
         $currid = $_SESSION['currency_id'];
       } else {
         $hConfig =& xoops_getmodulehandler('config','xasset');;
-				$currid = $hConfig->GetBaseCurrency();
-				//
-				if (!$currid > 0) {
-					//can't continue... redirect
-					redirect_header('index.php',3,'A Default currency has not been setup for this site. Please notify the webmaster.');
-				}
+                $currid = $hConfig->GetBaseCurrency();
+                //
+                if (!$currid > 0) {
+                    //can't continue... redirect
+                    redirect_header('index.php',3,'A Default currency has not been setup for this site. Please notify the webmaster.');
+                }
       }
       $order =& $hOrder->create();
       $order->setVar('uid',$xoopsUser->uid());
       $order->setVar('user_detail_id',$userDetail->getVar('id'));
       //$order->setVar('number',
       $order->setVar('currency_id',$currid);
-			$order->setVar('date',time());
+            $order->setVar('date',time());
       $order->setVar('status',1);//for stage 1
       //
       if ($hOrder->insert($order,true)) {
         if ($order->addOrderItem($itemID, $qty)) {
           //item added... redirect somwhere or do something?
           //add id to session
-					$_SESSION['orderID'] = $order->getVar('id');
-					redirect_header('order.php?op=showCart',2,'Item Added to Your Cart');
+                    $_SESSION['orderID'] = $order->getVar('id');
+                    redirect_header('order.php?op=showCart',2,'Item Added to Your Cart');
         }
       }
     } else  {
@@ -165,31 +166,31 @@ function askUserDetails($userDetails = null) {
   require_once(XOOPS_ROOT_PATH . "/header.php");
   //
   $hCountry  =& xoops_getmodulehandler('country','xasset');
-	//
-	$countriesSelect =& $hCountry->getCountriesSelect();
-	if (count($countriesSelect)>0) {       
-	  $country = key($countriesSelect);
-	  $country =& $hCountry->get($country);
-	} else {
-	  Die('No countried defined.');
-	}
-	//
-	if (isset($userDetails)) {
-		$cust    = $userDetails;
-		$aCust   = $cust->getArray();
-		$country =& $hCountry->get($cust->getVar('country_id'));
-		$errors  =& $userDetails->getErrors();   
-		$email   = $cust->getVar('company_name');
-		if (isset($errors['email'])) {
-  		$emailError = $errors['email'];
-  	} else {
-  	  $emailError = '';
-  	}
-	} else {
-	  $email = '';
-	  $emailError = '';
-	}
-	//
+    //
+    $countriesSelect =& $hCountry->getCountriesSelect();
+    if (count($countriesSelect)>0) {
+      $country = key($countriesSelect);
+      $country =& $hCountry->get($country);
+    } else {
+      Die('No countried defined.');
+    }
+    //
+    if (isset($userDetails)) {
+        $cust    = $userDetails;
+        $aCust   = $cust->getArray();
+        $country =& $hCountry->get($cust->getVar('country_id'));
+        $errors  =& $userDetails->getErrors();
+        $email   = $cust->getVar('company_name');
+        if (isset($errors['email'])) {
+        $emailError = $errors['email'];
+    } else {
+      $emailError = '';
+    }
+    } else {
+      $email = '';
+      $emailError = '';
+    }
+    //
   if (is_object($country)) {
     $zones =& $country->getZonesSelect();
     if (count($zones) > 0) {
@@ -210,13 +211,13 @@ function askUserDetails($userDetails = null) {
                 </td>
               </tr>';
   //
-	$xasset_module_header .= insertHeaderCountriesJavaScriptNoAllZones();
-	//
-	if (isset($cust))  $xoopsTpl->assign('xasset_customer',$aCust);
-	if (isset($errors)) $xoopsTpl->assign('xasset_error',$errors);
-	//
-	$xoopsTpl->assign('xoops_module_header',$xasset_module_header);
-	$xoopsTpl->assign('xasset_country_select',$hCountry->getCountriesSelect());
+    $xasset_module_header .= insertHeaderCountriesJavaScriptNoAllZones();
+    //
+    if (isset($cust))  $xoopsTpl->assign('xasset_customer',$aCust);
+    if (isset($errors)) $xoopsTpl->assign('xasset_error',$errors);
+    //
+    $xoopsTpl->assign('xoops_module_header',$xasset_module_header);
+    $xoopsTpl->assign('xasset_country_select',$hCountry->getCountriesSelect());
   $xoopsTpl->assign('xasset_order_stage',0);
   $xoopsTpl->assign('xasset_zone_select',$zones);
   $xoopsTpl->assign('xasset_email_row',$emailRow);
@@ -245,13 +246,13 @@ function showUserDetails($userDetails = null) {
     $cust =& $hCustDet->getUserDetailByID($xoopsUser->uid());
   }
   if (is_object($cust)) {
-    $aCust   =& $cust->getArray();   
+    $aCust   =& $cust->getArray();
     $aErrors = $cust->getErrors();
   } else {
     $aCust = array();
     $aCust['email'] = $xoopsUser->email();
     $aErrors = array();
-  }                 
+  }
   //
   $aCountrySelect =& $hCount->getCountriesSelect();
   //die if no countries define
@@ -259,11 +260,11 @@ function showUserDetails($userDetails = null) {
     Die('Please define at least one country.');  //------------------------->
   }
   //
-  if (is_object($cust)) {      
+  if (is_object($cust)) {
     $country =& $hCount->get($cust->getVar('country_id'));
     $zones   =& $country->getZonesSelect();
   } else {
-		$country =& $hCount->get(key($aCountrySelect));
+        $country =& $hCount->get(key($aCountrySelect));
   }
   $zones =& $country->getZonesSelect();
 
@@ -284,7 +285,7 @@ function showUserDetails($userDetails = null) {
   $xoopsTpl->assign('xasset_country_select',$aCountrySelect);
   $xoopsTpl->assign('xasset_zone_select',$zones);
   $xoopsTpl->assign('xasset_customer',$aCust);
-  $xoopsTpl->assign('xasset_error',$aErrors);    
+  $xoopsTpl->assign('xasset_error',$aErrors);
   //
   include(XOOPS_ROOT_PATH . "/footer.php");
 }
@@ -311,22 +312,22 @@ function addCustomer($post) {
       $cust->setVar('zone_id',$post['zone_id']);
       $cust->setVar('state',$hZone->getZoneNameByID($post['zone_id']));
     } else {
-			redirect_header('order.php?op=showUserDetails',3,'Country and State mismatch. Please select Country and State.');
+            redirect_header('order.php?op=showUserDetails',3,'Country and State mismatch. Please select Country and State.');
     }
   } else {
     $cust->setVar('zone_id',0);
     $cust->setVar('state',$post['state']);
-  }            
+  }
   //
-  $cust->setVarsFromArray($post);     
-  $cust->setVar('company_name',$post['email']);    
+  $cust->setVarsFromArray($post);
+  $cust->setVar('company_name',$post['email']);
   //check if post is valid
-  $cust->cleanVars();   
-  if (!$xoopsUser) {    
-    if (strlen($cust->getVar('company_name')) == 0) {  
-      $cust->setErrors('email','Email is required');   
+  $cust->cleanVars();
+  if (!$xoopsUser) {
+    if (strlen($cust->getVar('company_name')) == 0) {
+      $cust->setErrors('email','Email is required');
     } else { //check for a valid email
-       if (!$hCommon->validEmail('company_name',$msg)) {  
+       if (!$hCommon->validEmail('company_name',$msg)) {
         $cust->setErrors('email',$msg);
       }
       if ($hCommon->xoopsUserByEmail($cust->getVar('company_name'))) {
@@ -335,17 +336,18 @@ function addCustomer($post) {
     }
   }
   //
-  if (!$cust->cleanVars()) {   
-    if ($xoopsUser) { 
+  if (!$cust->cleanVars()) {
+    if ($xoopsUser) {
       //$errors = $cust->getErrors(); print_r($errors);
-      showUserDetails($cust); 
+      showUserDetails($cust);
     } else {
       askUserDetails($cust);
     }
+
     return false;
-  }   
+  }
   //if not xoops user then create
-  if ($xoopsUser) {     
+  if ($xoopsUser) {
     $cust->setVar('uid',$xoopsUser->uid());
   } else {
     if ($oUser =& $hCommon->AccountFromEmail( $cust->getVar('company_name'), $cust->getVar('first_name'),
@@ -353,7 +355,7 @@ function addCustomer($post) {
       $hMember =& xoops_gethandler('member');
       $hNotify->new_user(array($oUser,$password));
       //
-      $myts =& MyTextsanitizer::getInstance();
+      $myts = MyTextsanitizer::getInstance();
       $hMember->loginUser($myts->addSlashes($oUser->uname()), $myts->addSlashes($password));
       if (!isset($_SESSION)) {
         $_SESSION = array();
@@ -364,7 +366,7 @@ function addCustomer($post) {
         setcookie($xoopsConfig['session_name'], session_id(), time()+(60 * $xoopsConfig['session_expire']), '/',  '', 0);
       }
       //
-      $cust->setVar('uid',$oUser->uid());  
+      $cust->setVar('uid',$oUser->uid());
     }
   }
   //we are here so the data looks good...save it
@@ -378,7 +380,7 @@ function addCustomer($post) {
         unset($_SESSION['redirect']);
         //
         if (!$xoopsUser) {
-          $xoopsUser =& $hMember->getUser($_SESSION['xoopsUserId']);      
+          $xoopsUser =& $hMember->getUser($_SESSION['xoopsUserId']);
           addToCart($redir['id'], $redir['key'], $redir['qty'],$xoopsUser);
         } else {
           addToCart($redir['id'], $redir['key'], $redir['qty']);
@@ -394,29 +396,29 @@ function addCustomer($post) {
   }
 }
 //////////////////////////////////////////////////////////////////////////////
-function showCart() { 
+function showCart() {
   global $xoopsOption, $xoopsTpl, $xoopsConfig, $xoopsUser, $xoopsLogger, $xoopsUserIsAdmin, $xasset_module_header;
   //
-	$hOrder =& xoops_getmodulehandler('order','xasset');        
+    $hOrder =& xoops_getmodulehandler('order','xasset');
   //get the order id from session
-	if (isset($_SESSION['orderID']) && ($_SESSION['orderID'] > 0)) {
+    if (isset($_SESSION['orderID']) && ($_SESSION['orderID'] > 0)) {
     $xoopsOption['template_main'] = 'xasset_order_index.html';
     require_once(XOOPS_ROOT_PATH . "/header.php");
     //
-		if ($order =& $hOrder->get($_SESSION['orderID'])) {
+        if ($order =& $hOrder->get($_SESSION['orderID'])) {
       //check that this order is not complete
       if ($order->getVar('status') == $order->orderStatusComplete()) {
         unset($_SESSION['orderID']);
         redirect_header('index.php',2,'Cannot find your cart.');
       }
-  		$items = $order->getOrderDetailsArray();
+        $items = $order->getOrderDetailsArray();
       $cnt   = count($items);
       //
       if ($cnt>1) {
         $itemW = "$cnt items";
       } else {
         $itemW = "$cnt item";
-			}
+            }
       //
       $xoopsTpl->assign('xoops_module_header',$xasset_module_header);
       $xoopsTpl->assign('xasset_order_stage',1);
@@ -431,7 +433,7 @@ function showCart() {
     }
   }//phantom session?!?...user has logged out and the cookie has expired/been erased..check database for pending orders
   else if (($xoopsUser) && ($_SESSION['orderID'] = $hOrder->userInCartOrders($xoopsUser->uid()))) {
-    showCart(); 
+    showCart();
   } else {
     redirect_header('index.php',2,'No items in your cart.');
   }
@@ -471,12 +473,12 @@ function choosePayment() {
     $hGateway  =& xoops_getmodulehandler('gateway','xasset');
     //
     if ($order =& $hOrder->get($_SESSION['orderID'])) {
-      $installed = $hGateway->getInstalledGatewayWithDescArray();    
+      $installed = $hGateway->getInstalledGatewayWithDescArray();
       $items     = $order->getOrderDetailsArray();
       $cnt       = count($items);
       //
-      if (count($installed) == 0) 
-        die('No payment gateways have been setup.'); 
+      if (count($installed) == 0)
+        die('No payment gateways have been setup.');
       //
       if ($cnt > 0) {
         $xoopsOption['template_main'] = 'xasset_order_index.html';
@@ -533,7 +535,7 @@ function processPayment($post) { //print_r($post);
         $_SESSION['gatewayID'] = $value;
         if ($oGateway->requiresSSL()) {
           runkit_constant_redefine('XOOPS_URL',$hCommon->sslXoopsUrl());
-          header('location:'.XOOPS_URL.'/modules/xasset/order.php?op=processOptionForm&ssl=1&gateID='.$value.'&url='.urlencode(base64_encode(XOOPS_URL))); 
+          header('location:'.XOOPS_URL.'/modules/xasset/order.php?op=processOptionForm&ssl=1&gateID='.$value.'&url='.urlencode(base64_encode(XOOPS_URL)));
         } else
         processOptionForm($value);
       }
@@ -545,9 +547,9 @@ function processPayment($post) { //print_r($post);
   }
 }
 ////////////////////////////////////////////////////////////////////////////
-function processOptionForm($gatewayID) { 
+function processOptionForm($gatewayID) {
   global $xoopsOption, $xoopsTpl, $xoopsConfig, $xoopsUser, $xoopsLogger, $xoopsUserIsAdmin, $xasset_module_header;
-  //  
+  //
   $hGateway =& xoops_getmodulehandler('gateway','xasset');
   $hOrder   =& xoops_getmodulehandler('order','xasset');
   //
@@ -565,12 +567,10 @@ function processOptionForm($gatewayID) {
   include(XOOPS_ROOT_PATH . "/footer.php");
 }
 ///////////////////////////////////////////////////////////////////////////
-function postOptionForm($post) { 
+function postOptionForm($post) {
   $hGateway =& xoops_getmodulehandler('gateway','xasset');
   //
   $oGateway =& $hGateway->getGatewayModuleByID($_SESSION['gatewayID']);
   $errors = '';
-  $oGateway->processPost($post,$errors); 
+  $oGateway->processPost($post,$errors);
 }
-
-?>

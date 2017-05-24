@@ -19,7 +19,6 @@ class xassetRegion extends XAssetBaseObject {
   }
 }
 
-
 class xassetRegionHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -37,6 +36,7 @@ class xassetRegionHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetRegionHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -45,13 +45,14 @@ class xassetRegionHandler extends xassetBaseObjectHandler {
       $criteria   = new CriteriaCompo();
       $criteria->setSort('region'); }
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ar = array();
     //
     foreach($objs as $obj) {
       $ar[$obj->getVar('id')] = sprintf('%s - %s',$obj->getVar('region'), $obj->getVar('description'));
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -62,7 +63,7 @@ class xassetRegionHandler extends xassetBaseObjectHandler {
       $criteria   = new CriteriaCompo();
       $criteria->setSort('region'); }
     //
-    $objs  =& $this->getObjects($criteria);
+    $objs  = $this->getObjects($criteria);
     $ary   = array();
     //
     foreach($objs as $obj){
@@ -74,6 +75,7 @@ class xassetRegionHandler extends xassetBaseObjectHandler {
                       'description' => $obj->getVar('description'),
                       'actions'     => $actions);
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -108,6 +110,7 @@ class xassetRegionHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
 
@@ -116,8 +119,7 @@ class xassetRegionHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

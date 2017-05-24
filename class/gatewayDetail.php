@@ -24,7 +24,6 @@ class xassetGatewayDetail extends XoopsObject {
   }
 }
 
-
 class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -38,6 +37,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function &getByIndex($id){
     $crit = new Criteria('gateway_id',$id);
+
     return $this->getObjects($crit);
   }
   ///////////////////////////////////////////////////
@@ -45,7 +45,8 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('gateway_id',$id));
     $crit->add(new Criteria('gkey',$code));
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
+
     return $objs[reset($objs)];
   }
   ///////////////////////////////////////////////////
@@ -53,7 +54,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('gkey',$key));
     $crit->add(new Criteria('gateway_id',$indexID));
     //
-    $detail =& $this->getObjects($crit);
+    $detail = $this->getObjects($crit);
     //
     if (count($detail) > 0) {
       $detail = reset($detail);
@@ -78,6 +79,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
     $keys      = "'$keys'";
     //
     $sql = "delete from $thisTable where gateway_id = $id and gkey in ($keys)";
+
     return $this->_db->queryF($sql);
   }
   ///////////////////////////////////////////////////
@@ -96,7 +98,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function getConfigArray($crit = null) {
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     $ary  = array();
     //
     foreach($objs as $obj) {
@@ -108,6 +110,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
                       'gtype'       => $obj->getVar('gtype'),
                       'htmlField'   => $this->renderField($obj) );
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -123,6 +126,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
       //
       case 'b':
         if ($obj->getVar('gvalue')) $checked = 'checked'; else {$checked = '';}
+
         return "<input name='values[$key]' type='checkbox' value='' $checked> ";
         break;
       //
@@ -138,6 +142,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
           //
           $select .= "<option label='$val' value='$val' $selected>$val</option>";
         }
+
         return $select;
         break;
       case 'x':
@@ -152,6 +157,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetGatewayDetailHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -161,7 +167,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
       return false;
     }
     // Copy all object vars into local variables
-		foreach ($obj->cleanVars as $k => $v) {
+        foreach ($obj->cleanVars as $k => $v) {
       ${$k} = $v;
     }
 
@@ -171,7 +177,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
       $id = $this->_db->genId($this->_db->prefix($this->_dbtable).'_uid_seq');
       $sql = sprintf( 'INSERT INTO %s (id, gateway_id, gkey, gvalue, gorder, description, list_ov, gtype)
                        VALUES (%u, %u, %s, %s, %u, %s, %s, %s)',
-											$this->_db->prefix($this->_dbtable),  $id, $gateway_id, $this->_db->quoteString($gkey),
+                                            $this->_db->prefix($this->_dbtable),  $id, $gateway_id, $this->_db->quoteString($gkey),
                       $this->_db->quoteString($gvalue), $gorder, $this->_db->quoteString($description),
                       $this->_db->quoteString($list_ov), $this->_db->quoteString($gtype));
     } else {
@@ -191,6 +197,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
 
@@ -199,8 +206,7 @@ class xassetGatewayDetailHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

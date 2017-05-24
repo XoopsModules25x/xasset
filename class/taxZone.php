@@ -20,7 +20,6 @@ class xassetTaxZone extends XAssetBaseObject {
   }
 }
 
-
 class xassetTaxZoneHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -38,6 +37,7 @@ class xassetTaxZoneHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetTaxZoneHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -46,13 +46,14 @@ class xassetTaxZoneHandler extends xassetBaseObjectHandler {
       $criteria   = new CriteriaCompo();
       $criteria->setSort('name'); }
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ar = array();
     //
     foreach($objs as $obj) {
       $ar[$obj->getVar('id')] = $obj->getVar('name');
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -104,6 +105,7 @@ class xassetTaxZoneHandler extends xassetBaseObjectHandler {
                         'actions'    => $actions );
       }
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -138,6 +140,7 @@ class xassetTaxZoneHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
 
@@ -146,8 +149,7 @@ class xassetTaxZoneHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

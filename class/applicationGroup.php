@@ -24,10 +24,10 @@ class xassetApplicationGroup extends XAssetBaseObject {
   /////////////////////////////////////////
   function &getApplication() {
     $app =& xoops_modulehandler('application','xasset');
+
     return $app->get($this->getVar('applicationid'));
   }
 }
-
 
 class xassetApplicationGroupHandler extends xassetBaseObjectHandler {
   //vars
@@ -46,12 +46,13 @@ class xassetApplicationGroupHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetApplicationGroupHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
   function getGroupIDArray($appID) {
     $crit = new Criteria('application_id',$appID);
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     $ar = array();
     foreach($objs as $key=>$obj) {
@@ -63,7 +64,7 @@ class xassetApplicationGroupHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function &getAppObjectsByUID($uid) {
     $hMember =& xoops_gethandler('member');
-    $aGroups = $hMember->getGroupsByUser($uid); 
+    $aGroups = $hMember->getGroupsByUser($uid);
     //filter this if user is register and member of full group then remove the registered group
 //    if (count($aGroups)>1) {
 //      $tmp = array();
@@ -73,7 +74,7 @@ class xassetApplicationGroupHandler extends xassetBaseObjectHandler {
 //        }
 //      }
 //      $aGroups = $tmp;
-//    } 
+//    }
     $crit = new CriteriaCompo();
     //
     if ($uid>0) {
@@ -114,6 +115,7 @@ class xassetApplicationGroupHandler extends xassetBaseObjectHandler {
       //
       $grps .= "<input name='cb[]' type='checkbox' value='$grpid' $checked> $name";
     }
+
     return $grps;
   }
   ///////////////////////////////////////////////////
@@ -163,6 +165,7 @@ class xassetApplicationGroupHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
 
@@ -171,8 +174,7 @@ class xassetApplicationGroupHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

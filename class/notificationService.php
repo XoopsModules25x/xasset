@@ -4,7 +4,6 @@ class xassetNotificationService extends XoopsObject {
   }
 }
 
-
 class xassetNotificationServiceHandler  extends XoopsObjectHandler {
   var $_ts;
   var $_template_dir = '';
@@ -26,7 +25,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
     //
     $hModule =& xoops_gethandler('module');
     //
-    $this->_ts     =& MyTextSanitizer::getInstance();
+    $this->_ts     = MyTextSanitizer::getInstance();
     $this->_template_dir = $this->_getTemplateDir($xoopsConfig['language']);
     //
     if (isset($xoopsModule) && $xoopsModule->getVar('dirname') == 'xasset') {
@@ -37,7 +36,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
   }
   /////////////////////////////////////////////
   function _getEmailTpl($category, $event)
-  {  
+  {
       $templates =& $this->_module->getInfo('_email_tpl');   // Gets $modversion['_email_tpl'] array from xoops_version.php
 
       foreach($templates as $tpl){
@@ -45,6 +44,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
               return $tpl;
           }
       }
+
       return false;
   }
   /////////////////////////////////////////////
@@ -52,11 +52,11 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
   {
       global $xoopsUser;
       //
-      if (is_object($xoopsUser)) { 
-	      if($uid == $xoopsUser->getVar('uid')){      // If $uid = current user's uid
-	          return $xoopsUser->getVar('email');     // return their email
-	      }
-      } 
+      if (is_object($xoopsUser)) {
+          if($uid == $xoopsUser->getVar('uid')){      // If $uid = current user's uid
+              return $xoopsUser->getVar('email');     // return their email
+          }
+      }
       $hMember =& xoops_gethandler('member');     //otherwise...
       if($member =& $hMember->getUser($uid)) {
           return $member->getVar('email');
@@ -68,7 +68,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
   function _sendEventEmail($email_tpl, $toEmails, $tags, $fromEmail = '')
   {
     global $xoopsConfig;
-    $tags = array_merge($tags, $this->_getCommonTplVars());         
+    $tags = array_merge($tags, $this->_getCommonTplVars());
     $xoopsMailer =& getMailer();
     $xoopsMailer->useMail();
     //set to HTML or plain text email
@@ -87,7 +87,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
     $xoopsMailer->setToEmails($toEmails);                           // Set who the email goes to
     $xoopsMailer->setSubject($email_tpl['mail_subject']);           // Set the subject of the email
     $xoopsMailer->setFromName($xoopsConfig['sitename']);            // Set a from address
-    $success = $xoopsMailer->send(true);      
+    $success = $xoopsMailer->send(true);
     //
     if (!$success) {
       print_r($xoopsMailer);
@@ -144,7 +144,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
     $hConfig =& xoops_getmodulehandler('config','xasset');
     //
     return $hCommon->getGroupEmails($hConfig->getEmailGroup());
-  }  
+  }
   /////////////////////////////////////////////
   function new_client_purchase($args)  {
     $oOrder      = $args;
@@ -175,6 +175,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
       $toEmails = $this->_getSiteAdminEmails();
       $success = $this->_sendEventEmail($email_tpl, $toEmails, $tags);
     }
+
     return $success;
   }
   /////////////////////////////////////////////
@@ -200,23 +201,25 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
       $toEmails = $this->_getUserEmail($oUserDetail->getVar('uid'));
       $success = $this->_sendEventEmail($email_tpl, $toEmails, $tags);
     }
+
     return $success;
   }
   /////////////////////////////////////////////
   function new_user($args) {
-    $hCommon  =& xoops_getmodulehandler('common','xasset'); 
+    $hCommon  =& xoops_getmodulehandler('common','xasset');
     //
-    list($oUsr,$password) = $args; 
+    list($oUsr,$password) = $args;
     //
     $tags = array();
     $tags['USERNAME']           = $oUsr->getVar('uname');
     $tags['PASSWORD']           = $password;
     //send welcome email
-    if($email_tpl = $this->_getEmailTpl('client', 'new_user')) {    
+    if($email_tpl = $this->_getEmailTpl('client', 'new_user')) {
       // Send confirm email to submitter
       $toEmails = $oUsr->email();
       $success  = $this->_sendEventEmail($email_tpl, $toEmails, $tags);
     }
+
     return $success;
   }
   ///////////////////////////////////////////
@@ -238,7 +241,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
     if($email_tpl = $this->_getEmailTpl('client', 'expire_warning')) {// Send confirm email to submitter
       $toEmails = $this->_getUserEmail($oMember->uid());
       $success = $this->_sendEventEmail($email_tpl, $toEmails, $tags);
-    }   
+    }
   }
   ///////////////////////////////////////////
   function expire_account($args) {
@@ -262,8 +265,7 @@ class xassetNotificationServiceHandler  extends XoopsObjectHandler {
     if($email_tpl = $this->_getEmailTpl('client', 'expire_membership')) {// Send confirm email to submitter
       $toEmails = $this->_getUserEmail($oMember->uid());
       $success = $this->_sendEventEmail($email_tpl, $toEmails, $tags);
-    }   
+    }
   }
 
 }
-?>

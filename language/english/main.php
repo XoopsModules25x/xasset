@@ -68,6 +68,3 @@ define('_LANG_ORDER_EXTRA_BUT','Continue');
 define('_XASSET_INVALID_EMAIL','Invalid EMail');
 define('_XASSET_EMAIL_LONG','Email is too long');
 define('_XASSET_EMAIL_SHORT','Email is too short');
-
-
-?>

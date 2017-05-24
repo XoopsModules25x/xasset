@@ -22,8 +22,8 @@
   define('_MI_XASSET_ENCRYPT_KEYD','This key is used to encrypt data to protect your video files. A random key is generated for you.');
   define('_MI_XASSET_BANDWIDTHENABLE','Enable Bandwidth Throttling');
   define('_MI_XASSET_BANDWIDTHENABLED','When enabled xAsset will limit the download rate for video streaming.');
-  define('_MI_XASSET_BANDWIDTH','Bandwidth Throttling Rate (EXPERIMENTAL)'); 
-  define('_MI_XASSET_BANDWIDTHD','Set the Badnwidth at which FLV Video will be streamed. Value is kilobytes per second per client.'); 
+  define('_MI_XASSET_BANDWIDTH','Bandwidth Throttling Rate (EXPERIMENTAL)');
+  define('_MI_XASSET_BANDWIDTHD','Set the Badnwidth at which FLV Video will be streamed. Value is kilobytes per second per client.');
   define('_MI_XASSET_PRODWIN_WIDTH','Product Window Width');
   define('_MI_XASSET_PRODWIN_WIDTHD','Width of the Application Product popup window');
   define('_MI_XASSET_PRODWIN_HEIGHT','Product Window Height');
@@ -139,12 +139,12 @@
   define('_MI_XASSET_APP_NEW_USER_NOTIFY','Client : Welcome email.');
   define('_MI_XASSET_APP_NEW_USER_NOTIFYSBJ','Registration & Login Information');
   define('_MI_XASSET_APP_NEW_USER_NOTIFYCAP','Notify client of registration & login information.');
-  define('_MI_XASSET_APP_NEW_USER_NOTIFYCAPDSC','Sends email to new registered user.'); 
+  define('_MI_XASSET_APP_NEW_USER_NOTIFYCAPDSC','Sends email to new registered user.');
 
   define('_MI_XASSET_APP_EXPIRE_WARN_NOTIFY','Client : Membership Expiry Warning.');
   define('_MI_XASSET_APP_EXPIRE_WARN_NOTIFYSBJ','Your membership is about to expire.');
   define('_MI_XASSET_APP_EXPIRE_WARN_NOTIFYCAP','Notify client when membership is about to expire.');
-  define('_MI_XASSET_APP_EXPIRE_WARN_NOTIFYDSC','Sends email to client when membership is about to expire.'); 
+  define('_MI_XASSET_APP_EXPIRE_WARN_NOTIFYDSC','Sends email to client when membership is about to expire.');
 
   define('_MI_XASSET_APP_EXPIRE_MEMBER_NOTIFY','Client : Membership Expired.');
   define('_MI_XASSET_APP_EXPIRE_MEMBER_NOTIFYSBJ','Your membership has expired.');
@@ -157,7 +157,6 @@
   define('_MI_XASSET_ORDER_COMPLETE_NOTIFYDSC','Sends email to client when order is complete.');
 
 define('_MI_XASSET_DASHBBOARD','Dashboard');
-
 
 define("_MI_XASSET_APPLICATIONS","%s Aplications");
 define("_MI_XASSET_LICENSES","%s Licenses");

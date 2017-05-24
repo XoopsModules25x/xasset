@@ -1,6 +1,6 @@
 <?php
 if (!defined('XOOPS_ROOT_PATH')) {
-	exit();
+    exit();
 }
 
 include_once XOOPS_ROOT_PATH.'/modules/xasset/language/'.$GLOBALS['xoopsConfig']['language'].'/calendar.php';

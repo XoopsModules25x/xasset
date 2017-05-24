@@ -35,7 +35,7 @@ class xassetApplicationProductMemb extends XAssetBaseObject {
       return (time() - $this->getVar('sent_warning')) > 60 * 60 * 24;
     } else {
       return true;
-    } 
+    }
   }
   ///////////////////////////////////////////////////////////
   function setSentWarning() {
@@ -52,10 +52,10 @@ class xassetApplicationProductMemb extends XAssetBaseObject {
   ///////////////////////////////////////////////////////////
   function &getOrderDetails() {
     $hOrderDetail =& xoops_getmodulehandler('orderDetail','xasset');
+
     return $hOrderDetail->get($this->getVar('order_detail_id'));
   }
 }
-
 
 class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
   //vars
@@ -74,6 +74,7 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetApplicationProductMembHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -86,7 +87,7 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('uid',$oUserDetails->uid()));
     $crit->add(new Criteria('group_id',$oAppProd->getVar($grpField)));
     //
-    $existing =& $this->getObjects($crit);
+    $existing = $this->getObjects($crit);
     if (count($existing) > 0) {
       $oMember = reset($existing);
       //
@@ -132,7 +133,7 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
               g.groupid = gl.groupid and gl.uid = u.uid";
     //
     $this->postProcessSQL($sql,$criteria);
-    $ary = array(); 
+    $ary = array();
     //
     if ($res = $this->_db->query($sql)) {
       $i = 0;
@@ -146,7 +147,8 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
         //
         $i++;
       }
-    } 
+    }
+
     return $ary;
   }
   //////////////////////////////////////////////////
@@ -166,14 +168,15 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
       $aSubs[$key]['product'] = $aAppProds[$aSubs[$key]['order_detail_id']]->itemDescription();
       $aSubs[$key]['period']  = $aAppProds[$aSubs[$key]['order_detail_id']]->groupExpireDate();
       $aSubs[$key]['buyNow']  = $aAppProds[$aSubs[$key]['order_detail_id']]->getBuyNowButton();
-    } 
+    }
+
     return $aSubs;
   }
   ///////////////////////////////////////////////////
   function removeFromGroup($id, $force = false) {
-    $hMember =& xoops_gethandler('member');   
+    $hMember =& xoops_gethandler('member');
     
-    $oObj =& $this->get($id); 
+    $oObj =& $this->get($id);
     //first remove from xoops group
     if (!$force) {
       $hMember->removeUsersFromGroup($oObj->getVar('group_id'), array($oObj->getVar('uid')));
@@ -183,8 +186,9 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
       $uid     = $oObj->getVar('uid');
       //
       $sql   = "delete from $table where groupid = $groupid and uid = $uid";
+
       return $this->_db->queryF($sql);
-    }  
+    }
     //last, delete from this table
     return $this->delete($oObj);
   }
@@ -192,6 +196,7 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
   function getSubscriberCountByUser($xoopsUser) {
     if ($xoopsUser) {
       $crit = new Criteria('uid',$xoopsUser->uid());
+
       return $this->getCount($crit);
     } else {
       return false;
@@ -227,6 +232,7 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
     //Make sure auto-gen ID is stored correctly in object
@@ -238,5 +244,3 @@ class xassetApplicationProductMembHandler extends xassetBaseObjectHandler {
     return true;
   }
 }
-
-?>

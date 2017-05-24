@@ -19,17 +19,20 @@ class xassetGateway extends xassetBaseObject {
   }
   ///////////////////////////////////////////////////
   function getDetails() {
-		$hgDetail =& xoops_getmodulehandler('gatewayDetail','xasset');
+        $hgDetail =& xoops_getmodulehandler('gatewayDetail','xasset');
+
     return $hgDetail->getByIndex($this->getVar('id'));
   }
   ///////////////////////////////////////////////////
   function getDetailArray() {
     $hgDetail =& xoops_getmodulehandler('gatewayDetail','xasset');
+
     return $hgDetail->getConfigArrayByIndex($this->getVar('id'));
   }
   ///////////////////////////////////////////////////
   function saveConfigValue($key, $value) {
     $hGDetail =& xoops_getmodulehandler('gatewayDetail','xasset');
+
     return $hGDetail->saveConfigValue($this->getVar('id'),$key,$value);
   }
   ///////////////////////////////////////////////////
@@ -43,11 +46,10 @@ class xassetGateway extends xassetBaseObject {
         $hGDetail->saveConfigValue($this->getVar('id'),$detail['gkey'],true);
       } else {
         $hGDetail->saveConfigValue($this->getVar('id'),$detail['gkey'],false);
-			}
+            }
     }
   }
 }
-
 
 class xassetGatewayHandler extends xassetBaseObjectHandler {
   //vars
@@ -66,37 +68,43 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetGatewayHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
   function &getByCode($code){
     $crit = new Criteria('code',$code);
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     if (count($objs) == 0){
       $res = false;
+
       return $res;
-		} else {
+        } else {
       $res = current($objs);
-			return $res;
+
+            return $res;
     }
   }
   ///////////////////////////////////////////////////
   function &getCodeID($code) {
     $crit = new Criteria('code',$code);
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     if (count($objs) == 0){
       $res = false;
+
       return $res;
     } else if (count($objs) > 0) {
       $obj = current($objs);
+
       return $obj->getVar('id');
     }
   }
   ///////////////////////////////////////////////////
   function getInstalledGatewayArray() {
     $crit = new Criteria('enabled',true);
+
     return $this->getGatewayArray($crit);
   }
   ///////////////////////////////////////////////////
@@ -106,23 +114,25 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
       $gateway =& $this->getGatewayModuleByID($ar[$i]['id']);
       $ar[$i]['description'] = $gateway->description;
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
   function getGatewayArray($crit = null) {
-    global $xoopsModule; 
-    // 
-    $objs =& $this->getObjects($crit); 
+    global $xoopsModule;
+    //
+    $objs = $this->getObjects($crit);
     $ary  = array();
     foreach($objs as $obj) {
       $gateway =& $this->getGatewayModuleByID($obj->ID());
       if ($gateway->version() == $xoopsModule->getVar('version'))
         $ary[] = $obj->getArray();
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
-	function &getGatewayModuleByID($id) {
+    function &getGatewayModuleByID($id) {
     $gateway =& $this->get($id);
     //
     $directory_array = $this->_getDirectoryListing();
@@ -147,13 +157,14 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
       return $module;
     } else {
       $res = false;
+
       return $res;
     }
   }
   ///////////////////////////////////////////////////
   function getGatewayFromPost($post, &$gateway) {
-		$directory_array = $this->_getDirectoryListing();
-		//
+        $directory_array = $this->_getDirectoryListing();
+        //
     for ($i=0, $n=sizeof($directory_array); $i<$n; $i++) {
       $file = $directory_array[$i]['file'];
       $class = substr($file, 0, strrpos($file, '.'));
@@ -163,20 +174,22 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
       if (is_subclass_of($module,'baseGateway')) {
         if ($orderID = $module->isThisGateway($post)) {
           $gateway = $module;
+
           return $orderID;
         } else {
           unset($module);
         }
       }
     }
+
     return false;
   }
   ///////////////////////////////////////////////////
   function parseGatewayModules() {
-    global $xoopsModule; 
+    global $xoopsModule;
     //
-		$directory_array = $this->_getDirectoryListing();  
-		//include and process payment modules
+        $directory_array = $this->_getDirectoryListing();
+        //include and process payment modules
     $installed_modules = array();
     for ($i=0, $n=sizeof($directory_array); $i<$n; $i++) {
       $file = $directory_array[$i]['file'];
@@ -193,18 +206,19 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
                                       'enabled'   => $module->enabled,
                                       'installed' => $module->installed,
                                       'shortDesc' => $module->shortDesc);
-			}
+            }
       unset($module);
     }
+
     return $installed_modules;
   }
   ///////////////////////////////////////////////////
-	function enableGateway($class) {
-		return $this->switchGateway($class,true);
+    function enableGateway($class) {
+        return $this->switchGateway($class,true);
   }
   ///////////////////////////////////////////////////
   function disableGateway($class) {
-		$this->switchGateway($class,false);
+        $this->switchGateway($class,false);
     //now delete the gateway record
     if ($obj =& $this->getByCode($class)) {
       //delete data
@@ -215,15 +229,17 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
     }
   }
   ///////////////////////////////////////////////////
-	function switchGateway($class, $switch) {
+    function switchGateway($class, $switch) {
     if ($obj =& $this->getByCode($class)) {
       $obj->setVar('enabled',$switch);
+
       return $this->insert($obj);
     } else {
       //could not find in tables... need to install?
       $this->parseGatewayModules();
       //
       $module = new $class;
+
       return $module->install();
     }
   }
@@ -231,7 +247,7 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
   function postPaymentDetails($gateID) {
     $gateway =& $this->getGatewayModuleByID($gateID);
     //do we need more info?
-    if ($gateway->preprocess()) 
+    if ($gateway->preprocess())
       $gateway->doPreprocess();
     else
       $gateway->postToGateway();
@@ -253,7 +269,7 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
       $id = $this->_db->genId($this->_db->prefix($this->_dbtable).'_uid_seq');
       $sql = sprintf( 'INSERT INTO %s (id, code, enabled)
                        VALUES (%u, %s, %u)',
-											$this->_db->prefix($this->_dbtable),  $id, $this->_db->quoteString($code), $enabled);
+                                            $this->_db->prefix($this->_dbtable),  $id, $this->_db->quoteString($code), $enabled);
     } else {
         $sql = sprintf('UPDATE %s SET code = %s, enabled = %u where id = %u',
                         $this->_db->prefix($this->_dbtable), $this->_db->quoteString($code), $enabled, $id);
@@ -268,6 +284,7 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
 
@@ -275,24 +292,25 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
     if (empty($id)) {
       $id = $this->_db->getInsertId();
     }
-		$obj->assignVar('id', $id);
+        $obj->assignVar('id', $id);
+
     return true;
-	}
-	///////////////////////////////////////////////////
-	/*function _postToGateway($url, $fields) {
-		$form = "<html>
-						 <body onLoad='document.checkout.submit()'>
-						 <form name='checkout' method='post' action='$url'> $fields </form>
-						 </body>
-						 </html>";
-		echo $form;
-	}        */
+    }
+    ///////////////////////////////////////////////////
+    /*function _postToGateway($url, $fields) {
+        $form = "<html>
+                         <body onLoad='document.checkout.submit()'>
+                         <form name='checkout' method='post' action='$url'> $fields </form>
+                         </body>
+                         </html>";
+        echo $form;
+    }        */
   ///////////////////////////////////////////////////
   function _getDirectoryListing() {
-		global $PHP_SELF;
+        global $PHP_SELF;
     //
-		$file_extension   = '.php';//substr($PHP_SELF, strrpos($PHP_SELF, '.'));
-		$module_directory = XASSET_CLASS_PATH .'/gateways/';
+        $file_extension   = '.php';//substr($PHP_SELF, strrpos($PHP_SELF, '.'));
+        $module_directory = XASSET_CLASS_PATH .'/gateways/';
     //
     $directory_array = array();
     if ($dir = @dir($module_directory)) {
@@ -307,9 +325,7 @@ class xassetGatewayHandler extends xassetBaseObjectHandler {
       sort($directory_array);
       $dir->close();
     }
+
     return $directory_array;
-  } 
+  }
 }
-
-
-?>

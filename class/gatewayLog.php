@@ -30,7 +30,6 @@ class xassetGatewayLog extends XAssetBaseObject {
   }
 }
 
-
 class xassetGatewayLogHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -48,31 +47,33 @@ class xassetGatewayLogHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetGatewayLogHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
-	function addLog($orderID, $gatewayID, $orderStage, $log, $force = false) {
-		if (is_array($log)) {
+    function addLog($orderID, $gatewayID, $orderStage, $log, $force = false) {
+        if (is_array($log)) {
       $save = '';
-			foreach($log as $key=>$value) {
-				$save .= "$key : $value\n";
-			}
-		} else { $save = $log;}
+            foreach($log as $key=>$value) {
+                $save .= "$key : $value\n";
+            }
+        } else { $save = $log;}
     //
     $save = addslashes($save);
-		//
-		$obj  =& $this->create();
-		$obj->setVar('order_id',$orderID);
-		$obj->setVar('gateway_id',$gatewayID);
-		$obj->setVar('date',time());
-		$obj->setVar('order_stage',$orderStage);
-		$obj->setVar('log_text',$save);
+        //
+        $obj  =& $this->create();
+        $obj->setVar('order_id',$orderID);
+        $obj->setVar('gateway_id',$gatewayID);
+        $obj->setVar('date',time());
+        $obj->setVar('order_stage',$orderStage);
+        $obj->setVar('log_text',$save);
     //
     return $this->insert($obj, $force);
   }
   ///////////////////////////////////////////////////
   function &getLogsByOrder($orderID) {
     $crit = new Criteria('order_id',$orderID);
+
     return $this->getLogs($crit);
   }
   ///////////////////////////////////////////////////
@@ -111,6 +112,7 @@ class xassetGatewayLogHandler extends xassetBaseObjectHandler {
         $i++;
       }
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -131,7 +133,7 @@ class xassetGatewayLogHandler extends xassetBaseObjectHandler {
       $sql = sprintf( 'INSERT INTO %s (id, order_id, gateway_id, date, order_stage, log_text)
 											 VALUES (%u, %u, %u, %u, %u, %s)',
                       $this->_db->prefix($this->_dbtable),  $id, $order_id, $gateway_id, $date, $order_stage,
-											$this->_db->quoteString($log_text));
+                                            $this->_db->quoteString($log_text));
     } else {
         $sql = sprintf('UPDATE %s SET order_id = %u, gateway_id = %u, date = %u, ordre_stage = %u, log_text = %s where id = %u',
                         $this->_db->prefix($this->_dbtable), $order_id, $gateway_id, $date, $order_stage,
@@ -146,6 +148,7 @@ class xassetGatewayLogHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
 
@@ -154,8 +157,7 @@ class xassetGatewayLogHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

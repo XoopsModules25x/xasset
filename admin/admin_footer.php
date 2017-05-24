@@ -20,7 +20,6 @@
 
 global $pathIcon32;
 
-
 //$xoopsTpl->xoops_setCaching(0);
 $xoopsTpl->caching=0;
 if (isset($xoopsOption['template_main'])){

@@ -2,7 +2,7 @@
 
 ///////////////////////////////////////////////////
 function parseConstants($body, $moduleName) {
-  global $xoopsConfig;   
+  global $xoopsConfig;
   //
   $hModule =& xoops_gethandler('module');
   $module =& $hModule->getByDirname($moduleName);
@@ -18,6 +18,7 @@ function parseConstants($body, $moduleName) {
   foreach($tags as $k=>$v){
       $body = preg_replace('/{'.$k.'}/', $v, $body);
   }
+
   return $body;
 }
 ///////////////////////////////////////////////////
@@ -25,7 +26,7 @@ function getGroupClients() {
   global $xoopsOption;
   //
   $hConfig =& xoops_getmodulehandler('config','xasset');
-  $gid     = $hConfig->getGroup();     
+  $gid     = $hConfig->getGroup();
   //
   $hMember =& xoops_gethandler('member');
   $users   = $hMember->getUsersByGroup($gid,true);
@@ -33,7 +34,7 @@ function getGroupClients() {
   $ar = array();
   foreach($users as $user) {
     $ar[$user->getVar('uid')] = $user->getVar('name');
-  }     
+  }
   //
   return $ar;
 }
@@ -42,15 +43,17 @@ function getDateField($name, $date = null) {
   if (!isset($date)) {
     $date = time();
   }
-	include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-	//
-	if (class_exists('XoopsFormCalendar')) {
-  	$cal = new XoopsFormCalendar($name, $name, $date, array(), array('value'=>date("Y-m-d",$date)));
+    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    //
+    if (class_exists('XoopsFormCalendar')) {
+    $cal = new XoopsFormCalendar($name, $name, $date, array(), array('value'=>date("Y-m-d",$date)));
+
     return $cal->render();
-	} else {
+    } else {
 //    include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';
     include_once XOOPS_ROOT_PATH . '/modules/xasset/include/calendarjs.php';
-    return "<input type='text' name='$name' id='$name' size='11' maxlength='11' value='".date("Y-m-d", $date)."' /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$name."\");'>";	
+
+    return "<input type='text' name='$name' id='$name' size='11' maxlength='11' value='".date("Y-m-d", $date)."' /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$name."\");'>";
   }
 }
 /////////////////////////////////////////
@@ -66,25 +69,25 @@ function keyMatches($id,$key,$weight,$error) {
     require_once(XOOPS_ROOT_PATH . "/header.php");
     $xoopsTpl->assign('xasset_error',$error);
     include(XOOPS_ROOT_PATH . "/footer.php");
+
     return false;
   }
 }
 ///////////////////////////////////////////////
 function getKey($id, $weight) {
   $crypt = new xassetCrypt();
+
   return $crypt->cryptValue($id,$weight);
 }
 /////////////////////////////////////////
 function insertHeaderCountriesJavaScript() {
   $hCommon =& xoops_getmodulehandler('common','xasset');
+
   return $hCommon->insertHeaderCountriesJavaScript();
 }
 /////////////////////////////////////////
 function insertHeaderCountriesJavaScriptNoAllZones() {
   $hCommon =& xoops_getmodulehandler('common','xasset');
+
   return $hCommon->insertHeaderCountriesJavaScriptNoAllZones();
 }
-
-
-
-?>

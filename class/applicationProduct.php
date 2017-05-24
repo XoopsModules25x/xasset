@@ -22,8 +22,8 @@ class xassetApplicationProduct extends XAssetBaseObject {
     $this->initVar('max_access', XOBJ_DTYPE_INT, 0, false);
     $this->initVar('max_days',XOBJ_DTYPE_INT, 0, false);
     $this->initVar('expires', XOBJ_DTYPE_LTIME, null, false);
-    $this->initVar('add_to_group',XOBJ_DTYPE_INT, 0, false);  
-    $this->initVar('add_to_group2',XOBJ_DTYPE_INT, 0, false);  
+    $this->initVar('add_to_group',XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('add_to_group2',XOBJ_DTYPE_INT, 0, false);
     $this->initVar('item_rich_description', XOBJ_DTYPE_TXTBOX, null, true, 50000);
     $this->initVar('enabled', XOBJ_DTYPE_INT, 1, false);
     $this->initVar('group_expire_date', XOBJ_DTYPE_INT , null, false);
@@ -59,11 +59,13 @@ class xassetApplicationProduct extends XAssetBaseObject {
   /////////////////////////////////////////
   function &getApplication() {
     $app =& xoops_modulehandler('application','xasset');
+
     return $app->get($this->getVar('applicationid'));
   }
   /////////////////////////////////////////
   function &getTaxClass() {
     $class =& xoops_modulehandler('taxClass','xasset');
+
     return $class->get($this->getVar('taxclassid','xasset'));
   }
   /////////////////////////////////////////
@@ -81,6 +83,7 @@ class xassetApplicationProduct extends XAssetBaseObject {
   ///////////////////////////////////////////////
   function getKey() {
     $crypt = new xassetCrypt();
+
     return $crypt->cryptValue($this->getVar('id'),$this->weight);
   }
   //////////////////////////////////////////////
@@ -89,7 +92,7 @@ class xassetApplicationProduct extends XAssetBaseObject {
     //have two currency choices.. either the chosen currency in $_SESSION or the base currency;
     $curID = isset($_SESSION['currency_id']) ? $_SESSION['currency_id'] : $this->getVar('base_currency_id');
     $oCur    =& $hCurrency->get($curID);
-    $oAppCur =& $hCurrency->get($this->getVar('base_currency_id')); 
+    $oAppCur =& $hCurrency->get($this->getVar('base_currency_id'));
     //
     if ($format == 's') {
       return $oCur->valueOnlyFormat($this->getVar('unit_price')/$oAppCur->value());
@@ -105,16 +108,17 @@ class xassetApplicationProduct extends XAssetBaseObject {
   function getBuyNowButton($image = '') {
     if ($image == '')
       $image    = XOOPS_URL.'/modules/xasset/images/buyNow.png';
-    //     
-    $button = '<form method="post" action="'.XOOPS_URL.'/modules/xasset/order.php?id='.$this->ID().'&amp;key='.$this->getKey().'&amp;op=addToCart">    
-                         <input type="image" src="'.$image.'" title="Buy Now" ALT="Buy Now" name="buyNow" style="border:0;background:transparent" />                        
+    //
+    $button = '<form method="post" action="'.XOOPS_URL.'/modules/xasset/order.php?id='.$this->ID().'&amp;key='.$this->getKey().'&amp;op=addToCart">
+                         <input type="image" src="'.$image.'" title="Buy Now" ALT="Buy Now" name="buyNow" style="border:0;background:transparent" />
                          </form>';
+
     return $button;
   }
   //////////////////////////////////////////////
   function &getArray() {
-    $ary =& parent::getArray(); 
-    $ary['product_link'] = $this->getBuyNowButton(); 
+    $ary =& parent::getArray();
+    $ary['product_link'] = $this->getBuyNowButton();
     //
     return $ary;
   }
@@ -127,10 +131,10 @@ class xassetApplicationProduct extends XAssetBaseObject {
     //
     if (!isset($movie_id)) {
       //get first sample video from packages
-      $aoPackages =& $hPackage->getProductSamplePackages($this); 
+      $aoPackages =& $hPackage->getProductSamplePackages($this);
       if (count($aoPackages) > 0) {
         $oPackage =& $aoPackages[0];
-      } 
+      }
     } else {
       $oPackage =& $hPackage->get($movie_id);
     }
@@ -147,7 +151,6 @@ class xassetApplicationProduct extends XAssetBaseObject {
     }
   }
 }
-
 
 class xassetApplicationProductHandler extends xassetBaseObjectHandler {
   //vars
@@ -166,6 +169,7 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetApplicationProductsHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -192,9 +196,9 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
     //
     if (isset($currid)) {
       $crit = new Criteria('id',$currid);
-      $curs =& $hCurrency->getObjects($crit);
+      $curs = $hCurrency->getObjects($crit);
     } else {
-      $curs       =& $hCurrency->getObjects();
+      $curs       = $hCurrency->getObjects();
     }
     //
     $sql       = "select ap.*, a.name application_name, c.code tax_code, cu.name currency_name, cu.value
@@ -202,7 +206,7 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
                     ap.application_id   = a.id inner join $classTable c on
                     ap.tax_class_id     = c.id inner join $currTable cu on
                     ap.base_currency_id = cu.id";
-    $this->postProcessSQL($sql, $criteria);     
+    $this->postProcessSQL($sql, $criteria);
     //
     $ary = array();
     //
@@ -238,16 +242,17 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
         unset($priceAry);
       }
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
-  function parseTokens($body, $oApp) { 
+  function parseTokens($body, $oApp) {
     if (preg_match_all('/{TAG.(.*?)}/', $body, $matches)) {
-      //matchs will be of form {TAG.app.BUY(option) 
-      foreach($matches[1] as $key=>$match) { 
+      //matchs will be of form {TAG.app.BUY(option)
+      foreach($matches[1] as $key=>$match) {
         //check for BUY tag
         $replace = $matches[0][$key];
-        if (!(strpos($match,'.BUY') === false)) { 
+        if (!(strpos($match,'.BUY') === false)) {
           if (preg_match('/(.*).BUY\[(.*)\]/',$match,$buy)) {
             //here we have a buy with a pointer to a buy now image BUY[http://image...]
             $oAppProd =& $this->getProductByCode($buy[1],$oApp->ID());
@@ -257,7 +262,7 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
             $oAppProd =& $this->getProductByCode($buy[1],$oApp->ID());
             $image    = 'images/buyNow.png';
           }
-          if (is_object($oAppProd)) { 
+          if (is_object($oAppProd)) {
             //construct button
             $button = $oAppProd->getBuyNowButton($image);
             //finally replace
@@ -272,7 +277,7 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
             //
             $body = str_replace($replace,$price,$body);
           }
-        }  
+        }
         //matches will be of form {TAG.app.DESC}
         if (!(strpos($match,'.DESC') === false)) {
           if (preg_match('/(.*).DESC/',$match,$buy)) {
@@ -293,8 +298,8 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
             //here were only have app.BUY
             $oAppProd =& $this->getProductByCode($buy[1],$oApp->ID());
             $video    = null;
-          }      
-          if (is_object($oAppProd)) {    
+          }
+          if (is_object($oAppProd)) {
             //$hPackage =& xoops_getmodulehandler('package','xasset');
             //
             $player = $oAppProd->getVideoPlayer($video);
@@ -302,41 +307,45 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
           }
         }
       }
-    } 
+    }
+
     return $body;
-  } 
+  }
   ///////////////////////////////////////////////////
   function &getProductByCode($pCode, $pAppID) {
     $crit = new CriteriaCompo(new Criteria('application_id',$pAppID));
-    $crit->add(new Criteria('item_code',$pCode)); 
+    $crit->add(new Criteria('item_code',$pCode));
     //
-    $aObjs =& $this->getObjects($crit);
+    $aObjs = $this->getObjects($crit);
     //
     if (count($aObjs) > 0) {
       $obj = reset($aObjs);
+
       return $obj;
     } else {
       $obj = false;
+
       return $obj;
     }
   }
   ///////////////////////////////////////////////////
-  function &getApplicationProductObjectsByOrderDetail($crit) { 
+  function &getApplicationProductObjectsByOrderDetail($crit) {
     //first get prod_ids
     $hOrderDetail =& xoops_getmodulehandler('orderDetail','xasset');
-    $aDetails     =& $hOrderDetail->getObjects($crit);  
+    $aDetails     = $hOrderDetail->getObjects($crit);
     $crit         = new CriteriaCompo();
-    // 
+    //
     foreach($aDetails as $key=>$oDetail) {
       $crit->add(new Criteria('id',$oDetail->getAppProdID()));
     }
     //now get products
-    $aProds =& $this->getObjects($crit,true);
+    $aProds = $this->getObjects($crit,true);
     //index by orderDetail
-    $ary = array(); 
+    $ary = array();
     foreach($aDetails as $key=>$oDetail) {
       $ary[$oDetail->ID()] = $aProds[$oDetail->getAppProdID()];
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -375,27 +384,27 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
     if ($obj->isNew()) {
       // Determine next auto-gen ID for table
       $id = $this->_db->genId($this->_db->prefix($this->_dbtable).'_uid_seq');
-      $sql = sprintf( 'INSERT INTO %s (id, application_id, tax_class_id, display_order, base_currency_id, package_group_id, 
+      $sql = sprintf( 'INSERT INTO %s (id, application_id, tax_class_id, display_order, base_currency_id, package_group_id,
                        sample_package_group_id, item_code,
                        item_description, unit_price, old_unit_price, min_unit_count, max_access, max_days, expires, add_to_group,
                        add_to_group2, item_rich_description, enabled, group_expire_date, group_expire_date2, extra_instructions)
                        VALUES (%u, %u, %u, %u, %u, %u, %u, %s, %s, %f, %f, %u, %u, %u, %u, %u, %u, %s, %u, %u, %u, %s)',
                        $this->_db->prefix($this->_dbtable),  $id, $application_id, $tax_class_id, $display_order,
-                       $base_currency_id, $package_group_id, $sample_package_group_id, $this->_db->quoteString($item_code), 
-                       $this->_db->quoteString($item_description), $unit_price, $old_unit_price, $min_unit_count, 
+                       $base_currency_id, $package_group_id, $sample_package_group_id, $this->_db->quoteString($item_code),
+                       $this->_db->quoteString($item_description), $unit_price, $old_unit_price, $min_unit_count,
                        $max_access, $max_days, $expires, $add_to_group, $add_to_group2,
                        $this->_db->quoteString($item_rich_description), $enabled, $group_expire_date, $group_expire_date2,
                        $this->_db->quoteString($extra_instructions) );
     } else {
         $sql = sprintf('UPDATE %s SET application_id = %u, tax_class_id = %u, display_order = %u, base_currency_id = %u,
                         package_group_id = %u, sample_package_group_id = %u, item_code = %s, item_description = %s, unit_price = %f, old_unit_price = %f,
-                        min_unit_count = %u, max_access = %u, max_days = %u, expires = %u, add_to_group = %u, add_to_group2 = %u, 
+                        min_unit_count = %u, max_access = %u, max_days = %u, expires = %u, add_to_group = %u, add_to_group2 = %u,
                         item_rich_description = %s, enabled = %u, group_expire_date = %u, group_expire_date2 = %u, extra_instructions = %s where id = %u',
                         $this->_db->prefix($this->_dbtable), $application_id, $tax_class_id, $display_order,
                         $base_currency_id, $package_group_id, $sample_package_group_id, $this->_db->quoteString($item_code),
                         $this->_db->quoteString($item_description), $unit_price, $old_unit_price,
                         $min_unit_count, $max_access, $max_days, $expires, $add_to_group, $add_to_group2,
-                        $this->_db->quoteString($item_rich_description), $enabled, $group_expire_date, $group_expire_date2, 
+                        $this->_db->quoteString($item_rich_description), $enabled, $group_expire_date, $group_expire_date2,
                         $this->_db->quoteString($extra_instructions), $id);
     }
      //echo $sql;
@@ -408,6 +417,7 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
     //Make sure auto-gen ID is stored correctly in object
@@ -419,5 +429,3 @@ class xassetApplicationProductHandler extends xassetBaseObjectHandler {
     return true;
   }
 }
-
-?>

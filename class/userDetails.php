@@ -35,6 +35,7 @@ class xassetUserDetails extends XAssetBaseObject {
   //////////////////////////////////////
   function &getZone() {
     $zone =& xoops_getmodulehandler('zone','xasset');
+
     return $zone->get($this->getVar('zone_id'));
   }
   //////////////////////////////////////
@@ -44,11 +45,13 @@ class xassetUserDetails extends XAssetBaseObject {
   //////////////////////////////////////
   function &getUser() {
     $hUser =& xoops_gethandler('user');
+
     return $hUser->get($this->uid());
   }
   //////////////////////////////////////
   function email() {
     $oUser =& $this->getUser();
+
     return $oUser->email();
   }
   //////////////////////////////////////
@@ -57,19 +60,19 @@ class xassetUserDetails extends XAssetBaseObject {
     if ($this->getVar('street_address1') <> '')
       $address[] = $this->getVar('street_address1');
     if ($this->getVar('street_address2') <> '')
-      $address[] = $this->getVar('street_address2');  
+      $address[] = $this->getVar('street_address2');
     if ($this->getVar('town') <> '')
-      $address[] = $this->getVar('town');  
+      $address[] = $this->getVar('town');
     if ($this->getVar('state') <> '')
-      $address[] = $this->getVar('state');  
+      $address[] = $this->getVar('state');
     if ($this->getVar('zip') <> '')
-      $address[] = $this->getVar('zip');  
+      $address[] = $this->getVar('zip');
     if ($this->getVar('tel_no') <> '')
-      $address[] = $this->getVar('tel_no');  
+      $address[] = $this->getVar('tel_no');
     if ($this->getVar('fax_no') <> '')
-      $address[] = $this->getVar('fax_no');  
+      $address[] = $this->getVar('fax_no');
     //
-    return $address;  
+    return $address;
   }
   //////////////////////////////////////
   function addCredits($credits = 0) {
@@ -105,12 +108,12 @@ class xassetUserDetails extends XAssetBaseObject {
     $hThis      =& xoops_getmodulehandler('order','xasset');
     //
     $result    = false;
-    $aPackages =& $hThis->getUserDownloads($this->ID());     
+    $aPackages =& $hThis->getUserDownloads($this->ID());
     foreach($aPackages as $aPackage) {
-      if ($aPackage['packageID'] == $pPackageID) {   
-        if ($aPackage['status'] == 5) { 
-          $result = true;    
-          if ($aPackage['max_days'] > 0) { 
+      if ($aPackage['packageID'] == $pPackageID) {
+        if ($aPackage['status'] == 5) {
+          $result = true;
+          if ($aPackage['max_days'] > 0) {
             $firstDowned = $hPackStats->getFirstDownloadDate($pPackageID,$this->getVar('uid'));
             if ( ($firstDowned + $aPackage['max_days']*60*60*24) < time()) {
               $result = true;
@@ -118,7 +121,7 @@ class xassetUserDetails extends XAssetBaseObject {
               $pError = 'Download period has expired.';
               $result = false;
             }
-          } 
+          }
           if ($aPackage['max_access'] > 0) {
             $downed = $hPackStats->getUserPackageDownloadCount($pPackageID,$this->getVar('uid'));
             if ( $downed < $aPackage['max_access']) {
@@ -127,7 +130,7 @@ class xassetUserDetails extends XAssetBaseObject {
               $pError = 'Maximum download count exceeded.';
               $result = false;
             }
-          } 
+          }
         }
       }
     }
@@ -139,7 +142,6 @@ class xassetUserDetails extends XAssetBaseObject {
     return $result;
   }
 }
-
 
 class xassetUserDetailsHandler extends xassetBaseObjectHandler {
   //vars
@@ -158,17 +160,20 @@ class xassetUserDetailsHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetUserDetailsHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
   function &getUserDetailByID($uid) {
     $crit = new CriteriaCompo(new Criteria('uid',$uid));
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     if (count($objs) > 0) {
-      $obj = reset($objs); 
+      $obj = reset($objs);
+
       return $obj;
     } else {
       $res = false;
+
       return $res;
     }
   }
@@ -186,7 +191,7 @@ class xassetUserDetailsHandler extends xassetBaseObjectHandler {
   function getUserDetailArray($criteria=null) {
     global $xoopsUser;
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ary = array();
     //
@@ -203,6 +208,7 @@ class xassetUserDetailsHandler extends xassetBaseObjectHandler {
                       'fax_no'          => $obj->getVar('fax_no'),
                       'email'           => $xoopsUser->email() );
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -258,6 +264,7 @@ class xassetUserDetailsHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
     //Make sure auto-gen ID is stored correctly in object
@@ -265,8 +272,7 @@ class xassetUserDetailsHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

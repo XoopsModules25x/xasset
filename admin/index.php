@@ -18,14 +18,12 @@
  * @version    $Id $
  */
 
-
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/include/cp_header.php';
 include_once dirname(__FILE__) . '/admin_header.php';
 
 xoops_cp_header();
 
-	$indexAdmin = new ModuleAdmin();
-
+    $indexAdmin = new ModuleAdmin();
 
 //----------------------------------
 
@@ -53,7 +51,6 @@ else
 
 $indexAdmin->addInfoBox(_MI_XASSET_DASHBBOARD);
 
-
 $indexAdmin->addInfoBoxLine(_MI_XASSET_DASHBBOARD, _MI_XASSET_APPLICATIONS, $hApp->getAllApplicationsCount(), 'Green');
 $indexAdmin->addInfoBoxLine(_MI_XASSET_DASHBBOARD, _MI_XASSET_LICENSES, $hLic->getAllLicensesCount(), 'Green');
 $indexAdmin->addInfoBoxLine(_MI_XASSET_DASHBBOARD, _MI_XASSET_FILES, $hPack->getAllPackagesCount(), 'Green');
@@ -64,9 +61,6 @@ $indexAdmin->addInfoBoxLine(_MI_XASSET_DASHBBOARD, '<br />Outgoing SSL Support? 
 } else {
     $indexAdmin->addInfoBoxLine(_MI_XASSET_DASHBBOARD, '<br />Outgoing SSL Support? Failed with codes errnum: '. $errnum." and errstr: ".$errstr, 'Green');
 }
-
-
-
 
     echo $indexAdmin->addNavigation('index.php');
     echo $indexAdmin->renderIndex();

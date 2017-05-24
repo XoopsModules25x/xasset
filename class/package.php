@@ -39,7 +39,7 @@ class xassetPackage extends xassetBaseObject {
     if ($force) {
       return filesize($this->filePath());
     } else {
-      return $this->getVar('filesize'); 
+      return $this->getVar('filesize');
     }
   }
   ///////////////////////////////////////////////////
@@ -56,7 +56,7 @@ class xassetPackage extends xassetBaseObject {
     $crit = new CriteriaCompo(new Criteria('packageid', $id));
     $crit->setSort('date');
     //
-    $arr      =& $hPackStats->getObjects($crit);
+    $arr      = $hPackStats->getObjects($crit);
     //
     return $arr;
   }
@@ -73,10 +73,10 @@ class xassetPackage extends xassetBaseObject {
     //
     $hClient =& xoops_getmodulehandler('userDetails','xasset');
     //
-    if ($xoopsUser) {   
-      if ($oClient =& $hClient->getUserDetailByID($xoopsUser->uid())) {   
+    if ($xoopsUser) {
+      if ($oClient =& $hClient->getUserDetailByID($xoopsUser->uid())) {
         //this is the user.... check if this user has access to this file
-        if ($oClient->canDownloadPackage($this->ID(),$error)) {   
+        if ($oClient->canDownloadPackage($this->ID(),$error)) {
           $this->downloadFile();
         }  else {
           redirect_header('index.php',5,$error);
@@ -97,7 +97,7 @@ class xassetPackage extends xassetBaseObject {
     //
     $file_saved   = $this->getVar('serverFilePath');
     $file_display = $this->getVar('filename');
-    // 
+    //
     if ( $this->getVar('filetype') <> '')   {
       if (substr_count($file_display,'.') == 0) {
         $file_display = $this->getVar('filename').'.'.$this->getVar('filetype');
@@ -112,10 +112,10 @@ class xassetPackage extends xassetBaseObject {
     //now get mime type based on extension
     $mimetype     = 'application/x-download';
     @$extensionToMime = include( XOOPS_ROOT_PATH . '/class/mimetypes.inc.php' );
-    if ($this->getVar('filetype') <> '') {  
+    if ($this->getVar('filetype') <> '') {
       if (isset( $extensionToMime[$this->getVar('filetype')] ) ) {
-        $mimetype     = $extensionToMime[$this->getVar('filetype')]; 
-      } 
+        $mimetype     = $extensionToMime[$this->getVar('filetype')];
+      }
     }
     $this->incrementDownload();
 //    if ($xoopsUser) {
@@ -130,14 +130,14 @@ class xassetPackage extends xassetBaseObject {
 //    $stats->setVar('ip',getenv("REMOTE_ADDR"));
 //    $stats->setVar('dns',gethostbyaddr(getenv('REMOTE_ADDR'))); ;
 //    $stats->setVar('date',time());
-//    $hStats->insert($stats,true);      
+//    $hStats->insert($stats,true);
     //
     if (!headers_sent($filename, $linenum) ) {
       header('Content-Type: '.$mimetype);
       header('Content-Length: ' . $fileSize);
       header('Expires: 0');
       header('Content-Disposition: attachment; filename="'.$file_display.'"');
-      if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $HTTP_USER_AGENT)) {   
+      if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $HTTP_USER_AGENT)) {
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
       } else {
@@ -151,16 +151,17 @@ class xassetPackage extends xassetBaseObject {
   /////////////////////////////////////////////////
   function &getPackageGroup() {
     $hGrp =& xoops_getmodulehandler('packageGroup','xasset');
+
     return $hGrp->get($this->getVar('packagegroupid'));
   }
   ///////////////////////////////////////////////
   function getKey() {
     $crypt = new xassetCrypt();
+
     return $crypt->cryptValue($this->getVar('id'),$this->weight);
   }
 
 }
-
 
 class xassetPackageHandler extends xassetBaseObjectHandler {
   //vars
@@ -180,12 +181,13 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
       $criteria->setSort('filename');
     }
     //
-    $objs =& $this->getObjects($criteria,true);
+    $objs = $this->getObjects($criteria,true);
     $ar   = array();
     //
     foreach($objs as $obj) {
       $ar[] = $obj->getArray();
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -199,7 +201,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
   function getDownloadSummary($crit){
     $hStats =& xoops_getmodulehandler('userPackageStats','xasset');
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     $ary  = array();
     //
     foreach($objs as $obj) {
@@ -208,7 +210,8 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
                      'filename'  => $obj->getVar('filename'),
                      'downloads' => $stats,
                      'count'     => count($stats) );
-    }  
+    }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -218,12 +221,12 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('packagegroupid', $groupID));
     $crit->setSort('filename');
     //
-    $objs  =& $this->getObjects($crit);
+    $objs  = $this->getObjects($crit);
     $crypt = new xassetCrypt();
     $ar    = array();
     $i     = 0;
     //
-    foreach($objs as $obj){            
+    foreach($objs as $obj){
       $action = '<a href="main.php?op=editPackage&id='.$obj->getVar('id').'">'.$imagearray['editimg'].'</a>' .
                 '<a href="main.php?op=deletePackage&id='.$obj->getVar('id').'">'.$imagearray['deleteimg'].'</a>'.
                 '<a href="'.XOOPS_URL.'/modules/xasset/index.php?op=downloadPack&packid='.$obj->getVar('id').'&key='.$crypt->cryptValue($obj->getVar('id'),$obj->weight).'">'.$imagearray['online'].'</a>';
@@ -236,6 +239,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
       $ar[$i]['cryptKey']  = $crypt->cryptValue($obj->getVar('id'),$obj->weight);
       $i++;
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -267,13 +271,14 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function &getProductSamplePackages($oAppProduct) {
-    $crit = new CriteriaCompo(new Criteria('packagegroupid', $oAppProduct->sampleGroupID())); 
-    $objs =& $this->getObjects($crit);
+    $crit = new CriteriaCompo(new Criteria('packagegroupid', $oAppProduct->sampleGroupID()));
+    $objs = $this->getObjects($crit);
     //
     if (count($objs) > 0) {
       return $objs;
     } else {
       $objs = false;
+
       return $objs;
     }
   }
@@ -284,6 +289,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetPackageHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -299,16 +305,16 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
     if ($obj->isNew()) {
       // Determine next auto-gen ID for table
       $id = $this->_db->genId($this->_db->prefix($this->_dbtable).'_uid_seq');
-      $sql = sprintf('INSERT INTO %s (id, packagegroupid, filename, filesize, filetype, serverFilePath, protected, isVideo) 
+      $sql = sprintf('INSERT INTO %s (id, packagegroupid, filename, filesize, filetype, serverFilePath, protected, isVideo)
                       VALUES (%u, %u, %s, %u, %s, %s, %u, %u)',
-                      $this->_db->prefix($this->_dbtable),  $id, $packagegroupid, $this->_db->quoteString($filename), 
+                      $this->_db->prefix($this->_dbtable),  $id, $packagegroupid, $this->_db->quoteString($filename),
                       $filesize, $this->_db->quoteString($filetype), $this->_db->quoteString($serverFilePath),
                       $protected, $isVideo);
     } else {
-        $sql = sprintf('UPDATE %s SET packagegroupid = %u, filename = %s, filesize = %u, filetype = %s, 
+        $sql = sprintf('UPDATE %s SET packagegroupid = %u, filename = %s, filesize = %u, filetype = %s,
                         serverFilePath = %s, protected = %u, isVideo = %u where id = %u',
-                        $this->_db->prefix($this->_dbtable), $packagegroupid, $this->_db->quoteString($filename), 
-                        $filesize, $this->_db->quoteString($filetype), $this->_db->quoteString($serverFilePath), 
+                        $this->_db->prefix($this->_dbtable), $packagegroupid, $this->_db->quoteString($filename),
+                        $filesize, $this->_db->quoteString($filetype), $this->_db->quoteString($serverFilePath),
                         $protected, $isVideo, $id);
     }
 
@@ -321,6 +327,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       print_r($this->_db);
+
       return false;
     }
 
@@ -329,8 +336,7 @@ class xassetPackageHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

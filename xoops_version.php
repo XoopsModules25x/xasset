@@ -43,7 +43,7 @@ $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][] = "xasset_app_prod_memb";
 $modversion['tables'][] = "xasset_app_product";
 $modversion['tables'][] = "xasset_application";
-$modversion['tables'][] = "xasset_application_groups"; 
+$modversion['tables'][] = "xasset_application_groups";
 $modversion['tables'][] = "xasset_config";
 $modversion['tables'][] = "xasset_country";
 $modversion['tables'][] = "xasset_currency";
@@ -55,7 +55,7 @@ $modversion['tables'][] = "xasset_links";
 $modversion['tables'][] = "xasset_order_detail";
 $modversion['tables'][] = "xasset_order_index";
 $modversion['tables'][] = "xasset_package";
-$modversion['tables'][] = "xasset_packagegroup";     
+$modversion['tables'][] = "xasset_packagegroup";
 $modversion['tables'][] = "xasset_region";
 $modversion['tables'][] = "xasset_tax_class";
 $modversion['tables'][] = "xasset_tax_rates";
@@ -86,13 +86,13 @@ foreach($oApps as $key=>$oApp) {
 
 if ($xoopsUser) {
   if ($oUserDetails =& $hUserDetails->getUserDetailByID($xoopsUser->uid())) {
-    $aDownloads =& $oUserDetails->getUserDownloads();  
+    $aDownloads =& $oUserDetails->getUserDownloads();
     if (count($aDownloads) > 0) {
       //show only if we have downloads
       $modversion['sub'][$i+1]['name'] = _MI_XASSET_SUBMENU_MY_DOWNLOADS;
       $modversion['sub'][$i+1]['url'] = "index.php?op=showMyDownloads";
     }
-  } 
+  }
   //show only if we have something in our cart
   if ($hOrder->userInCartOrders($xoopsUser->uid()) > 0) {
     $modversion['sub'][$i+2]['name'] = _MI_XASSET_SUBMENU_MY_CART;
@@ -101,7 +101,7 @@ if ($xoopsUser) {
   $modversion['sub'][$i+3]['name'] = _MI_XASSET_SUBMENU_MY_DETAILS;
   $modversion['sub'][$i+3]['url'] = "order.php?op=showUserDetails";
   //now show my subscriptios
-  if ($hMembers->getSubscriberCountByUser($xoopsUser)) { 
+  if ($hMembers->getSubscriberCountByUser($xoopsUser)) {
     $modversion['sub'][$i+4]['name'] = _MI_XASSET_SUBMENU_MY_SUBS;
     $modversion['sub'][$i+4]['url'] = "index.php?op=showUserSubs";
   }
@@ -186,13 +186,13 @@ $modversion['templates'][32]['description'] = _MI_XASSET_VERSION_REGIONZONE_INDE
 $modversion['templates'][33]['file'] = 'xasset_admin_gateway_index.html';
 $modversion['templates'][33]['description'] = _MI_XASSET_VERSION_GATEWAY_INDEX;
 $modversion['templates'][34]['file'] = 'xasset_admin_config.html';
-$modversion['templates'][34]['description'] = _MI_XASSET_VERSION_CONFIG;             
+$modversion['templates'][34]['description'] = _MI_XASSET_VERSION_CONFIG;
 $modversion['templates'][35]['file'] = 'xasset_admin_gateway_log_index.html';
-$modversion['templates'][35]['description'] = _MI_XASSET_VERSION_GATEWAY_LOGS; 
+$modversion['templates'][35]['description'] = _MI_XASSET_VERSION_GATEWAY_LOGS;
 $modversion['templates'][36]['file'] = 'xasset_admin_gateway_log_detail.html';
-$modversion['templates'][36]['description'] = _MI_XASSET_VERSION_GATEWAY_DET;   
+$modversion['templates'][36]['description'] = _MI_XASSET_VERSION_GATEWAY_DET;
 $modversion['templates'][37]['file'] = 'xasset_admin_order_tracking.html';
-$modversion['templates'][37]['description'] = _MI_XASSET_VERSION_ORDER_TRACKING;   
+$modversion['templates'][37]['description'] = _MI_XASSET_VERSION_ORDER_TRACKING;
 $modversion['templates'][38]['file'] = 'xasset_admin_support.html';
 $modversion['templates'][38]['description'] = _MI_XASSET_VERSION_SUPPORT;
 $modversion['templates'][39]['file'] = 'xasset_admin_order_details.html';
@@ -221,7 +221,7 @@ $modversion['templates'][58]['description'] = _MI_XASSET_VERSION_ORDER_USER_DETA
 $modversion['templates'][59]['file'] = 'xasset_order_checkout.html';
 $modversion['templates'][59]['description'] = _MI_XASSET_VERSION_ORDER_CHECKOUT;
 $modversion['templates'][60]['file'] = 'xasset_product.html';
-$modversion['templates'][60]['description'] = _MI_XASSET_VERSION_PRODUCT; 
+$modversion['templates'][60]['description'] = _MI_XASSET_VERSION_PRODUCT;
 $modversion['templates'][61]['file'] = 'xasset_downloads.html';
 $modversion['templates'][61]['description'] = _MI_XASSET_VERSION_DOWNLOADS;
 $modversion['templates'][62]['file'] = 'xasset_order_extra.html';
@@ -232,7 +232,7 @@ $modversion['templates'][64]['file'] = 'xasset_player_code.html';
 $modversion['templates'][64]['description'] = _MI_XASSET_VERSION_PLAYER;
 $modversion['templates'][65]['file'] = 'xasset_video_index.html';
 $modversion['templates'][65]['description'] = _MI_XASSET_VERSION_VIDEO;
-//block templates 
+//block templates
 $modversion['templates'][90]['file'] = 'xasset_block_download_option.html';
 $modversion['templates'][90]['description'] = _MI_XASSET_BLOCK_DOWNOPT;
 $modversion['templates'][91]['file'] = 'xasset_block_pics_option.html';
@@ -286,63 +286,63 @@ $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
 $i++;
-$modversion['config'][$i]['name'] = 'prodShowExpires';       
+$modversion['config'][$i]['name'] = 'prodShowExpires';
 $modversion['config'][$i]['title'] = '_MI_XASSET_SHOW_EXPIRES';
 $modversion['config'][$i]['description'] = '_MI_XASSET_SHOW_EXPIRES';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
 $i++;
-$modversion['config'][$i]['name'] = 'memExpireDaysWarn';       
+$modversion['config'][$i]['name'] = 'memExpireDaysWarn';
 $modversion['config'][$i]['title'] = '_MI_XASSET_EXPIRE_WARND';
 $modversion['config'][$i]['description'] = '_MI_XASSET_EXPIRE_WARNDE';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 7;
 $i++;
-$modversion['config'][$i]['name'] = 'orderCompleteWait';       
+$modversion['config'][$i]['name'] = 'orderCompleteWait';
 $modversion['config'][$i]['title'] = '_MI_XASSET_ORDERC_CAP';
 $modversion['config'][$i]['description'] = '_MI_XASSET_ORDERC_CAPDE';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 10;
 $i++;
-$modversion['config'][$i]['name'] = 'orderCompleteRedirect';       
+$modversion['config'][$i]['name'] = 'orderCompleteRedirect';
 $modversion['config'][$i]['title'] = '_MI_XASSET_ORDERC_RED';
 $modversion['config'][$i]['description'] = '_MI_XASSET_ORDERC_REDDE';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'string';
 $modversion['config'][$i]['default'] = '';
 $i++;
-$modversion['config'][$i]['name'] = 'encryptKey';       
+$modversion['config'][$i]['name'] = 'encryptKey';
 $modversion['config'][$i]['title'] = '_MI_XASSET_ENCRYPT_KEY';
 $modversion['config'][$i]['description'] = '_MI_XASSET_ENCRYPT_KEYD';
 $modversion['config'][$i]['formtype'] = 'text';
 $modversion['config'][$i]['valuetype'] = 'string';
-$modversion['config'][$i]['default'] = base64_encode(time()); 
+$modversion['config'][$i]['default'] = base64_encode(time());
 $i++;
-$modversion['config'][$i]['name'] = 'Enablebandwidth';       
+$modversion['config'][$i]['name'] = 'Enablebandwidth';
 $modversion['config'][$i]['title'] = '_MI_XASSET_BANDWIDTHENABLE';
 $modversion['config'][$i]['description'] = '_MI_XASSET_BANDWIDTHENABLED';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
 $i++;
-$modversion['config'][$i]['name'] = 'bandwidth';       
+$modversion['config'][$i]['name'] = 'bandwidth';
 $modversion['config'][$i]['title'] = '_MI_XASSET_BANDWIDTH';
 $modversion['config'][$i]['description'] = '_MI_XASSET_BANDWIDTHD';
 $modversion['config'][$i]['formtype'] = 'int';
 $modversion['config'][$i]['valuetype'] = 'string';
 $modversion['config'][$i]['default'] = 128;
 $i++;
-$modversion['config'][$i]['name'] = 'prodwin_width';       
+$modversion['config'][$i]['name'] = 'prodwin_width';
 $modversion['config'][$i]['title'] = '_MI_XASSET_PRODWIN_WIDTH';
 $modversion['config'][$i]['description'] = '_MI_XASSET_PRODWIN_WIDTHD';
 $modversion['config'][$i]['formtype'] = 'int';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 450;
 $i++;
-$modversion['config'][$i]['name'] = 'prodwin_height';       
+$modversion['config'][$i]['name'] = 'prodwin_height';
 $modversion['config'][$i]['title'] = '_MI_XASSET_PRODWIN_HEIGHT';
 $modversion['config'][$i]['description'] = '_MI_XASSET_PRODWIN_HEIGHTD';
 $modversion['config'][$i]['formtype'] = 'int';
@@ -363,7 +363,7 @@ $modversion['config'][$i]['options'] = array_flip($editor_handler->getList());
 //$modversion['hasNotification'] = 0;
 
 // Email templates
-$modversion['_email_tpl'][1]['name'] = 'new_client_purchase';   
+$modversion['_email_tpl'][1]['name'] = 'new_client_purchase';
 $modversion['_email_tpl'][1]['category'] = 'client';
 $modversion['_email_tpl'][1]['mail_template'] = 'client_newpurchase_notify';
 $modversion['_email_tpl'][1]['mail_subject'] = _MI_XASSET_APP_NEW_PURCHASE_NOTIFYSBJ;
@@ -372,7 +372,7 @@ $modversion['_email_tpl'][1]['title'] = _MI_XASSET_APP_NEW_PURCHASE_NOTIFY;
 $modversion['_email_tpl'][1]['caption'] = _MI_XASSET_APP_NEW_PURCHASE_NOTIFYCAP;
 $modversion['_email_tpl'][1]['description'] = _MI_XASSET_APP_NEW_PURCHASE_NOTIFYDSC;
 
-$modversion['_email_tpl'][2]['name'] = 'new_client_purchase';   
+$modversion['_email_tpl'][2]['name'] = 'new_client_purchase';
 $modversion['_email_tpl'][2]['category'] = 'admin';
 $modversion['_email_tpl'][2]['html'] = true;
 $modversion['_email_tpl'][2]['mail_template'] = 'newpurchase_notify';
@@ -382,7 +382,7 @@ $modversion['_email_tpl'][2]['title'] = _MI_XASSET_APP_NEW_PURCHASE_ADMIN_NOTIFY
 $modversion['_email_tpl'][2]['caption'] = _MI_XASSET_APP_NEW_PURCHASE_ADMIN_NOTIFYCAP;
 $modversion['_email_tpl'][2]['description'] = _MI_XASSET_APP_NEW_PURCHASE_ADMIN_NOTIFYDSC;
 
-$modversion['_email_tpl'][3]['name'] = 'new_user';        
+$modversion['_email_tpl'][3]['name'] = 'new_user';
 $modversion['_email_tpl'][3]['category'] = 'client';
 $modversion['_email_tpl'][3]['html'] = true;
 $modversion['_email_tpl'][3]['mail_template'] = 'new_user';
@@ -392,7 +392,7 @@ $modversion['_email_tpl'][3]['title'] = _MI_XASSET_APP_NEW_USER_NOTIFY;
 $modversion['_email_tpl'][3]['caption'] = _MI_XASSET_APP_NEW_USER_NOTIFYCAP;
 $modversion['_email_tpl'][3]['description'] = _MI_XASSET_APP_NEW_USER_NOTIFYCAPDSC;
 
-$modversion['_email_tpl'][4]['name'] = 'expire_warning';        
+$modversion['_email_tpl'][4]['name'] = 'expire_warning';
 $modversion['_email_tpl'][4]['category'] = 'client';
 $modversion['_email_tpl'][4]['html'] = true;
 $modversion['_email_tpl'][4]['mail_template'] = 'expire_warning';
@@ -402,7 +402,7 @@ $modversion['_email_tpl'][4]['title'] = _MI_XASSET_APP_EXPIRE_WARN_NOTIFY;
 $modversion['_email_tpl'][4]['caption'] = _MI_XASSET_APP_EXPIRE_WARN_NOTIFYCAP;
 $modversion['_email_tpl'][4]['description'] = _MI_XASSET_APP_EXPIRE_WARN_NOTIFYDSC;
 
-$modversion['_email_tpl'][5]['name'] = 'expire_membership';        
+$modversion['_email_tpl'][5]['name'] = 'expire_membership';
 $modversion['_email_tpl'][5]['category'] = 'client';
 $modversion['_email_tpl'][5]['html'] = true;
 $modversion['_email_tpl'][5]['mail_template'] = 'expire_membership';
@@ -412,7 +412,7 @@ $modversion['_email_tpl'][5]['title'] = _MI_XASSET_APP_EXPIRE_MEMBER_NOTIFY;
 $modversion['_email_tpl'][5]['caption'] = _MI_XASSET_APP_EXPIRE_MEMBER_NOTIFYCAP;
 $modversion['_email_tpl'][5]['description'] = _MI_XASSET_APP_EXPIRE_MEMBER_NOTIFYDSC;
 
-$modversion['_email_tpl'][6]['name'] = 'order_complete';        
+$modversion['_email_tpl'][6]['name'] = 'order_complete';
 $modversion['_email_tpl'][6]['category'] = 'client';
 $modversion['_email_tpl'][6]['html'] = true;
 $modversion['_email_tpl'][6]['mail_template'] = 'order_complete';
@@ -421,6 +421,3 @@ $modversion['_email_tpl'][6]['bit_value'] = 3;
 $modversion['_email_tpl'][6]['title'] = _MI_XASSET_ORDER_COMPLETE_NOTIFY;
 $modversion['_email_tpl'][6]['caption'] = _MI_XASSET_ORDER_COMPLETE_NOTIFYCAP;
 $modversion['_email_tpl'][6]['description'] = _MI_XASSET_ORDER_COMPLETE_NOTIFYDSC;
-
-
-?>

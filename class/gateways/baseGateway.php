@@ -22,7 +22,7 @@ class baseGateway {
     $this->_hGate       =& xoops_getmodulehandler('gateway','xasset');
     $this->_hGateDetail =& xoops_getmodulehandler('gatewayDetail','xasset');
     //
-		$this->_returnURL   = XOOPS_URL.'/modules/xasset/return.php';
+        $this->_returnURL   = XOOPS_URL.'/modules/xasset/return.php';
     $this->_cancelURL   = XOOPS_URL.'/modules/xasset/cancel.php';
     $this->_validates   = false;
     //
@@ -105,6 +105,7 @@ class baseGateway {
     if ($res = $this->_db->query($sql)) {
       if ($row = $this->_db->fetcharray['enabled']) {
         $this->enabled = $row['enabled'] == 1;
+
         return $this->enabled;
       }
     }
@@ -123,6 +124,7 @@ class baseGateway {
     }
     if ($this->_hGate->insert($gate)) {
       $this->id = $gate->getVar('id');
+
       return true;
     } else {
       return false;
@@ -141,16 +143,16 @@ class baseGateway {
   }
   //////////////////////////////////////////////////helper functions/////////////////////////////////////////////////
   function drawHidden($name, $value = '', $parameters = '') {
-		$field = '<input type="hidden" name="' . $name . '"';
-		//
-		if (strlen($value)>0) {
-			$field .= ' value="' . $value . '"';
-		}
-		//
-		if (isset($parameters)) $field .= ' ' . $parameters;
-		$field .= '>';
-		//
-		return $field;
+        $field = '<input type="hidden" name="' . $name . '"';
+        //
+        if (strlen($value)>0) {
+            $field .= ' value="' . $value . '"';
+        }
+        //
+        if (isset($parameters)) $field .= ' ' . $parameters;
+        $field .= '>';
+        //
+        return $field;
   }
   /////////////////////////////////////////
   function drawField($name, $type, $label, $value = '', $options = '') {
@@ -166,16 +168,17 @@ class baseGateway {
             $option .= '<option value="'.$optID.'">'.$optValue.'</option>';
           }
         }
-        $control = '<label for="'.$name.'" style="float:left;width:30%;padding-left:5px;">'.$label.'</label><select name="'.$name.'" id="'.$name.'">'.$option.'</select>'; 
+        $control = '<label for="'.$name.'" style="float:left;width:30%;padding-left:5px;">'.$label.'</label><select name="'.$name.'" id="'.$name.'">'.$option.'</select>';
       break;
       case 'area':
         $control = "<textarea name='$name' cols='70' rows='5'>$value</textarea>";
       break;
       case 'box':
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         $control = "<table class='outer'><tr><td>".$myts->xoopsCodeDecode($myts->nl2Br($value))."</td></tr></table>";
       break;
     }
+
     return $control.'<br />';
   }
   ////////////////////////////////////////////
@@ -185,6 +188,7 @@ class baseGateway {
       $out = $this->drawfield($name, $this->_optionFields[$name]['type'],$this->_optionFields[$name]['label'],
                                      $this->_optionFields[$name]['value'],$this->_optionFields[$name]['options']);
     }
+
     return $out;
   }
   /////////////////////////////////////////
@@ -205,6 +209,7 @@ class baseGateway {
       return $this->_optionFields[$name];
     else {
       $ret = false;
+
       return $ret;
     }
   }
@@ -219,12 +224,14 @@ class baseGateway {
     for ($i = 0; $i < $years; $i++) {
       $out[$year + $i] = $year + $i;
     }
+
     return $out;
   }
   ///////////////////////////////////////////
   function &monthArray() {
     $out = array('01'=>'Jan','02'=>'Feb','03'=>'Mar','04'=>'Apr','05'=>'May','06'=>'Jun','07'=>'Jul','08'=>'Aug',
-                 '09'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec'); 
+                 '09'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec');
+
     return $out;
   }
   /////////////////////////////////////////
@@ -256,4 +263,3 @@ class baseGateway {
     echo $form;
   }
 }
-?>

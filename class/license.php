@@ -44,11 +44,10 @@ class xassetLicense extends XAssetBaseObject {
   ////////////////////////////////////////////
   function &getApplication() {
     $hApp =& xoops_getmodulehandler('application', 'xasset');
+
     return $hApp->get($this->getVar('applicationid'));
   }
 }
-
-
 
 class xassetLicenseHandler extends xassetBaseObjectHandler {
   //vars
@@ -82,7 +81,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
         $licTable = $this->_db->prefix($hLic->_dbtable);
         //
         $sql    = "select count(*) cnt from $licTable
-                   where applicationid = $appid and uid = $uid and expires >= ".time(); 
+                   where applicationid = $appid and uid = $uid and expires >= ".time();
         if ($res = $this->_db->query($sql)) {
           if ($row = $this->_db->fetcharray($res)) {
             $result = $row['cnt'] > 0;
@@ -90,6 +89,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
         }
       }
     }
+
     return $result;
   }
   ///////////////////////////////////////////////////
@@ -140,11 +140,12 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
                    '<a href="index.php?op=deleteLicense&id='.$row['id'].'">'.$imagearray['deleteimg'].'</a>';  */
         //
         $ar[] = array( 'id'       => $row['id'],
-          						 'name'     => '<a href="index.php?op=viewAppLicenses&id='.$row['id'].'">'.$row['name'].'</a>',
+                                   'name'     => '<a href="index.php?op=viewAppLicenses&id='.$row['id'].'">'.$row['name'].'</a>',
                        'licenses' => '<a href="index.php?op=viewAppLicenses&id='.$row['id'].'">'.$row['licenses'].'</a>',
                        'actions'  => $actions );
       }
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -174,6 +175,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
                        'actions'  => $actions );
       }
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -234,7 +236,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
                        'richDescription'      => $row['richDescription'],
                        'cryptKey'             => $crypt->cryptValue($row['appid'],$app->weight));
       }
-    }    
+    }
     //
     return $ar;
   }
@@ -266,6 +268,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
                        'actions'   => $actions );
       }
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -275,7 +278,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('uid', $clientid));
     $crit->add(new Criteria('applicationid', $appid));
     //
-    $lics =& $this->getObjects($crit);
+    $lics = $this->getObjects($crit);
     $ar   = array();
     //
     $crypt = new xassetCrypt();
@@ -292,6 +295,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
                      'cryptKey'   => $crypt->cryptValue($lic->getVar('id'),$lic->weight),
                      'actions'    => $actions );
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -305,6 +309,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetLicenseHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -343,8 +348,7 @@ class xassetLicenseHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

@@ -64,7 +64,7 @@ class xassetApplication extends XAssetBaseObject {
     $template = $this->poductListTemplate();
     //
     $tpl = new XoopsTpl();
-    $tpl->assign($xoopsTpl->get_template_vars()); 
+    $tpl->assign($xoopsTpl->get_template_vars());
     //
     return $tpl->xoops_fetchFromData($template);
   }
@@ -85,7 +85,7 @@ class xassetApplication extends XAssetBaseObject {
       $crit->add(new Criteria('uid', $uid));
       $crit->setSort('datePublished');
       //
-      $arr      =& $hLicense->getObjects($crit);
+      $arr      = $hLicense->getObjects($crit);
     }
     //
     return $arr;
@@ -104,7 +104,7 @@ class xassetApplication extends XAssetBaseObject {
     $crit = new CriteriaCompo(new Criteria('applicationid', $id));
     $crit->setSort('datePublished');
     //
-    $arr      =& $hpackGroups->getObjects($crit);
+    $arr      = $hpackGroups->getObjects($crit);
     //
     return $arr;
   }
@@ -116,10 +116,10 @@ class xassetApplication extends XAssetBaseObject {
   ///////////////////////////////////////////////
   function getKey() {
     $crypt = new xassetCrypt();
+
     return $crypt->cryptValue($this->getVar('id'),$this->weight);
   }
 }
-
 
 class xassetApplicationHandler extends xassetBaseObjectHandler {
   //vars
@@ -135,13 +135,14 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function getApplications($criteria){
     //
-    $ret =& $this->getObjects($criteria,true);
+    $ret = $this->getObjects($criteria,true);
     //
     return $ret;
   }
   ///////////////////////////////////////////////////
   function getEvalApplicationsArray() {
     $crit = new CriteriaCompo(new Criteria('listInEval',1));
+
     return $this->getApplicationsArray($crit);
   }
   ///////////////////////////////////////////////////
@@ -168,6 +169,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
       //
       $i++;
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -254,7 +256,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
     }
     //
     $crit = new CriteriaCompo(new Criteria('mainMenu',1));
-    $aGrps = $hGroup->getAppObjectsByUID($uid);   
+    $aGrps = $hGroup->getAppObjectsByUID($uid);
     //
     $subCrit = new CriteriaCompo();
     foreach($aGrps as $key=>$group) {
@@ -266,14 +268,14 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
     }
     $crit->add($subCrit);
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     return $objs;
   }
   ///////////////////////////////////////////////////
   function getUserApplications($uid = false, $allApps = true) {
     $hGroup =& xoops_getmodulehandler('applicationGroup','xasset');
-    //  
+    //
     if (!$uid) {
       global $xoopsUser;
       $uid = $xoopsUser ? $xoopsUser->uid() : XOOPS_GROUP_ANONYMOUS;
@@ -282,8 +284,8 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo();
     if (!$allApps)
       $crit->add(new Criteria('mainMenu',1));
-    //  
-    $aGrps = $hGroup->getAppObjectsByUID($uid);   
+    //
+    $aGrps = $hGroup->getAppObjectsByUID($uid);
     //
     $subCrit = new CriteriaCompo();
     foreach($aGrps as $key=>$group) {
@@ -295,7 +297,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
     }
     $crit->add($subCrit);
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     return $objs;
     
@@ -303,6 +305,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
   ///////////////////////////////////////////////////
   function cryptID($id) {
     $crypt = new xassetCrypt();
+
     return $crypt->cryptValue($id,$this->_weight);
   }
   ///////////////////////////////////////////////////
@@ -312,21 +315,23 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetApplicationHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
   function parseTokens($body, $oApp) {
     if (preg_match_all('/{TAG.(.*?)}/', $body, $matches)) {
-      //matchs will be of form {TAG.app.BUY(option) 
-      foreach($matches[1] as $key=>$match) { 
+      //matchs will be of form {TAG.app.BUY(option)
+      foreach($matches[1] as $key=>$match) {
         $replace = $matches[0][$key];
         //matches LIST tag
-        if (!(strpos($match,'LIST') === false)) { 
+        if (!(strpos($match,'LIST') === false)) {
           $desc    = $oApp->poductListPage();
           $body = str_replace($replace,$desc,$body);
         }
       }
-    }  
+    }
+
     return $body;
   }
   ///////////////////////////////////////////////////
@@ -340,6 +345,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
       $ary[$key] = $oApp->getArray();
       $ary[$key]['key'] = $oApp->getKey();
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -350,6 +356,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo();
     //
     if (isset($userid) && ($userid > 0)) { echo $userid;
+
       return;
     }
     //
@@ -362,7 +369,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
       $crit->add($sub,$andor);
       unset($sub);
     }
-    $this->postProcessSQL($sql,$crit);  
+    $this->postProcessSQL($sql,$crit);
     $objs =& $this->sqlToArray($sql,true,$limit,$offset);
     //
     return $objs;
@@ -397,7 +404,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
                         $this->_db->quoteString($description), $this->_db->quoteString($platform),
                         $this->_db->quoteString($version), $datePublished, $requiresLicense, $listInEval, $hasSamples,
                         $this->_db->quoteString($richDescription), $mainMenu,
-                        $this->_db->quoteString($menuItem), $productsVisible, 
+                        $this->_db->quoteString($menuItem), $productsVisible,
                         $this->_db->quoteString($image), $this->_db->quoteString($product_list_template),  $id);
     }
     // Update DB
@@ -409,6 +416,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       echo $sql;
+
       return false;
     }
 
@@ -417,8 +425,7 @@ class xassetApplicationHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

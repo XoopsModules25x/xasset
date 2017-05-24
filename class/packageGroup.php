@@ -46,17 +46,17 @@ class xassetPackageGroup extends xassetBaseObject {
     $crit = new CriteriaCompo(new Criteria('packagegroupid', $id));
     $crit->setSort('filename');
     //
-    $arr      =& $hPackages->getObjects($crit);
+    $arr      = $hPackages->getObjects($crit);
     //
     return $arr;
   }
   //////////////////////////////////////////
   function getApplication() {
     $hApp =& xoops_getmodulehandler('application', 'xasset');
+
     return $hApp->get($this->getVar('applicationid'));
   }
 }
-
 
 class xassetPackageGroupHandler extends xassetBaseObjectHandler {
   //vars
@@ -75,7 +75,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
       $criteria->setSort('name');
     }
     //
-    $objs =& $this->getObjects($criteria,true);
+    $objs = $this->getObjects($criteria,true);
     $crypt = new xassetCrypt();
     $ar   = array();
     //
@@ -86,7 +86,8 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
       $ar[$i]['cryptKey'] = $crypt->cryptValue($obj->getVar('id'),$obj->weight);
       //
       $i++;
-    }        
+    }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -115,7 +116,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
     //
     $hPack =& xoops_getmodulehandler('package','xasset');
     //
-    $objs = $this->getPackageGroupArray($crit);     
+    $objs = $this->getPackageGroupArray($crit);
     //
     for($i=0;$i<count($objs);$i++) {
       $action = '<a href="main.php?op=editPackageGroup&id='.$objs[$i]['id'].'&appid='.$objs[$i]['applicationid'].'">'.$imagearray['editimg'].'</a>' .
@@ -125,6 +126,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
       //now need to get the packages
       $objs[$i]['packages'] = $hPack->getGroupPackagesArray( $objs[$i]['id'] );
     }
+
     return $objs;
   }
   ///////////////////////////////////////////////////
@@ -146,17 +148,19 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function getGroupsSelectArray($crit) {
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     $ar   = array();
     //
     foreach($objs as $obj) {
       $ar[$obj->getVar('id')] = $obj->getVar('name');
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
   function getDownloadByApplicationSummaryArray($appid) {
     $crit = new CriteriaCompo(new Criteria('applicationid',$appid));
+
     return $this->getDownloadSummaryArray($crit);
   }
   ///////////////////////////////////////////////////
@@ -168,7 +172,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
     //
     $hPack  =& xoops_getmodulehandler('package','xasset');
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     $ary  = array();
     //
     foreach($objs as $obj){
@@ -178,6 +182,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
                        'grpDesc'     => $obj->getVar('grpDesc'),
                        'packages'    => $packs);
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -187,6 +192,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetPackageGroupHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -225,8 +231,7 @@ class xassetPackageGroupHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

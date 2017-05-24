@@ -1,10 +1,10 @@
 <?php
                     
-require("header.php");       
+require("header.php");
 require_once(XOOPS_ROOT_PATH . "/header.php");
-//require_once('class/crypt.php');    
+//require_once('class/crypt.php');
 
-$op = 'default';    
+$op = 'default';
 
 if ( isset( $_GET['op'] ) ) {
   $op = $_GET['op'];
@@ -53,8 +53,8 @@ switch ( $op ) {
     }
     break;
   //
-	case 'updateCurrency':
-		updateCurrency($_POST);
+    case 'updateCurrency':
+        updateCurrency($_POST);
     break;
   //
   case 'product':
@@ -179,7 +179,7 @@ function viewAppGroups($groupid, $key){
   $hPackGrp  =& xoops_getmodulehandler('packageGroup','xasset');
   //
   $packGrp   =& $hPackGrp->get($groupid);
-  $app       =& $packGrp->getApplication();    
+  $app       =& $packGrp->getApplication();
   $grp       =  $hPackGrp->getPackageGroup($groupid);
   //
   if (keyMatches($groupid,$key,$packGrp->weight,'Invalid Key. Cannot view Package Group')){
@@ -209,15 +209,15 @@ function downloadPack($id,$key) {
   }
 }
 /////////////////////////////////////////
-function downloadLicPack($id,$key) {   
+function downloadLicPack($id,$key) {
   global $xoopsOption, $xoopsTpl, $xoopsConfig, $xoopsUser, $xoopsLogger, $xoopsUserIsAdmin, $xasset_module_header;
   //
   $hPackage =& xoops_getmodulehandler('package','xasset');
   //
   $pack     =& $hPackage->get($id);
   //
-  if ( keyMatches($id,$key,$pack->weight,'Invalid Key. Cannot download package file') ) { 
-    $pack->secureDownloadFile();   
+  if ( keyMatches($id,$key,$pack->weight,'Invalid Key. Cannot download package file') ) {
+    $pack->secureDownloadFile();
   }
 }
 /////////////////////////////////////////
@@ -228,8 +228,8 @@ function downloadSample($id,$key) {
   //
   $pack     =& $hPackage->get($id);
   //
-  if ( keyMatches($id,$key,$pack->weight,'Invalid Key. Cannot download package file') ) { 
-    $pack->downloadFile();   
+  if ( keyMatches($id,$key,$pack->weight,'Invalid Key. Cannot download package file') ) {
+    $pack->downloadFile();
   }
 }
 /////////////////////////////////////////
@@ -357,7 +357,7 @@ function product($appid = null, $key = null) {
   $hAppProd =& xoops_getmodulehandler('applicationProduct','xasset');
   $hCurr    =& xoops_getmodulehandler('currency','xasset');
   $hConfig  =& xoops_getmodulehandler('config','xasset');
-  $hAjax    =& xoops_getmodulehandler('ajax','xasset'); 
+  $hAjax    =& xoops_getmodulehandler('ajax','xasset');
   $hCommon  =& xoops_getmodulehandler('common','xasset');
   //
   $app      =& $hApps->create();
@@ -369,6 +369,7 @@ function product($appid = null, $key = null) {
     $xoopsOption['template_main'] = 'xasset_error.html';
     $xoopsTpl->assign('xasset_error','No applications defined for this group.');
     include(XOOPS_ROOT_PATH . "/footer.php");
+
     return;
   }
   //
@@ -397,7 +398,7 @@ function product($appid = null, $key = null) {
     $oAjax->registerFunction('onSampleClick',XOOPS_URL.'/modules/xasset/include/ajax.php');
     //
     $links     = $hLink->getApplicationLinks($appid);
-    $prods     = $hAppProd->getAppProductArray($appid, $currid);     
+    $prods     = $hAppProd->getAppProductArray($appid, $currid);
     $curs      = $hCurr->getSelectArray();
     $appGroups = $hPackGrp->getApplicationGroupPackages($appid);
     //
@@ -406,7 +407,7 @@ function product($appid = null, $key = null) {
     $showMaxDays  = $hCommon->getModuleOption('prodShowMaxDays','xasset');
     $showExpires  = $hCommon->getModuleOption('prodShowExpires','xasset');
     $showSamples  = $oApp->getVar('hasSamples') == 1;
-    $aPopup['width']  = $hCommon->getModuleOption('prodwin_width'); 
+    $aPopup['width']  = $hCommon->getModuleOption('prodwin_width');
     $aPopup['height'] = $hCommon->getModuleOption('prodwin_height');
     //
     $xoopsTpl->assign('xoops_module_header',$xasset_module_header . $oAjax->getHeaderCode());
@@ -447,12 +448,12 @@ function showMyDownloads() {
   //only register userDetail users will be able to access this page
   if ($xoopsUser) {
     if ( $userDetail =& $hUserDetail->getUserDetailByID($xoopsUser->uid()) ) {
-      $aDownloads =& $userDetail->getUserDownloads();   
+      $aDownloads =& $userDetail->getUserDownloads();
       //
       $xoopsTpl->assign('xasset_downloads',$aDownloads);
     } else {
       redirect_header('order.php?op=showUserDetails',3,'Please Complete User Detail Information Before Proceeding.');
-    } 
+    }
   } else {
     redirect_header(XOOPS_URL.'/user.php',3,'Not Logged in.');
   }
@@ -472,7 +473,7 @@ function showUserSubs() {
     $crit = new Criteria('am.uid',$xoopsUser->uid());
     $crit->setSort('expiry_date');
     //
-    $aSubs =& $hMembers->getMembersForSubscription($crit); 
+    $aSubs =& $hMembers->getMembersForSubscription($crit);
     //
     $xoopsTpl->assign('xoops_module_header',$xasset_module_header);
     $xoopsTpl->assign('xasset_subscriptons',$aSubs);
@@ -483,7 +484,7 @@ function showUserSubs() {
   include(XOOPS_ROOT_PATH . "/footer.php");
 }
 ////////////////////////////////////////////
-function getVideo($id, $position, $token) { 
+function getVideo($id, $position, $token) {
   $hVideo =& xoops_getmodulehandler('video','xasset');
   $hVideo->getVideo($id,$token,$position);
 }
@@ -522,9 +523,7 @@ function viewProductDescription($id, $key) {
   //
   if ( keyMatches($id,$key,$oAppProd->weight,'Invalid Key') ) {
     echo '<div id="content">'.$oAppProd->getRichDescription().'</div>';
-  } 
+  }
   //
-  xoops_footer();  
+  xoops_footer();
 }
-
-?>

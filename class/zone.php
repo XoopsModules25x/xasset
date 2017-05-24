@@ -21,10 +21,10 @@ class xassetZone extends XoopsObject {
   /////////////////////////////////////////////////
   function &getCountry() {
     $country =& xoops_getmodulehandler('country','xasset');
+
     return $country->get($this->getVar('countryid'));
   }
 }
-
 
 class xassetZoneHandler extends xassetBaseObjectHandler {
   //vars
@@ -43,6 +43,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetZoneHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
@@ -94,9 +95,11 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
       if ( (count($zoneAry) > 0) && (count($cntAry)>0) ) {
             $cntAry[count($cntAry)-1]['zones'] = $zoneAry;
       }
+
       return $cntAry;
     } else {
       $res = false;
+
       return $res;
     }
   }
@@ -106,7 +109,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
       $criteria   = new CriteriaCompo();
       $criteria->setSort('code'); }
     //
-    $objs =& $this->getObjects($criteria);
+    $objs = $this->getObjects($criteria);
     //
     $ar = array();
     if ($allZones) {
@@ -117,6 +120,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
       //$ar[$obj->getVar('id')] = sprintf('%s - %s',$obj->getVar('code'),$obj->getVar('name'));
       $ar[$obj->getVar('id')] = $obj->getVar('name');
     }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -132,7 +136,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
   function &getZonesArray($criteria = null) {
     global $imagearray;
     //
-    $objs  =& $this->getObjects($criteria);
+    $objs  = $this->getObjects($criteria);
     $ary   = array();
     //
     $hCnt  =& xoops_getmodulehandler('country','xasset');
@@ -157,14 +161,16 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
                       'actions'     => $actions);
       }
     }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
   function getZoneNameByID($zoneID) {
     $crit = new Criteria('id',$zoneID);
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     if (count($objs) > 0) {
       $obj = reset($objs);
+
       return $obj->getVar('name');
     } else {
       return false;
@@ -175,7 +181,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('country_id',$countryID));
     $crit->add(new Criteria('id',$zoneID));
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     return count($objs) > 0;
   }
@@ -218,8 +224,7 @@ class xassetZoneHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

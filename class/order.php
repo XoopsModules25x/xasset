@@ -8,7 +8,7 @@ class xassetOrder extends xassetBaseObject {
     $this->initVar('id', XOBJ_DTYPE_INT, null, false);
     $this->initVar('uid', XOBJ_DTYPE_INT, null, true);
     $this->initVar('user_detail_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('currency_id', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('currency_id', XOBJ_DTYPE_INT, null, false);
     $this->initVar('number', XOBJ_DTYPE_INT, null, false);
     $this->initVar('date', XOBJ_DTYPE_INT, time(), false);
     $this->initVar('status', XOBJ_DTYPE_INT, 0, false);
@@ -22,7 +22,7 @@ class xassetOrder extends xassetBaseObject {
         $this->assignVars($id);
       }
     } else {
-			$this->setNew();
+            $this->setNew();
     }
   }
   ////////////////////////////////////////////  `
@@ -48,16 +48,17 @@ class xassetOrder extends xassetBaseObject {
         return $row['totalPrice'];
       }
     }
+
     return false;
   }
   ////////////////////////////////////////////  `
-	function getOrderTotal($format = 'f'){ //f=full s=short
+    function getOrderTotal($format = 'f'){ //f=full s=short
     $hCurr      =& xoops_getmodulehandler('currency','xasset');
     //
     $cur      =& $hCurr->get($this->getVar('currency_id'));
     //
-		$orderNet = $this->getOrderNet();
-		$tax      = $this->getOrdertaxTotalSum();
+        $orderNet = $this->getOrderNet();
+        $tax      = $this->getOrdertaxTotalSum();
     //
     $total = $tax['amount'] + $orderNet;
     //
@@ -99,6 +100,7 @@ class xassetOrder extends xassetBaseObject {
                    'name'      => $taxArray[$i]['description']);
       //$total =. $taxArray[$i]['amount'];
     }
+
     return $res;
   }
   ///////////////////////////////////////////////////
@@ -115,7 +117,7 @@ class xassetOrder extends xassetBaseObject {
     $ODetTable  = $hIndex->_db->prefix($hODetail->_dbtable);
     $indexTable = $hIndex->_db->prefix($hIndex->_dbtable);
     $apTable    = $hIndex->_db->prefix($hAppProd->_dbtable);
-		$cliTable   = $hIndex->_db->prefix($hClient->_dbtable);
+        $cliTable   = $hIndex->_db->prefix($hClient->_dbtable);
     $rateTable  = $hIndex->_db->prefix($hTaxRate->_dbtable);
     $tzTable    = $hIndex->_db->prefix($hTaxZone->_dbtable);
     //
@@ -133,7 +135,7 @@ class xassetOrder extends xassetBaseObject {
            group by tr.id, tax_class_id, tr.description, tr.priority
            order by tr.priority";
     //
-    $taxArray = array(); 
+    $taxArray = array();
     //
     if ($res = $hIndex->_db->query($sql)) {
       while ($row = $hIndex->_db->fetchArray($res)) {
@@ -141,10 +143,10 @@ class xassetOrder extends xassetBaseObject {
       }
     }// print_r($taxArray);
     //now get order items and apply relevant tax and build into result array
-    $prodArray =& $hODetail->getOrderApplicationProducts($id); //print_r($prodArray); 
+    $prodArray =& $hODetail->getOrderApplicationProducts($id); //print_r($prodArray);
     //repopulate $taxArray with order values.
     foreach($taxArray as $priority=>$aTax) {
-      if (isset($subTax)) 
+      if (isset($subTax))
         unset($subTax);
       for ($j=0;$j<count($prodArray);$j++) {
         $tax = 0;
@@ -154,8 +156,8 @@ class xassetOrder extends xassetBaseObject {
             $subTax[$i] = $subTax[$i] + $prodArray[$j]['qty'] * $prodArray[$j]['unit_price'] * ($aTax[$i]['rate']/100);
             $taxArray[$priority][$i]['amount'] = $subTax[$i];
           }
-        } 
-        $prodArray[$j]['unit_price']    = $prodArray[$j]['unit_price'] + $tax; 
+        }
+        $prodArray[$j]['unit_price']    = $prodArray[$j]['unit_price'] + $tax;
       }
     } //print_r($prodArray); print_r($taxArray);
     //finally construct output array
@@ -163,27 +165,27 @@ class xassetOrder extends xassetBaseObject {
     foreach($taxArray as $priority=>$aTaxs) {
       foreach($aTaxs as $key=>$aTax) {
         $aOutTax[] = $aTax;
-      } 
+      }
     } //print_r($aOutTax);
-		return $aOutTax;
+        return $aOutTax;
   }
   ///////////////////////////////////////////////////
-	function getOrderDetailsArray() {
-		$hODetail   =& xoops_getmodulehandler('orderDetail','xasset');
-		$hCurr      =& xoops_getmodulehandler('currency','xasset');
-		//
+    function getOrderDetailsArray() {
+        $hODetail   =& xoops_getmodulehandler('orderDetail','xasset');
+        $hCurr      =& xoops_getmodulehandler('currency','xasset');
+        //
     $currID     = isset($_SESSION['currency_id']) ? $_SESSION['currency_id'] : $this->getVar('currency_id');
     //
-		$cur     =& $hCurr->get($currID);
-		$details = $hODetail->getOrderDetailsByIndex($this->getVar('id'));
-		//now add the currency info
-		for($i=0;$i<count($details);$i++) {
-			$details[$i]['fmtUnitPrice'] = $cur->valueFormat($details[$i]['unit_price']);
+        $cur     =& $hCurr->get($currID);
+        $details = $hODetail->getOrderDetailsByIndex($this->getVar('id'));
+        //now add the currency info
+        for($i=0;$i<count($details);$i++) {
+            $details[$i]['fmtUnitPrice'] = $cur->valueFormat($details[$i]['unit_price']);
       $details[$i]['fmtTotPrice']  = $cur->valueFormat($details[$i]['totalPrice']);
     }
     //
     return $details;
-	}
+    }
   ///////////////////////////////////////////////////
   function addOrderItem($product, $qty) {
     //only save if the index record has been posted
@@ -192,7 +194,7 @@ class xassetOrder extends xassetBaseObject {
     $crit = new CriteriaCompo(new Criteria('order_index_id',$this->getVar('id')));
     $crit->add(new Criteria('app_prod_id',$product));
     //
-    if ($orderObjs =& $hODetail->getObjects($crit)) {
+    if ($orderObjs = $hODetail->getObjects($crit)) {
       $order =& $hODetail->get($orderObjs[0]->getVar('id'));
       $qty   = $qty + $order->getVar('qty');
     }
@@ -209,6 +211,7 @@ class xassetOrder extends xassetBaseObject {
   ///////////////////////////////////////////////////
   function &orderDetails() {
     $hODetails =& xoops_getmodulehandler('orderDetail','xasset');
+
     return $hODetails->getOrderDetailsObjectsByIndex($this->getVar('id'));
   }
   //////////////////////////////////////////////////
@@ -236,7 +239,7 @@ class xassetOrder extends xassetBaseObject {
         $oUserDetail =& $this->getUserDetail();
         $oUserDetail->addUserToGroup($oAppProduct->getVar('add_to_group'));
         //add to group expiry table
-        $hProdMember->AddGroupExpiry($oDetail,$oAppProduct,$oUserDetail); 
+        $hProdMember->AddGroupExpiry($oDetail,$oAppProduct,$oUserDetail);
         //
         if (isset($oUserDetail)) {
           unset($oUserDetail);
@@ -246,7 +249,7 @@ class xassetOrder extends xassetBaseObject {
         $oUserDetail =& $this->getUserDetail();
         $oUserDetail->addUserToGroup($oAppProduct->getVar('add_to_group2'));
         //add to group expiry table
-        $hProdMember->AddGroupExpiry($oDetail,$oAppProduct,$oUserDetail,'2'); 
+        $hProdMember->AddGroupExpiry($oDetail,$oAppProduct,$oUserDetail,'2');
         //
         if (isset($oUserDetail)) {
           unset($oUserDetail);
@@ -259,6 +262,7 @@ class xassetOrder extends xassetBaseObject {
   //////////////////////////////////////////////////
   function &getUserDetail() {
     $hUserDetail =& xoops_getmodulehandler('userDetails','xasset');
+
     return $hUserDetail->get($this->getVar('user_detail_id'));
   }
   //////////////////////////////////////////////////
@@ -267,13 +271,14 @@ class xassetOrder extends xassetBaseObject {
     //
     $items = '';
     foreach($oItems as $key=>$oItem) {
-      $oAppProd =& $oItem->getAppProduct();   
+      $oAppProd =& $oItem->getAppProduct();
       //
       $product = $oAppProd->getVar('item_description');
       $qty     = $oItem->getVar('qty');
       //
       $items .= "Product : $product\t  Quantity: $qty\n";
     }
+
     return $items;
   }
   //////////////////////////////////////////////////
@@ -282,7 +287,7 @@ class xassetOrder extends xassetBaseObject {
     //
     $inst = '';
     foreach($oItems as $key=>$oItem) {
-      $oAppProd =& $oItem->getAppProduct();   
+      $oAppProd =& $oItem->getAppProduct();
       //
       $inst .= $oAppProd->getVar('extra_instructions')."\n\n";
     }
@@ -323,7 +328,6 @@ class xassetOrder extends xassetBaseObject {
   }
 }
 
-
 class xassetOrderHandler extends xassetBaseObjectHandler {
   //vars
   var $_db;
@@ -342,21 +346,23 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
       if(!isset($instance)) {
           $instance = new xassetOrderHandler($db);
       }
+
       return $instance;
   }
   ///////////////////////////////////////////////////
   function getStatuByCode($status) {
     switch ($status) {
-      case 1 : return 'In Cart'; 
-      case 2 : return 'Checked Out'; 
-      case 3 : return 'Gone to Gateway'; 
-      case 4 : return 'Validated'; 
-      case 5 : return 'Payment Complete'; 
+      case 1 : return 'In Cart';
+      case 2 : return 'Checked Out';
+      case 3 : return 'Gone to Gateway';
+      case 4 : return 'Validated';
+      case 5 : return 'Payment Complete';
     }
   }
   ///////////////////////////////////////////////////
   function transactionExists($transID) {
     $crit = new Criteria('trans_id',$transID);
+
     return $this->getCount($crit) > 0;
   }
   ///////////////////////////////////////////////////
@@ -388,10 +394,10 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
               ap.package_group_id  = pg.id inner join $tablePackage p on
               ap.package_group_id  = p.packagegroupid left join $tableStats us on
               us.uid               = oi.uid and us.packageid = p.id
-            where oi.user_detail_id = $userID  
+            where oi.user_detail_id = $userID
             group by od.qty, oi.status, oi.number, oi.trans_id, oi.date,
                      ap.item_description, ap.max_access, ap.max_days, ap.expires, p.filename,
-                     p.serverFilePath, p.filetype, p.id             
+                     p.serverFilePath, p.filetype, p.id
             order by p.filename";
     //
     $i = 0;
@@ -399,7 +405,7 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
     //
     if ($res = $this->_db->query($sql)) {
       while($row = $this->_db->fetchArray($res)) {
-        $ary[$i] = $row;  
+        $ary[$i] = $row;
         $ary[$i]['statusFmt']      = $this->getStatuByCode($row['status']);
         $ary[$i]['packageKey']     = $crypt->cryptValue($row['packageID'],$hPackage->_weight);
         $ary[$i]['datePurchase']   = formatTimestamp($row['date'],'s');
@@ -415,7 +421,8 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
       }
     }  else {
       echo $sql;
-    }           
+    }
+
     return $ary;
   }
   ///////////////////////////////////////////////////
@@ -438,13 +445,13 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
     $userTable   = $this->_db->prefix('users');
     //
     $sql = "select o.*, u.uname, c.first_name, c.last_name, cu.code currency from $thisTable o inner join $clientTable c on
-              o.user_detail_id = c.id inner join $userTable u on          
+              o.user_detail_id = c.id inner join $userTable u on
               c.uid = u.uid inner join $curTable cu on
               o.currency_id = cu.id";
     //
-    $this->postProcessSQL($sql,$crit);           
+    $this->postProcessSQL($sql,$crit);
     //
-    $ar = array();                                          
+    $ar = array();
     $i  = 0;
     //
     if ($res = $this->_db->query($sql)) {
@@ -456,7 +463,8 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
         //
         $i++;
       }
-    }             
+    }
+
     return $ar;
   }
   ///////////////////////////////////////////////////
@@ -464,10 +472,11 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
     $crit = new CriteriaCompo(new Criteria('uid',$uid));
     $crit->add(new Criteria('status',3,'<'));
     //
-    $objs =& $this->getObjects($crit);
+    $objs = $this->getObjects($crit);
     //
     if (count($objs) > 0) {
       $obj = reset($objs);
+
       return $obj->getVar('id');
     } else {
       return false;
@@ -475,7 +484,7 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
   }
   ///////////////////////////////////////////////////
   function delete($orderID) {
-    //delete items first 
+    //delete items first
     $hOrderDetail =& xoops_getmodulehandler('orderDetail','xasset');
     $hOrderDetail->deleteByOrder($orderID);
     //
@@ -516,6 +525,7 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
 
     if (!$result) {
       print_r($this);
+
       return false;
     }
 
@@ -524,8 +534,7 @@ class xassetOrderHandler extends xassetBaseObjectHandler {
       $id = $this->_db->getInsertId();
     }
     $obj->assignVar('id', $id);
+
     return true;
   }
 }
-
-?>

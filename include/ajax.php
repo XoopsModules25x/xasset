@@ -8,9 +8,9 @@ function onSampleClick($packageID, $packageKey) {
   $hPackage =& xoops_getmodulehandler('package','xasset');
   $hCommon  =& xoops_getmodulehandler('common','xasset');
   //
-  $objResponse = new xajaxResponse(); 
+  $objResponse = new xajaxResponse();
   //
-  if ($hCommon->keyMatches($packageID, $packageKey, $hPackage->_weight)) { 
+  if ($hCommon->keyMatches($packageID, $packageKey, $hPackage->_weight)) {
     $oPackage =& $hPackage->get($packageID);
     //
     $objResponse->addAssign("movie_player","innerHTML", '');
@@ -20,13 +20,10 @@ function onSampleClick($packageID, $packageKey) {
   }
   //
   return $objResponse;
-} 
+}
 
 $hAjax =& xoops_getmodulehandler('ajax','xasset');
 $oAjax =& $hAjax->create();
 //
 $oAjax->registerFunction('onSampleClick');
 $oAjax->processRequests();
-
-
-?>
